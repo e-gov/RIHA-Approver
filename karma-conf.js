@@ -13,7 +13,15 @@ module.exports = function(karma) {
     // list of files / patterns to load in the browser
     files: [
       'src/main/resources/static/js/**/*.js',
-      'src/test/js/**/*.js'
+      'src/test/js/**/*.js',
+      {
+        pattern: 'src/main/resources/templates/**/*.html',
+        watched: true,
+        included: false,
+        served: true
+      },
+
+      'src/test/js/spec_helper.js'
     ],
 
     preprocessors: {
