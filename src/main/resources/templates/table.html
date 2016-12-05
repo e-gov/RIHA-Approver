@@ -10,23 +10,27 @@
   th, td {
     text-align: left;
   }
+
+  th.name {
+    width:30%;
+  }
 </style>
 
 <table>
   <thead>
     <tr>
-      <th>Omanik</th>
-      <th>Infosüsteemi nimi</th>
-      <th>Avaldamise aeg</th>
-      <th>Kinnitamise aeg</th>
-      <th>Kinnita infosüsteem</th>
+      <th class="owner">Omanik</th>
+      <th class="name">Infosüsteemi nimi</th>
+      <th class="last-modified">Avaldamise aeg</th>
+      <th class="approved">Kinnitamise aeg</th>
+      <th class="approve">Kinnita infosüsteem</th>
     </tr>
     <tr class="template-row hidden">
       <td class="owner"></td>
       <td class="name"></td>
       <td class="last-modified"></td>
       <td class="approved"></td>
-      <td><button disabled>Kinnita</button></td>
+      <td class="approve"><button>Kinnita</button></td>
     </tr>
   </thead>
   <tbody>

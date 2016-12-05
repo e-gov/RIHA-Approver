@@ -21,7 +21,7 @@ function Approver() {
     data.forEach(function (infoSystem) {
       var newRow = $(template).clone().removeClass('hidden').removeClass('template-row');
       newRow.find('.owner').text(infoSystem.owner);
-      newRow.find('.name').text(infoSystem.shortname);
+      newRow.find('.name').text(infoSystem.name);
       newRow.find('.last-modified').text(infoSystem.status ? infoSystem.status.timestamp : '');
       tbody.append(newRow);
     });
