@@ -31,7 +31,7 @@ describe('Approver', function() {
     }
   ];
 
-  it('fills table with infosystem data', function() {
+  it('fills table with info system data', function() {
     loadFixtures('table.html');
 
     new Approver()._createTableRows(data);
@@ -45,10 +45,28 @@ describe('Approver', function() {
     expect($(rows[0]).find('.owner').text()).toBe('70000562');
     expect($(rows[0]).find('.last-modified').text()).toBe('2015-08-05T08:29:58.328468');
     expect($(rows[0]).find('.approved').text()).toBe('');
+    expect($(rows[0]).find('.approve button').data('id')).toBe('70000562|Eesti kirikute, koguduste ja koguduste liitude register');
   });
 
   it('does not fail if no status defined', function() {
     new Approver()._createTableRows([{}]);
-  })
+  });
+  
+  describe('Approve button', function() {
+    it('changes info system status to Approved and sets approval timestamp', function() {
+      setFixtures(
+        '<tr>' +
+          '<td class="approved"></td>' +
+          '<td class="approve"><button data-id="1000-RIA">Kinnita</button></td>' +
+        '</tr>');
+      spyOn($, 'post').and.returnValue(promise({approved: '2016-12-05T15:29:00.128468'}));
+      var event  = {target: $('button')};
+
+      new Approver().approveInfoSystem(event);
+
+      expect($('.approved').text()).toBe('2016-12-05T15:29:00.128468');
+      expect($('.approve button').attr('disabled')).toBe('disabled');
+    });
+  });
 });
 
