@@ -3,13 +3,16 @@
   <head>
     <title>Kooskõlastaja</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.css">
+
     <script src="/js/index.js"></script>
     <script src="/js/vendor/jquery-3.1.1.min.js"></script>
+    <script src="/js/vendor/jquery.dataTables.min.js"></script>
     <script>
-      window.onload = function() {
+      $(function() {
         var approver = new Approver();
         approver.init();
-      }
+      });
     </script>
   </head>
   <body>

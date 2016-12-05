@@ -13,6 +13,7 @@ function Approver() {
   function loadInfoSystems() {
     $.getJSON('https://raw.githubusercontent.com/e-gov/RIHA-API/master/riha_live.json', function(data) {
       self._createTableRows(data);
+      $('#info-systems-table').DataTable({paging: false});
     });
   }
 
