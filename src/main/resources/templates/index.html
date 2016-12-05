@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Kooskõlastaja</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="/js/index.js"></script>
+    <script src="/js/vendor/jquery-3.1.1.min.js"></script>
+    <script>
+      window.onload = function() {
+        var approver = new Approver();
+        approver.init();
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Infosüsteemide nimekiri</h1>
+    <#include 'table.html'/>
+  </body>
+</html>

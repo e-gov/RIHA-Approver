@@ -12,6 +12,7 @@ module.exports = function(karma) {
 
     // list of files / patterns to load in the browser
     files: [
+      'src/main/resources/static/js/vendor/jquery-3.1.1.min.js',
       'src/main/resources/static/js/**/*.js',
       'src/test/js/**/*.js',
       {
