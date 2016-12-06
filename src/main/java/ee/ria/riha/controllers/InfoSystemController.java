@@ -1,7 +1,9 @@
 package ee.ria.riha.controllers;
 
+import ee.ria.riha.models.Infosystem;
 import ee.ria.riha.services.ApprovalStorageService;
 import ee.ria.riha.services.DateTimeService;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
+import java.util.Properties;
 
 import static ee.ria.riha.services.DateTimeService.format;
 import static ee.ria.riha.services.DateTimeService.toUTC;
@@ -31,7 +34,17 @@ public class InfoSystemController {
   @RequestMapping(value = "/infosystems/", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
   public String infosystems() {
-    return harvestedData();
+    Properties approvals = approvalStorageService.load();
+
+    String harvestedData = harvestedData();
+    JSONArray jsonArray = new JSONArray(harvestedData);
+    for (int i = 0; i < jsonArray.length(); i++) {
+      Infosystem infosystem = new Infosystem(jsonArray.getJSONObject(i));
+      if (approvals.containsKey(infosystem.getId())) {
+        infosystem.setApproved(approvals.getProperty(infosystem.getId()));
+      }
+    }
+    return jsonArray.toString();
   }
 
   String harvestedData() {
