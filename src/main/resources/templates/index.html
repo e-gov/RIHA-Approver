@@ -11,13 +11,15 @@
     <script src="/js/vendor/jquery-3.1.1.min.js"></script>
     <script src="/js/vendor/jquery.dataTables.min.js"></script>
     <script src="/js/vendor/jquery.dataTables.bootstrap4.min.js"></script>
+    <script src="/js/vendor/moment.min.js"></script>
+    <script src="/js/vendor/moment-with-locales.min.js"></script>
     <script src="/js/vendor/tether.min.js"></script>
     <script src="/js/vendor/bootstrap.min.js"></script>
-
     <script>
       $(function() {
         var approver = new Approver();
         approver.init();
+        moment.locale('et');
       });
     </script>
   </head>

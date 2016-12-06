@@ -22,7 +22,7 @@ function Approver() {
     $.post('/approve/', {id: approveButton.data('id')})
       .done(function (result) {
         approveButton.attr('disabled', 'disabled');
-        approveButton.closest('tr').find('.approved').text(result.approved);
+        approveButton.closest('tr').find('.approved').text(moment.utc(result.approved).local().fromNow());
       });
   };
 
@@ -35,7 +35,7 @@ function Approver() {
       newRow.find('.owner').text(infoSystem.owner);
       newRow.find('.name').text(infoSystem.name);
       newRow.find('button').attr('data-id', infoSystem.owner + '|' + infoSystem.name);
-      newRow.find('.last-modified').text(infoSystem.status ? infoSystem.status.timestamp : '');
+      newRow.find('.last-modified').text(infoSystem.status ? moment.utc(infoSystem.status.timestamp).local().fromNow() : '');
       tbody.append(newRow);
     });
   }
