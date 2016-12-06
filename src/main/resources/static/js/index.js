@@ -32,6 +32,7 @@ function Approver() {
     var tbody = $('tbody');
     data.forEach(function (infoSystem) {
       var newRow = $(template).clone().removeClass('hidden').removeClass('template-row');
+      newRow.attr('title', JSON.stringify(infoSystem));
       newRow.find('.owner').text(infoSystem.owner);
       newRow.find('.name').text(infoSystem.name);
       newRow.find('button').attr('data-id', infoSystem.owner + '|' + infoSystem.name);
