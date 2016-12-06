@@ -36,4 +36,13 @@ public class InfoSystemControllerTest {
     assertEquals("{\"approved\": \"2016-12-12T08:10:10\"}", result);
     verify(storageService).saveInfosystemApproval("owner|infosystem", "2016-12-12T08:10:10");
   }
+
+  @Test
+  public void infosystems() {
+    doReturn("{}").when(controller).harvestedData();
+
+    String result = controller.infosystems();
+
+    assertEquals("{}", result);
+  }
 }

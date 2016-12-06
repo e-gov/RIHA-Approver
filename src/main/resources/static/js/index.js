@@ -11,7 +11,7 @@ function Approver() {
   };
 
   function loadInfoSystems() {
-    $.getJSON('https://raw.githubusercontent.com/e-gov/RIHA-API/master/riha_live.json', function(data) {
+    $.getJSON('/infosystems/', function(data) {
       self._createTableRows(data);
       $('#info-systems-table').DataTable({paging: false});
     });
@@ -32,9 +32,10 @@ function Approver() {
     var tbody = $('tbody');
     data.forEach(function (infoSystem) {
       var newRow = $(template).clone().removeClass('hidden').removeClass('template-row');
+      newRow.attr('title', JSON.stringify(infoSystem));
       newRow.find('.owner').text(infoSystem.owner);
       newRow.find('.name').text(infoSystem.name);
-      newRow.find('button').attr('data-id', infoSystem.owner + '|' + infoSystem.name);
+      newRow.find('button').attr('data-id', infoSystem.meta.URI);
       newRow.find('.last-modified').text(infoSystem.status ? moment.utc(infoSystem.status.timestamp).local().fromNow() : '');
       tbody.append(newRow);
     });
