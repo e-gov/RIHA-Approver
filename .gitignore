@@ -2,5 +2,4 @@ target/
 .idea/workspace.xml
 .idea/libraries
 *.iws
-*.iml
 *.ipr
