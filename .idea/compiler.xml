@@ -23,13 +23,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="Approver" />
-        <module name="approver" />
+        <module name="RIHA-Approver" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="approver" target="1.8" />
-      <module name="Approver" target="1.8" />
+      <module name="RIHA-Approver" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

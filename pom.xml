@@ -8,7 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>approver</name>
+	<name>RIHA-Approver</name>
 	<description>Application for approving information system descriptions</description>
 
 	<parent>
