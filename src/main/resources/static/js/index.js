@@ -35,7 +35,10 @@ function Approver() {
       newRow.attr('title', JSON.stringify(infoSystem));
       newRow.find('.owner').text(infoSystem.owner);
       newRow.find('.name').text(infoSystem.name);
-      newRow.find('button').attr('data-id', infoSystem.meta.URI);
+      var button = newRow.find('button').attr('data-id', infoSystem.meta.URI);
+      if (infoSystem.approved) {
+        button.attr('disabled', 'disabled');
+      }
       newRow.find('.last-modified').text(infoSystem.status ? moment.utc(infoSystem.status.timestamp).local().fromNow() : '');
       newRow.find('.approved').text(infoSystem.approved);
       tbody.append(newRow);
