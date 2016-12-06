@@ -26,21 +26,26 @@ function Approver() {
       });
   };
 
+  self._canNotBeApproved = function (infosystem) {
+    return infosystem.approved && infosystem.status
+      && new Date(infosystem.status.timestamp) < new Date(infosystem.approved);
+  };
+
   self._createTableRows = function(data) {
     var template = $('.template-row');
 
     var tbody = $('tbody');
-    data.forEach(function (infoSystem) {
+    data.forEach(function (infosystem) {
       var newRow = $(template).clone().removeClass('hidden').removeClass('template-row');
-      newRow.attr('title', JSON.stringify(infoSystem));
-      newRow.find('.owner').text(infoSystem.owner);
-      newRow.find('.name').text(infoSystem.name);
-      var button = newRow.find('button').attr('data-id', infoSystem.meta.URI);
-      if (infoSystem.approved) {
+      newRow.attr('title', JSON.stringify(infosystem));
+      newRow.find('.owner').text(infosystem.owner);
+      newRow.find('.name').text(infosystem.name);
+      var button = newRow.find('button').attr('data-id', infosystem.meta.URI);
+      if (_canNotBeApproved(infosystem)) {
         button.attr('disabled', 'disabled');
       }
-      newRow.find('.last-modified').text(infoSystem.status ? moment.utc(infoSystem.status.timestamp).local().fromNow() : '');
-      newRow.find('.approved').text(infoSystem.approved);
+      newRow.find('.last-modified').text(infosystem.status ? moment.utc(infosystem.status.timestamp).local().fromNow() : '');
+      newRow.find('.approved').text(infosystem.approved);
       tbody.append(newRow);
     });
   }
