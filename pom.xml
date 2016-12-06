@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>RIHA-Approver</name>
-	<description>Application for approving information system descriptions</description>
+	<description>Software application that allows a human user (person from dedicated agencies) to review descriptions and make approval decisions. Approval decisions are published through the Approver's API.</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
