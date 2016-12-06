@@ -11,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
@@ -39,10 +40,20 @@ public class InfoSystemControllerTest {
 
   @Test
   public void infosystems() {
-    doReturn("{}").when(controller).harvestedData();
+    doReturn("[" +
+        "{\"meta\":{\"URI\":\"/owner-1/shortname-1/\"}}, " +
+        "{\"meta\":{\"URI\":\"/owner-2/shortname-2/\"}}" +
+      "]").when(controller).harvestedData();
+
+    Properties approvals = new Properties();
+    approvals.setProperty("/owner-2/shortname-2/", "2016-12-11T08:10:10");
+    doReturn(approvals).when(storageService).load();
 
     String result = controller.infosystems();
 
-    assertEquals("{}", result);
+    assertEquals("[" +
+        "{\"meta\":{\"URI\":\"/owner-1/shortname-1/\"}}," +
+        "{\"approved\":\"2016-12-11T08:10:10\",\"meta\":{\"URI\":\"/owner-2/shortname-2/\"}}" +
+      "]", result);
   }
 }

@@ -27,7 +27,8 @@ describe('Approver', function() {
       "meta": {
         "URI": "/70000740/\u00d5ppurite register",
         "timestamp": "2013-11-14T13:43:55.546948"
-      }
+      },
+      "approved": "2016-09-05T00:36:26"
     }
   ];
 
@@ -46,10 +47,18 @@ describe('Approver', function() {
     expect($(rows[0]).find('.last-modified').text()).toBe('2015-08-05T08:29:58.328468');
     expect($(rows[0]).find('.approved').text()).toBe('');
     expect($(rows[0]).find('.approve button').data('id')).toBe('70000562|Eesti kirikute, koguduste ja koguduste liitude register');
+    expect($(rows[1]).find('.approve button').attr('disabled')).toBe('disabled');
+    expect($(rows[1]).find('.approved').text()).toBe('2016-09-05T00:36:26');
   });
 
   it('does not fail if no status defined', function() {
     new Approver()._createTableRows([{}]);
+  });
+
+  describe('can not be approved', function() {
+    it('', function() {
+      expect(new Approver()._canNotBeApproved(infosystem)).toBe(false);
+    });
   });
   
   describe('Approve button', function() {
