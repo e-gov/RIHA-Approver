@@ -15,7 +15,7 @@ public class ApprovalStorageService {
 
   private Logger logger = LoggerFactory.getLogger(ApprovalStorageService.class);
 
-  File file = new File("approval.properties");
+  File file = new File("approvals.db");
 
   synchronized public void saveInfosystemApproval(String id, ZonedDateTime approvalTimestamp) {
     System.out.println(id + "|" + approvalTimestamp.toString());
@@ -35,7 +35,8 @@ public class ApprovalStorageService {
   }
 
   public Properties load() {
-    try (InputStream inputStream = new FileInputStream(file)) {
+    if (!file.exists()) return new Properties();
+      try (InputStream inputStream = new FileInputStream(file)) {
       Properties properties = new Properties();
       properties.load(inputStream);
       return properties;
