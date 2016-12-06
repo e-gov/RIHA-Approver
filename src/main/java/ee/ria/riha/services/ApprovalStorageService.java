@@ -5,9 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 
 @Service
@@ -17,10 +14,9 @@ public class ApprovalStorageService {
 
   File file = new File("approvals.db");
 
-  synchronized public void saveInfosystemApproval(String id, ZonedDateTime approvalTimestamp) {
-    System.out.println(id + "|" + approvalTimestamp.toString());
+  synchronized public void saveInfosystemApproval(String id, String approvalTimestamp) {
     Properties properties = load();
-    properties.setProperty(id, ZonedDateTime.ofInstant(approvalTimestamp.toInstant(), ZoneId.of("UTC")).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+    properties.setProperty(id, approvalTimestamp);
     save(properties);
   }
 
