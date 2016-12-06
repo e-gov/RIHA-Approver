@@ -19,7 +19,7 @@ function Approver() {
 
   self.approveInfoSystem = function (event) {
     var approveButton = $(event.target);
-    $.post('/save/', {id: approveButton.data('id')})
+    $.post('/approve/', {id: approveButton.data('id')})
       .done(function (result) {
         approveButton.attr('disabled', 'disabled');
         approveButton.closest('tr').find('.approved').text(result.approved);
