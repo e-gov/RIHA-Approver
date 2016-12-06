@@ -35,7 +35,7 @@ function Approver() {
       newRow.attr('title', JSON.stringify(infoSystem));
       newRow.find('.owner').text(infoSystem.owner);
       newRow.find('.name').text(infoSystem.name);
-      newRow.find('button').attr('data-id', infoSystem.owner + '|' + infoSystem.name);
+      newRow.find('button').attr('data-id', infoSystem.meta.URI);
       newRow.find('.last-modified').text(infoSystem.status ? infoSystem.status.timestamp : '');
       tbody.append(newRow);
     });
