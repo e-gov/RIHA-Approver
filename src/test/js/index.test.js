@@ -48,6 +48,7 @@ describe('Approver', function() {
     expect($(rows[0]).find('.owner').text()).toBe('70000562');
     expect($(rows[0]).data('id')).toBe('/70000562/Eesti kirikuregister');
     expect($(rows[0]).find('.last-modified').text()).toBe('1 day ago');
+    expect($(rows[0]).find('.status').text()).toBe('Lõpetatud');
     expect(approver._timeSince).toHaveBeenCalledWith('2015-08-05T08:29:58.328468');
   });
 

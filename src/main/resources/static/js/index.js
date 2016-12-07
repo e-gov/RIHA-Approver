@@ -64,6 +64,7 @@ function Approver() {
       newRow.find('.owner').text(infosystem.owner);
       newRow.find('.name').text(infosystem.name);
       newRow.find('.last-modified').text(infosystem.status ? self._timeSince(infosystem.status.timestamp) : '');
+      newRow.find('.status').text(infosystem.status ? infosystem.status.staatus : '');
       tbody.append(newRow);
     });
   }
