@@ -34,25 +34,24 @@ describe('Approver', function() {
 
   it('fills table with info system data', function() {
     loadFixtures('table.html');
+    var approver = new Approver();
+    spyOn(approver, '_timeSince').and.returnValue("1 day ago");
 
-    new Approver()._createTableRows(data);
+    approver._createTableRows(data);
 
-    var rows = $('tbody tr');
+    var rows = $('tbody tr:not(.template-row)');
 
     expect(rows.length).toBe(2);
     expect(rows.hasClass('hidden')).toBe(false);
     expect(rows.hasClass('template-row')).toBe(false);
     expect($(rows[0]).find('.name').text()).toBe('Eesti kirikute, koguduste ja koguduste liitude register');
     expect($(rows[0]).find('.owner').text()).toBe('70000562');
-    expect($(rows[0]).find('.last-modified').text()).toBe('2015-08-05T08:29:58.328468');
+    expect($(rows[0]).find('.last-modified').text()).toBe('1 day ago');
     expect($(rows[0]).find('.approved').text()).toBe('');
-    expect($(rows[0]).find('.approve button').data('id')).toBe('70000562|Eesti kirikute, koguduste ja koguduste liitude register');
+    expect($(rows[0]).find('.approve button').data('id')).toBe('/70000562/Eesti kirikuregister');
     expect($(rows[1]).find('.approve button').attr('disabled')).toBe('disabled');
     expect($(rows[1]).find('.approved').text()).toBe('2016-09-05T00:36:26');
-  });
-
-  it('does not fail if no status defined', function() {
-    new Approver()._createTableRows([{}]);
+    expect(approver._timeSince).toHaveBeenCalledWith('2015-08-05T08:29:58.328468');
   });
 
   describe('can not be approved', function() {

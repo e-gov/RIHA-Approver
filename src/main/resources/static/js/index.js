@@ -31,6 +31,10 @@ function Approver() {
       && new Date(infosystem.status.timestamp) < new Date(infosystem.approved);
   };
 
+  self._timeSince = function (timestamp) {
+    return moment.utc(timestamp).local().fromNow();
+  };
+
   self._createTableRows = function(data) {
     var template = $('.template-row');
 
@@ -44,7 +48,7 @@ function Approver() {
       if (self._canNotBeApproved(infosystem)) {
         button.attr('disabled', 'disabled');
       }
-      newRow.find('.last-modified').text(infosystem.status ? moment.utc(infosystem.status.timestamp).local().fromNow() : '');
+      newRow.find('.last-modified').text(infosystem.status ? self._timeSince(infosystem.status.timestamp) : '');
       newRow.find('.approved').text(infosystem.approved);
       tbody.append(newRow);
     });
