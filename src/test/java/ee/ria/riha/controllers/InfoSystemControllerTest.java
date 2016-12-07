@@ -1,5 +1,6 @@
 package ee.ria.riha.controllers;
 
+import ee.ria.riha.models.Approval;
 import ee.ria.riha.services.ApprovalStorageService;
 import ee.ria.riha.services.DateTimeService;
 import org.junit.Test;
@@ -11,8 +12,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Properties;
+import java.util.List;
 
+import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
@@ -39,21 +41,12 @@ public class InfoSystemControllerTest {
   }
 
   @Test
-  public void infosystems() {
-    doReturn("[" +
-        "{\"meta\":{\"URI\":\"/owner-1/shortname-1/\"}}, " +
-        "{\"meta\":{\"URI\":\"/owner-2/shortname-2/\"}}" +
-      "]").when(controller).harvestedData();
-
-    Properties approvals = new Properties();
-    approvals.setProperty("/owner-2/shortname-2/", "2016-12-11T08:10:10");
+  public void approvals() {
+    List<Approval> approvals = asList(new Approval("/owner/shortname1", "2016-01-01T10:00:00"), new Approval("/owner/shortname2", "2015-10-10T01:10:10"));
     doReturn(approvals).when(storageService).load();
 
-    String result = controller.infosystems();
+    String result = controller.approvals();
 
-    assertEquals("[" +
-        "{\"meta\":{\"URI\":\"/owner-1/shortname-1/\"}}," +
-        "{\"approved\":\"2016-12-11T08:10:10\",\"meta\":{\"URI\":\"/owner-2/shortname-2/\"}}" +
-      "]", result);
+    assertEquals("[{\"id\":\"/owner/shortname1\",\"timestamp\":\"2016-01-01T10:00:00\"},{\"id\":\"/owner/shortname2\",\"timestamp\":\"2015-10-10T01:10:10\"}]", result);
   }
 }

@@ -1,5 +1,6 @@
 package ee.ria.riha.services;
 
+import ee.ria.riha.models.Approval;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,16 +13,34 @@ import java.util.List;
 import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 
 public class ApprovalStorageServiceTest {
 
-  private ApprovalStorageService service = new ApprovalStorageService();
+  private ApprovalStorageService service = spy(new ApprovalStorageService());
   private Path storageFilePath;
 
   @Before
   public void setUp() throws Exception {
     storageFilePath = Files.createTempFile("", "");
     service.file = storageFilePath.toFile();
+  }
+
+  @Test
+  public void load() {
+    Properties properties = new Properties();
+    properties.setProperty("/owner-2/shortname-2", "2015-10-10T01:10:10");
+    properties.setProperty("/owner-1/shortname-1", "2016-01-01T10:00:00");
+    doReturn(properties).when(service).loadProperties();
+
+    List<Approval> result = service.load();
+
+    assertEquals(2, result.size());
+    assertEquals("/owner-1/shortname-1", result.get(0).getId());
+    assertEquals("2016-01-01T10:00:00", result.get(0).getTimestamp());
+    assertEquals("/owner-2/shortname-2", result.get(1).getId());
+    assertEquals("2015-10-10T01:10:10", result.get(1).getTimestamp());
   }
 
   @Test
