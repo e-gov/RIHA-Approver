@@ -16,13 +16,13 @@ function Approver() {
     $.getJSON(infosystemsUrl, function(data) {
       self._createTableRows(data);
       loadApprovals();
-      $('#info-systems-table').DataTable({paging: false});
     });
   }
 
   function loadApprovals () {
     $.getJSON(approvalsUrl, function (data) {
       self._addApprovalsData(data);
+      $('#info-systems-table').DataTable({paging: false});
     })
   }
 
