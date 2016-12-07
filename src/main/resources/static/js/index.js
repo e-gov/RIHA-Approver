@@ -41,7 +41,7 @@ function Approver() {
       newRow.find('.owner').text(infosystem.owner);
       newRow.find('.name').text(infosystem.name);
       var button = newRow.find('button').attr('data-id', infosystem.meta.URI);
-      if (_canNotBeApproved(infosystem)) {
+      if (self._canNotBeApproved(infosystem)) {
         button.attr('disabled', 'disabled');
       }
       newRow.find('.last-modified').text(infosystem.status ? moment.utc(infosystem.status.timestamp).local().fromNow() : '');
