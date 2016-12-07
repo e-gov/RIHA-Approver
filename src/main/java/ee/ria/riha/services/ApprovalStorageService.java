@@ -20,14 +20,17 @@ public class ApprovalStorageService {
 
   File file = new File("approvals.db");
 
-  synchronized public void saveInfosystemApproval(String id, String approvalTimestamp) {
+  synchronized public void saveInfosystemApproval(Approval approval) {
     Properties properties = loadProperties();
-    properties.setProperty(id, approvalTimestamp);
+    properties.setProperty(approval.getId(), approval.getTimestamp() + "|" + approval.getStatus());
     save(properties);
   }
 
   public List<Approval> load() {
-    return loadProperties().entrySet().stream().map(property -> new Approval((String)property.getKey(), (String)property.getValue())).collect(Collectors.toList());
+    return loadProperties().entrySet().stream().map(property -> {
+      String[] value = ((String)property.getValue()).split("\\|");
+      return new Approval((String)property.getKey(), value[0], value[1]);
+    }).collect(Collectors.toList());
   }
 
   private void save(Properties properties) {

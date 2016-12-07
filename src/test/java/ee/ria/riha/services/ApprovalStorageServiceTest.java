@@ -30,8 +30,8 @@ public class ApprovalStorageServiceTest {
   @Test
   public void load() {
     Properties properties = new Properties();
-    properties.setProperty("/owner-2/shortname-2", "2015-10-10T01:10:10");
-    properties.setProperty("/owner-1/shortname-1", "2016-01-01T10:00:00");
+    properties.setProperty("/owner-2/shortname-2", "2015-10-10T01:10:10|KOOSKÕLASTATUD");
+    properties.setProperty("/owner-1/shortname-1", "2016-01-01T10:00:00|MITTE KOOSKÕLASTATUD");
     doReturn(properties).when(service).loadProperties();
 
     List<Approval> result = service.load();
@@ -39,29 +39,31 @@ public class ApprovalStorageServiceTest {
     assertEquals(2, result.size());
     assertEquals("/owner-1/shortname-1", result.get(0).getId());
     assertEquals("2016-01-01T10:00:00", result.get(0).getTimestamp());
+    assertEquals("MITTE KOOSKÕLASTATUD", result.get(0).getStatus());
     assertEquals("/owner-2/shortname-2", result.get(1).getId());
     assertEquals("2015-10-10T01:10:10", result.get(1).getTimestamp());
+    assertEquals("KOOSKÕLASTATUD", result.get(1).getStatus());
   }
 
   @Test
   public void saveInfosystemApproval_noExistingFile() throws IOException {
-    service.saveInfosystemApproval("owner-id|infosystem-name", "2016-12-12T08:05:08.4567");
+    service.saveInfosystemApproval(new Approval("owner-id|infosystem-name","2016-12-12T08:05:08.4567", "MITTE KOOSKÕLASTATUD"));
 
-    assertEquals("2016-12-12T08:05:08.4567", approvals().getProperty("owner-id|infosystem-name"));
+    assertEquals("2016-12-12T08:05:08.4567|MITTE KOOSKÕLASTATUD", approvals().getProperty("owner-id|infosystem-name"));
   }
 
   @Test
   public void saveInfosystemApproval_existingFileWithData() throws IOException {
     Properties existingApprovals = approvals();
-    existingApprovals.setProperty("other-owner-id|other-infosystem-name", "2016-12-12T01:01:01");
+    existingApprovals.setProperty("other-owner-id/other-infosystem-name", "2016-12-12T01:01:01|KOOSKÕLASTATUD");
     existingApprovals.store(Files.newOutputStream(storageFilePath), null);
 
-    service.saveInfosystemApproval("owner-id|infosystem-name", "2016-12-12T08:05:08.4567");
+    service.saveInfosystemApproval(new Approval("owner-id/infosystem-name","2016-12-12T08:05:08.4567", "MITTE KOOSKÕLASTATUD"));
 
     Properties approvals = approvals();
     assertEquals(2, approvals.size());
-    assertEquals("2016-12-12T08:05:08.4567", approvals.getProperty("owner-id|infosystem-name"));
-    assertEquals("2016-12-12T01:01:01", approvals.getProperty("other-owner-id|other-infosystem-name"));
+    assertEquals("2016-12-12T08:05:08.4567|MITTE KOOSKÕLASTATUD", approvals.getProperty("owner-id/infosystem-name"));
+    assertEquals("2016-12-12T01:01:01|KOOSKÕLASTATUD", approvals.getProperty("other-owner-id/other-infosystem-name"));
   }
 
   @Test
@@ -70,7 +72,7 @@ public class ApprovalStorageServiceTest {
     for (int i = 0; i < 10; i++) {
       Thread thread = new Thread(() -> {
         try {
-          service.saveInfosystemApproval(Thread.currentThread().getName(), "2016-12-12T08:05:08.4567");
+          service.saveInfosystemApproval(new Approval(Thread.currentThread().getName(),"2016-12-12T08:05:08.4567", "MITTE KOOSKÕLASTATUD"));
         }
         catch (Throwable e) {
           e.printStackTrace();

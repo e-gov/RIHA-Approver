@@ -6,7 +6,8 @@
         <th class="name">Infosüsteemi nimi</th>
         <th class="last-modified">Viimati muudetud</th>
         <th class="status">Staatus</th>
-        <th class="approved">Kinnitatud</th>
+        <th class="approved">Kooskõlastatud</th>
+        <th class="approval-status">Kooskõlastamise staatus</th>
         <th class="approve text-sm-right">Tegevused</th>
       </tr>
     </thead>
@@ -17,7 +18,11 @@
         <td class="last-modified text-nowrap"></td>
         <td class="status"></td>
         <td class="approved text-nowrap"></td>
-        <td class="approve text-sm-right"><button class="btn btn-sm btn-outline-success">Kinnita</button></td>
+        <td class="approval-status text-nowrap"></td>
+        <td class="approve text-sm-right">
+          <button class="btn btn-sm btn-outline-success" data-status="KOOSKÕLASTATUD">Kooskõlasta</button>
+          <button class="btn btn-sm btn-outline-danger" data-status="MITTE KOOSKÕLASTATUD">Ei kooskõlasta</button>
+        </td>
       </tr>
     </tbody>
   </table>

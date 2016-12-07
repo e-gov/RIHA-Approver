@@ -1,8 +1,10 @@
 package ee.ria.riha.controllers;
 
+import ee.ria.riha.models.Approval;
 import ee.ria.riha.services.ApprovalStorageService;
 import ee.ria.riha.services.DateTimeService;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -34,10 +36,9 @@ public class InfoSystemController {
 
   @RequestMapping(value = "/approve/", method = POST, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
-  public String approve(@RequestParam String id){
-    //todo use GSON or better spring to convert object e.g. hashmap
-    String approvalTimestamp = format(toUTC(dateTimeService.now()));
-    approvalStorageService.saveInfosystemApproval(id, approvalTimestamp);
-    return "{\"approved\": \"" + approvalTimestamp + "\"}";
+  public String updateApprovalStatus(@RequestParam String id, String status){
+    Approval approval = new Approval(id, format(toUTC(dateTimeService.now())), status);
+    approvalStorageService.saveInfosystemApproval(approval);
+    return new JSONObject(approval).toString();
   }
 }

@@ -9,7 +9,7 @@ function Approver() {
 
   self.init = function() {
     loadInfosystems();
-    $('body').on('click', '.approve button', self.approveInfoSystem);
+    $('body').on('click', '.approve button', self.approveInfosystem);
   };
 
   function loadInfosystems() {
@@ -34,18 +34,21 @@ function Approver() {
     data.forEach(function (approval) {
       var row = $('tbody tr[data-id="' + approval.id + '"]');
       $(row.find('.approved')).text(approval.timestamp);
+      $(row.find('.approval-status')).text(approval.status);
       if (!self._isApprovable(row.find('.last-modified').text(), approval.timestamp)) {
         row.find('button').attr('disabled', 'disabled');
       }
     })
   };
 
-  self.approveInfoSystem = function (event) {
-    var approveButton = $(event.target);
-    $.post('/approve/', {id: approveButton.closest('tr').data('id')})
+  self.approveInfosystem = function (event) {
+    var clickedButton = $(event.target);
+    var infosystemRow = clickedButton.closest('tr');
+    $.post('/approve/', {id: infosystemRow.data('id'), status: clickedButton.data('status')})
       .done(function (result) {
-        approveButton.attr('disabled', 'disabled');
-        approveButton.closest('tr').find('.approved').text(result.approved);
+        infosystemRow.find('button').attr('disabled', 'disabled');
+        infosystemRow.find('.approved').text(result.timestamp);
+        infosystemRow.find('.approval-status').text(result.status);
       });
   };
 

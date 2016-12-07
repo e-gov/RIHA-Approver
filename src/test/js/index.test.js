@@ -74,9 +74,10 @@ describe('Approver', function() {
       $('tbody td.last-modified').text('2016-01-01T10:00:00');
 
       spyOn(approver, '_isApprovable').and.returnValue(false);
-      approver._addApprovalsData([{"id":"/owner/shortname", "timestamp":"2015-01-01T10:00:00"}]);
+      approver._addApprovalsData([{"id":"/owner/shortname", "timestamp":"2015-01-01T10:00:00", "status": "KOOSKÕLASTATUD"}]);
 
       expect($('tbody .approved').text()).toBe('2015-01-01T10:00:00');
+      expect($('tbody .approval-status').text()).toBe('KOOSKÕLASTATUD');
       expect($('.approve button').attr('disabled')).toBe('disabled');
       expect(approver._isApprovable).toHaveBeenCalledWith('2016-01-01T10:00:00', '2015-01-01T10:00:00');
     });
@@ -88,9 +89,10 @@ describe('Approver', function() {
       $('tbody td.last-modified').text('2015-01-01T10:00:00');
 
       spyOn(approver, '_isApprovable').and.returnValue(true);
-      approver._addApprovalsData([{"id":"/owner/shortname", "timestamp":"2016-01-01T10:00:00"}]);
+      approver._addApprovalsData([{"id":"/owner/shortname", "timestamp":"2016-01-01T10:00:00", "status": "KOOSKÕLASTATUD"}]);
 
       expect($('tbody .approved').text()).toBe('2016-01-01T10:00:00');
+      expect($('tbody .approval-status').text()).toBe('KOOSKÕLASTATUD');
       expect($('.approve button').is('[disabled]')).toBe(false);
       expect(approver._isApprovable).toHaveBeenCalledWith('2015-01-01T10:00:00', '2016-01-01T10:00:00');
     });
@@ -99,16 +101,21 @@ describe('Approver', function() {
   describe('Approve button', function() {
     it('changes info system status to Approved and sets approval timestamp', function() {
       setFixtures(
-        '<tr>' +
+        '<tr data-id="1000-RIA">' +
           '<td class="approved"></td>' +
-          '<td class="approve"><button data-id="1000-RIA">Kinnita</button></td>' +
+          '<td class="approval-status"></td>' +
+          '<td class="approve">' +
+            '<button data-status="KOOSKÕLASTATUD">kooskõlasta</button>' +
+            '<button data-status="MITTE KOOSKÕLASTATUD">ei kooskõlasta</button>' +
+          '</td>' +
         '</tr>');
-      spyOn($, 'post').and.returnValue(promise({approved: '2016-12-05T15:29:00.128468'}));
-      var event  = {target: $('button')};
+      spyOn($, 'post').and.returnValue(promise({id: '/owner/shortname', timestamp: '2016-12-05T15:29:00.128468', status: 'KOOSKÕLASTATUD'}));
+      var event  = {target: $('button[data-status="KOOSKÕLASTATUD"]')};
 
-      new Approver().approveInfoSystem(event);
+      new Approver().approveInfosystem(event);
 
       expect($('.approved').text()).toBe('2016-12-05T15:29:00.128468');
+      expect($('.approval-status').text()).toBe('KOOSKÕLASTATUD');
       expect($('.approve button').attr('disabled')).toBe('disabled');
     });
   });
