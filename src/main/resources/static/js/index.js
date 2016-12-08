@@ -44,7 +44,7 @@ function Approver() {
   self.approveInfosystem = function (event) {
     var clickedButton = $(event.target);
     var infosystemRow = clickedButton.closest('tr');
-    $.post('/approve/', {id: infosystemRow.data('id'), status: clickedButton.data('status')})
+    $.post('/approve/', {id: infosystemRow.data('id'), status: clickedButton.val()})
       .done(function (result) {
         infosystemRow.find('button').attr('disabled', 'disabled');
         infosystemRow.find('.approved').text(result.timestamp);
