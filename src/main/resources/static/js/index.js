@@ -21,7 +21,10 @@ function Approver(infosystemsUrl) {
   function loadApprovals () {
     $.getJSON(approvalsUrl, function (data) {
       self._addApprovalsData(data);
-      $('#info-systems-table').DataTable({paging: false});
+      $('#info-systems-table').DataTable({
+        paging: false,
+        order: []
+      });
     })
   }
 
