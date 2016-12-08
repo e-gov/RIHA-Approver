@@ -1,6 +1,7 @@
 package ee.ria.riha.controllers;
 
 import ee.ria.riha.models.Approval;
+import ee.ria.riha.models.Status;
 import ee.ria.riha.services.ApprovalStorageService;
 import ee.ria.riha.services.DateTimeService;
 import org.json.JSONArray;
@@ -8,6 +9,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,7 +26,9 @@ public class InfoSystemController {
   @Autowired DateTimeService dateTimeService;
 
   @RequestMapping(value = "/", method = GET)
-  public String index() {
+  public String index(Model model) {
+    model.addAttribute("approvedStatus", Status.APPROVED.getValue());
+    model.addAttribute("notApprovedStatus", Status.NOT_APPROVED.getValue());
     return "index";
   }
 

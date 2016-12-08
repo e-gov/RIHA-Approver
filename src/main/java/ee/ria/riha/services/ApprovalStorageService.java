@@ -1,6 +1,7 @@
 package ee.ria.riha.services;
 
 import ee.ria.riha.models.Approval;
+import ee.ria.riha.models.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class ApprovalStorageService {
   }
 
   public List<Approval> approvedApprovals() {
-    return allApprovals().stream().filter(a -> a.getStatus().equals("KOOSKÕLASTATUD")).collect(Collectors.toList());
+    return allApprovals().stream().filter(a -> a.getStatus().equals(Status.APPROVED.getValue())).collect(Collectors.toList());
   }
 
   private void save(Properties properties) {
