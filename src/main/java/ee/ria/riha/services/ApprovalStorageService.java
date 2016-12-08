@@ -26,11 +26,15 @@ public class ApprovalStorageService {
     save(properties);
   }
 
-  public List<Approval> load() {
+  public List<Approval> allApprovals() {
     return loadProperties().entrySet().stream().map(property -> {
       String[] value = ((String)property.getValue()).split("\\|");
       return new Approval((String)property.getKey(), value[0], value[1]);
     }).collect(Collectors.toList());
+  }
+
+  public List<Approval> approvedApprovals() {
+    return allApprovals().stream().filter(a -> a.getStatus().equals("KOOSKÕLASTATUD")).collect(Collectors.toList());
   }
 
   private void save(Properties properties) {

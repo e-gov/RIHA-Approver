@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
@@ -28,13 +29,13 @@ public class ApprovalStorageServiceTest {
   }
 
   @Test
-  public void load() {
+  public void allApprovals() {
     Properties properties = new Properties();
     properties.setProperty("/owner-2/shortname-2", "2015-10-10T01:10:10|KOOSKÕLASTATUD");
     properties.setProperty("/owner-1/shortname-1", "2016-01-01T10:00:00|MITTE KOOSKÕLASTATUD");
     doReturn(properties).when(service).loadProperties();
 
-    List<Approval> result = service.load();
+    List<Approval> result = service.allApprovals();
 
     assertEquals(2, result.size());
     assertEquals("/owner-1/shortname-1", result.get(0).getId());
@@ -43,6 +44,18 @@ public class ApprovalStorageServiceTest {
     assertEquals("/owner-2/shortname-2", result.get(1).getId());
     assertEquals("2015-10-10T01:10:10", result.get(1).getTimestamp());
     assertEquals("KOOSKÕLASTATUD", result.get(1).getStatus());
+  }
+
+  @Test
+  public void approvedApprovals() {
+    Approval approved1 = new Approval("/owner-2/shortname-2", "2015-10-10T01:10:10", "KOOSKÕLASTATUD");
+    Approval notApproved = new Approval("/owner-1/shortname-1", "2016-01-01T10:00:00", "MITTE KOOSKÕLASTATUD");
+    Approval approved2 = new Approval("/owner-1/shortname-3", "2014-01-01T10:00:00", "KOOSKÕLASTATUD");
+    doReturn(asList(approved1, notApproved, approved2)).when(service).allApprovals();
+
+    List<Approval> result = service.approvedApprovals();
+
+    assertEquals(asList(approved1, approved2), result);
   }
 
   @Test

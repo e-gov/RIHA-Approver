@@ -48,7 +48,7 @@ public class InfoSystemControllerTest {
   @Test
   public void approvals() {
     List<Approval> approvals = asList(new Approval("/owner/shortname1", "2016-01-01T10:00:00", "MITTE KOOSKÕLASTATUD"), new Approval("/owner/shortname2", "2015-10-10T01:10:10", "KOOSKÕLASTATUD"));
-    doReturn(approvals).when(storageService).load();
+    doReturn(approvals).when(storageService).allApprovals();
 
     String result = controller.approvals();
 

@@ -31,7 +31,13 @@ public class InfoSystemController {
   @RequestMapping(value = "/approvals/", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
   public String approvals() {
-    return new JSONArray(approvalStorageService.load()).toString();
+    return new JSONArray(approvalStorageService.allApprovals()).toString();
+  }
+
+  @RequestMapping(value = "/approvals/approved/", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public String approvedApprovals() {
+    return new JSONArray(approvalStorageService.approvedApprovals()).toString();
   }
 
   @RequestMapping(value = "/approve/", method = POST, produces = MediaType.APPLICATION_JSON_VALUE)
