@@ -17,8 +17,7 @@
     <script src="/js/vendor/bootstrap.min.js"></script>
     <script>
       $(function() {
-        var approver = new Approver();
-        approver.init();
+        new Approver('${infosystemsUrl}').init();
         moment.locale('et');
       });
     </script>

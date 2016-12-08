@@ -1,8 +1,7 @@
 "use strict";
 
-function Approver() {
+function Approver(infosystemsUrl) {
 
-  var infosystemsUrl = 'https://raw.githubusercontent.com/e-gov/RIHA-API/master/riha_live.json';
   var approvalsUrl = '/approvals/';
 
   var self = this;

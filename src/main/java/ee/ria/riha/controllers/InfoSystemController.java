@@ -7,6 +7,7 @@ import ee.ria.riha.services.DateTimeService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,10 +26,14 @@ public class InfoSystemController {
   @Autowired ApprovalStorageService approvalStorageService;
   @Autowired DateTimeService dateTimeService;
 
+  @Value("${infosystems.url}")
+  private String infosystemsUrl;
+
   @RequestMapping(value = "/", method = GET)
   public String index(Model model) {
     model.addAttribute("approvedStatus", Status.APPROVED.getValue());
     model.addAttribute("notApprovedStatus", Status.NOT_APPROVED.getValue());
+    model.addAttribute("infosystemsUrl", infosystemsUrl);
     return "index";
   }
 
