@@ -20,13 +20,13 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class InfoSystemControllerTest {
+public class ApprovalControllerTest {
 
   @Mock ApprovalStorageService storageService;
   @Mock DateTimeService dateTimeService;
 
   @Spy @InjectMocks
-  InfoSystemController controller = new InfoSystemController();
+  ApprovalController controller = new ApprovalController();
 
   @Test
   public void updateApprovalStatus() {
