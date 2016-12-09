@@ -29,18 +29,11 @@ function Approver(infosystemsUrl) {
     })
   }
 
-  self._isApprovable = function (lastModified, approval) {
-    return new Date(lastModified) > new Date(approval);
-  };
-
   self._addApprovalsData = function (data) {
     data.forEach(function (approval) {
       var row = $('tbody tr[data-id="' + approval.id + '"]');
       $(row.find('.approved')).text(approval.timestamp);
       $(row.find('.approval-status')).text(approval.status);
-      if (!self._isApprovable(row.find('.last-modified').text(), approval.timestamp)) {
-        row.find('button').attr('disabled', 'disabled');
-      }
     })
   };
 
@@ -49,7 +42,6 @@ function Approver(infosystemsUrl) {
     var infosystemRow = clickedButton.closest('tr');
     $.post('/approve/', {id: infosystemRow.data('id'), status: clickedButton.val()})
       .done(function (result) {
-        infosystemRow.find('button').attr('disabled', 'disabled');
         infosystemRow.find('.approved').text(result.timestamp);
         infosystemRow.find('.approval-status').text(result.status);
       });
