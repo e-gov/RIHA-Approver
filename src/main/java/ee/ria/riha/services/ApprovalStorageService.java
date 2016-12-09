@@ -28,6 +28,7 @@ public class ApprovalStorageService {
   }
 
   public List<Approval> allApprovals() {
+    //todo review to use get..., setProperty
     return loadProperties().entrySet().stream().map(property -> {
       String[] value = ((String)property.getValue()).split("\\|");
       return new Approval((String)property.getKey(), value[0], value[1]);
