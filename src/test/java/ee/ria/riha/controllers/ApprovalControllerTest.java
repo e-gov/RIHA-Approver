@@ -37,9 +37,9 @@ public class ApprovalControllerTest {
     String result = controller.updateApprovalStatus("/owner/infosystem", "MITTE KOOSKÕLASTATUD");
 
     assertEquals("{\"id\":\"/owner/infosystem\",\"timestamp\":\"2016-12-12T08:10:10\",\"status\":\"MITTE KOOSKÕLASTATUD\"}", result);
-    ArgumentCaptor<Approval> aprovalCaptor = ArgumentCaptor.forClass(Approval.class);
-    verify(storageService).saveInfosystemApproval(aprovalCaptor.capture());
-    Approval approval = aprovalCaptor.getValue();
+    ArgumentCaptor<Approval> approvalCaptor = ArgumentCaptor.forClass(Approval.class);
+    verify(storageService).saveInfosystemApproval(approvalCaptor.capture());
+    Approval approval = approvalCaptor.getValue();
     assertEquals(approval.getId(), "/owner/infosystem");
     assertEquals(approval.getTimestamp(), "2016-12-12T08:10:10");
     assertEquals(approval.getStatus(), "MITTE KOOSKÕLASTATUD");
