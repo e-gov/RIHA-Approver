@@ -22,6 +22,7 @@ function Approver(infosystemsUrl) {
     $.getJSON(approvalsUrl, function (data) {
       self._addApprovalsData(data);
       $('#info-systems-table').DataTable({
+        language: { "url": "/js/vendor/jquery.dataTables.i18n.json" },
         paging: false,
         order: []
       });
