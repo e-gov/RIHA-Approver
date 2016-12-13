@@ -39,11 +39,9 @@ describe('Approver', function() {
 
     approver._createTableRows(data);
 
-    var rows = $('tbody tr:not(.template-row)');
+    var rows = $('tbody tr');
 
     expect(rows.length).toBe(2);
-    expect(rows.hasClass('hidden')).toBe(false);
-    expect(rows.hasClass('template-row')).toBe(false);
     expect($(rows[0]).find('.name').text()).toBe('Eesti kirikute, koguduste ja koguduste liitude register');
     expect($(rows[0]).find('.owner').text()).toBe('70000562');
     expect($(rows[0]).data('id')).toBe('/70000562/Eesti kirikuregister');
@@ -53,10 +51,15 @@ describe('Approver', function() {
   });
 
   describe('adds approval', function() {
-    it('to approved infosystem', function() {
-      loadFixtures('table.html');
+    function parametrizeTemplateRow() {
+      $('tbody').append($('#row-template').html());
       $('tbody tr').attr('data-id', '/owner/shortname');
       $('tbody td.last-modified').text('2016-01-01T10:00:00');
+    }
+
+    it('to approved infosystem', function() {
+      loadFixtures('table.html');
+      parametrizeTemplateRow();
 
       new Approver()._addApprovalsData([{"id":"/owner/shortname", "timestamp":"2015-01-01T10:00:00", "status": "KOOSKÕLASTATUD"}]);
 
@@ -66,8 +69,7 @@ describe('Approver', function() {
 
     it('to infosystem approved before latest modification', function() {
       loadFixtures('table.html');
-      $('tbody tr').attr('data-id', '/owner/shortname');
-      $('tbody td.last-modified').text('2015-01-01T10:00:00');
+      parametrizeTemplateRow();
 
       new Approver()._addApprovalsData([{"id":"/owner/shortname", "timestamp":"2016-01-01T10:00:00", "status": "KOOSKÕLASTATUD"}]);
 
