@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.skyscreamer.jsonassert.JSONAssert;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -36,7 +37,7 @@ public class ApprovalControllerTest {
 
     String result = controller.updateApprovalStatus("/owner/infosystem", "MITTE KOOSKÕLASTATUD");
 
-    assertEquals("{\"id\":\"/owner/infosystem\",\"timestamp\":\"2016-12-12T08:10:10\",\"status\":\"MITTE KOOSKÕLASTATUD\"}", result);
+    JSONAssert.assertEquals("{\"id\":\"/owner/infosystem\",\"timestamp\":\"2016-12-12T08:10:10\",\"status\":\"MITTE KOOSKÕLASTATUD\"}", result, true);
     ArgumentCaptor<Approval> approvalCaptor = ArgumentCaptor.forClass(Approval.class);
     verify(storageService).saveInfosystemApproval(approvalCaptor.capture());
     Approval approval = approvalCaptor.getValue();
@@ -54,6 +55,6 @@ public class ApprovalControllerTest {
 
     String expected = "[{\"id\":\"/owner/shortname1\",\"timestamp\":\"2016-01-01T10:00:00\",\"status\":\"MITTE KOOSKÕLASTATUD\"}," +
       "{\"id\":\"/owner/shortname2\",\"timestamp\":\"2015-10-10T01:10:10\",\"status\":\"KOOSKÕLASTATUD\"}]";
-    assertEquals(expected, result);
+    JSONAssert.assertEquals(expected, result, true);
   }
 }
