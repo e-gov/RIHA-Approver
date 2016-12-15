@@ -48,9 +48,9 @@ public class ApprovalStorageServiceTest {
 
   @Test
   public void approvedApprovals() {
-    Approval approved1 = new Approval("/owner-2/shortname-2", "2015-10-10T01:10:10", "KOOSKÕLASTATUD");
-    Approval notApproved = new Approval("/owner-1/shortname-1", "2016-01-01T10:00:00", "MITTE KOOSKÕLASTATUD");
-    Approval approved2 = new Approval("/owner-1/shortname-3", "2014-01-01T10:00:00", "KOOSKÕLASTATUD");
+    Approval approved1 = new Approval("http://base.url/shortname-2", "2015-10-10T01:10:10", "KOOSKÕLASTATUD");
+    Approval notApproved = new Approval("http://base.url/shortname-1", "2016-01-01T10:00:00", "MITTE KOOSKÕLASTATUD");
+    Approval approved2 = new Approval("http://base.url/shortname-3", "2014-01-01T10:00:00", "KOOSKÕLASTATUD");
     doReturn(asList(approved1, notApproved, approved2)).when(service).allApprovals();
 
     List<Approval> result = service.approvedApprovals();
@@ -60,23 +60,23 @@ public class ApprovalStorageServiceTest {
 
   @Test
   public void saveInfosystemApproval_noExistingFile() throws IOException {
-    service.saveInfosystemApproval(new Approval("owner-id|infosystem-name","2016-12-12T08:05:08.4567", "MITTE KOOSKÕLASTATUD"));
+    service.saveInfosystemApproval(new Approval("http://base.url/infosystem-name","2016-12-12T08:05:08.4567", "MITTE KOOSKÕLASTATUD"));
 
-    assertEquals("2016-12-12T08:05:08.4567|MITTE KOOSKÕLASTATUD", approvals().getProperty("owner-id|infosystem-name"));
+    assertEquals("2016-12-12T08:05:08.4567|MITTE KOOSKÕLASTATUD", approvals().getProperty("http://base.url/infosystem-name"));
   }
 
   @Test
   public void saveInfosystemApproval_existingFileWithData() throws IOException {
     Properties existingApprovals = approvals();
-    existingApprovals.setProperty("other-owner-id/other-infosystem-name", "2016-12-12T01:01:01|KOOSKÕLASTATUD");
+    existingApprovals.setProperty("http://base.url/other-infosystem-name", "2016-12-12T01:01:01|KOOSKÕLASTATUD");
     existingApprovals.store(Files.newOutputStream(storageFilePath), null);
 
-    service.saveInfosystemApproval(new Approval("owner-id/infosystem-name","2016-12-12T08:05:08.4567", "MITTE KOOSKÕLASTATUD"));
+    service.saveInfosystemApproval(new Approval("http://base.url/infosystem-name","2016-12-12T08:05:08.4567", "MITTE KOOSKÕLASTATUD"));
 
     Properties approvals = approvals();
     assertEquals(2, approvals.size());
-    assertEquals("2016-12-12T08:05:08.4567|MITTE KOOSKÕLASTATUD", approvals.getProperty("owner-id/infosystem-name"));
-    assertEquals("2016-12-12T01:01:01|KOOSKÕLASTATUD", approvals.getProperty("other-owner-id/other-infosystem-name"));
+    assertEquals("2016-12-12T08:05:08.4567|MITTE KOOSKÕLASTATUD", approvals.getProperty("http://base.url/infosystem-name"));
+    assertEquals("2016-12-12T01:01:01|KOOSKÕLASTATUD", approvals.getProperty("http://base.url/other-infosystem-name"));
   }
 
   @Test

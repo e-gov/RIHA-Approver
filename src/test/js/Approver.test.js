@@ -19,7 +19,7 @@ describe('Approver', function() {
           "timestamp": "2015-09-05T00:36:26.255215"
         }
       },
-      "uri": "http://172.31.34.244:8090/Eesti%20kirikuregister"
+      "uri": "http://base.url:8090/Eesti%20kirikuregister"
     },
     {
       "name": "Õpilaste ja üliõpilaste register",
@@ -39,7 +39,7 @@ describe('Approver', function() {
           "timestamp": "2013-11-14T13:43:55.546948"
         }
       },
-      "uri": "http://172.31.34.244:8090/%C3%95ppurite%20register"
+      "uri": "http://base.url:8090/%C3%95ppurite%20register"
     }
   ];
 
@@ -55,7 +55,7 @@ describe('Approver', function() {
     expect(rows.length).toBe(2);
     expect($(rows[0]).find('.name').text()).toBe('Eesti kirikute, koguduste ja koguduste liitude register');
     expect($(rows[0]).find('.owner').text()).toBe('70000562');
-    expect($(rows[0]).data('id')).toBe('http://172.31.34.244:8090/Eesti%20kirikuregister');
+    expect($(rows[0]).data('id')).toBe('http://base.url:8090/Eesti%20kirikuregister');
     expect($(rows[0]).find('.last-modified').text()).toBe('1 day ago');
     expect($(rows[0]).find('.status').text()).toBe('INFOSYS_STAATUS_LOPETATUD');
     expect(approver._timeSince).toHaveBeenCalledWith('2015-09-05T00:36:26.255215');
@@ -64,7 +64,7 @@ describe('Approver', function() {
   describe('adds approval', function() {
     function parametrizeTemplateRow() {
       $('tbody').append($('#row-template').html());
-      $('tbody tr').attr('data-id', '/owner/shortname');
+      $('tbody tr').attr('data-id', 'http://base.url/shortname');
       $('tbody td.last-modified').text('2016-01-01T10:00:00');
     }
 
@@ -72,7 +72,7 @@ describe('Approver', function() {
       loadFixtures('table.html');
       parametrizeTemplateRow();
 
-      new Approver()._addApprovalsData([{"id":"/owner/shortname", "timestamp":"2015-01-01T10:00:00", "status": "KOOSKÕLASTATUD"}]);
+      new Approver()._addApprovalsData([{"id":"http://base.url/shortname", "timestamp":"2015-01-01T10:00:00", "status": "KOOSKÕLASTATUD"}]);
 
       expect($('tbody .approved').text()).toBe('2015-01-01T10:00:00');
       expect($('tbody .approval-status').text()).toBe('KOOSKÕLASTATUD');
@@ -82,7 +82,7 @@ describe('Approver', function() {
       loadFixtures('table.html');
       parametrizeTemplateRow();
 
-      new Approver()._addApprovalsData([{"id":"/owner/shortname", "timestamp":"2016-01-01T10:00:00", "status": "KOOSKÕLASTATUD"}]);
+      new Approver()._addApprovalsData([{"id":"http://base.url/shortname", "timestamp":"2016-01-01T10:00:00", "status": "KOOSKÕLASTATUD"}]);
 
       expect($('tbody .approved').text()).toBe('2016-01-01T10:00:00');
       expect($('tbody .approval-status').text()).toBe('KOOSKÕLASTATUD');
@@ -100,7 +100,7 @@ describe('Approver', function() {
             '<button data-status="MITTE KOOSKÕLASTATUD">ei kooskõlasta</button>' +
           '</td>' +
         '</tr>');
-      spyOn($, 'post').and.returnValue(promise({id: '/owner/shortname', timestamp: '2016-12-05T15:29:00.128468', status: 'KOOSKÕLASTATUD'}));
+      spyOn($, 'post').and.returnValue(promise({id: 'http://base.url/shortname', timestamp: '2016-12-05T15:29:00.128468', status: 'KOOSKÕLASTATUD'}));
       var event  = {target: $('button[data-status="KOOSKÕLASTATUD"]')};
 
       new Approver().approveInfosystem(event);
