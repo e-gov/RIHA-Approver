@@ -4,31 +4,42 @@ describe('Approver', function() {
     {
       "name": "Eesti kirikute, koguduste ja koguduste liitude register",
       "shortname": "Eesti kirikuregister",
-      "owner": "70000562",
-      "documentation": "https://riha.eesti.ee/riha/main/inf/eesti_kirikute_koguduste_ja_koguduste_liitude_register",
-      "status": {
-        "staatus": "L\u00f5petatud",
-        "timestamp": "2015-08-05T08:29:58.328468"
+      "owner": {
+        "code": "70000562",
+        "name": "Siseministeerium"
       },
+      "documentation": "eesti_kirikute_koguduste_ja_koguduste_liitude_register",
       "meta": {
-        "URI": "/70000562/Eesti kirikuregister",
-        "timestamp": "2015-09-05T00:36:26.255215"
-      }
+        "system_status": {
+          "status": "INFOSYS_STAATUS_LOPETATUD",
+          "timestamp": "2015-09-05T00:36:26.255215"
+        },
+        "approval_status": {
+          "status": "INFOSYS_STAATUS_LOPETATUD",
+          "timestamp": "2015-09-05T00:36:26.255215"
+        }
+      },
+      "uri": "http://172.31.34.244:8090/Eesti%20kirikuregister"
     },
     {
-      "name": "\u00d5pilaste ja \u00fcli\u00f5pilaste register",
-      "shortname": "\u00d5ppurite register",
-      "owner": "70000740",
-      "documentation": "https://riha.eesti.ee/riha/main/inf/opilaste_ja_uliopilaste_register",
-      "status": {
-        "staatus": "L\u00f5petatud",
-        "timestamp": "2013-11-08T15:46:15.121725"
+      "name": "Õpilaste ja üliõpilaste register",
+      "shortname": "Õppurite register",
+      "owner": {
+        "code": "70000740",
+        "name": "Haridus- ja Teadusministeerium"
       },
+      "documentation": "opilaste_ja_uliopilaste_register",
       "meta": {
-        "URI": "/70000740/\u00d5ppurite register",
-        "timestamp": "2013-11-14T13:43:55.546948"
+        "system_status": {
+          "status": "INFOSYS_STAATUS_LOPETATUD",
+          "timestamp": "2013-11-14T13:43:55.546948"
+        },
+        "approval_status": {
+          "status": "INFOSYS_STAATUS_LOPETATUD",
+          "timestamp": "2013-11-14T13:43:55.546948"
+        }
       },
-      "approved": "2016-09-05T00:36:26"
+      "uri": "http://172.31.34.244:8090/%C3%95ppurite%20register"
     }
   ];
 
@@ -44,10 +55,10 @@ describe('Approver', function() {
     expect(rows.length).toBe(2);
     expect($(rows[0]).find('.name').text()).toBe('Eesti kirikute, koguduste ja koguduste liitude register');
     expect($(rows[0]).find('.owner').text()).toBe('70000562');
-    expect($(rows[0]).data('id')).toBe('/70000562/Eesti kirikuregister');
+    expect($(rows[0]).data('id')).toBe('http://172.31.34.244:8090/Eesti%20kirikuregister');
     expect($(rows[0]).find('.last-modified').text()).toBe('1 day ago');
-    expect($(rows[0]).find('.status').text()).toBe('Lõpetatud');
-    expect(approver._timeSince).toHaveBeenCalledWith('2015-08-05T08:29:58.328468');
+    expect($(rows[0]).find('.status').text()).toBe('INFOSYS_STAATUS_LOPETATUD');
+    expect(approver._timeSince).toHaveBeenCalledWith('2015-09-05T00:36:26.255215');
   });
 
   describe('adds approval', function() {
