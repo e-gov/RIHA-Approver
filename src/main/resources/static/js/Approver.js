@@ -2,7 +2,7 @@
 
 function Approver(infosystemsUrl) {
 
-  var approvalsUrl = '/approvals/';
+  var approvalsUrl = '/approvals';
 
   var self = this;
 

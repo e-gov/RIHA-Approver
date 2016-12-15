@@ -37,7 +37,7 @@ public class ApprovalController {
     return "index";
   }
 
-  @RequestMapping(value = "/approvals/", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping(value = "/approvals", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
   public String approvals() {
     return new JSONArray(approvalStorageService.allApprovals()).toString();
