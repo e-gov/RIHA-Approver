@@ -46,7 +46,6 @@ describe('Approver', function() {
   it('fills table with info system data', function() {
     loadFixtures('table.html');
     var approver = new Approver();
-    spyOn(approver, '_timeSince').and.returnValue("1 day ago");
 
     approver._createTableRows(data);
 
@@ -56,9 +55,8 @@ describe('Approver', function() {
     expect($(rows[0]).find('.name').text()).toBe('Eesti kirikute, koguduste ja koguduste liitude register');
     expect($(rows[0]).find('.owner').text()).toBe('70000562');
     expect($(rows[0]).data('id')).toBe('http://base.url:8090/Eesti%20kirikuregister');
-    expect($(rows[0]).find('.last-modified').text()).toBe('1 day ago');
+    expect($(rows[0]).find('.last-modified').text()).toBe('2015-09-05T00:36:26.255215');
     expect($(rows[0]).find('.status').text()).toBe('INFOSYS_STAATUS_LOPETATUD');
-    expect(approver._timeSince).toHaveBeenCalledWith('2015-09-05T00:36:26.255215');
   });
 
   describe('adds approval', function() {

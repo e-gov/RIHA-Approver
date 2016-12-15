@@ -47,10 +47,6 @@ function Approver(infosystemsUrl) {
       });
   };
 
-  self._timeSince = function (timestamp) {
-    return timestamp;
-  };
-
   self._createTableRows = function(data) {
     var template = $('#row-template').html();
 
@@ -61,7 +57,7 @@ function Approver(infosystemsUrl) {
       newRow.attr('title', JSON.stringify(infosystem));
       newRow.find('.owner').text(infosystem.owner.code);
       newRow.find('.name').text(infosystem.name);
-      newRow.find('.last-modified').text(infosystem.meta && infosystem.meta.system_status ? self._timeSince(infosystem.meta.system_status.timestamp) : '');
+      newRow.find('.last-modified').text(infosystem.meta && infosystem.meta.system_status ? infosystem.meta.system_status.timestamp : '');
       newRow.find('.status').text(infosystem.meta && infosystem.meta.system_status ?  infosystem.meta.system_status.status : '');
       tbody.append(newRow);
     });
