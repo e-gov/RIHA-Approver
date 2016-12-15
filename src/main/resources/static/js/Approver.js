@@ -31,7 +31,7 @@ function Approver(infosystemsUrl) {
 
   self._addApprovalsData = function (data) {
     data.forEach(function (approval) {
-      var row = $('tbody tr[data-id="' + approval.id + '"]');
+      var row = $('tbody tr[data-id="' + approval.uri + '"]');
       $(row.find('.approved')).text(approval.timestamp);
       $(row.find('.approval-status')).text(approval.status);
     })
