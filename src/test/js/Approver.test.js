@@ -72,7 +72,7 @@ describe('Approver', function() {
       loadFixtures('table.html');
       parametrizeTemplateRow();
 
-      new Approver()._addApprovalsData([{"id":"http://base.url/shortname", "timestamp":"2015-01-01T10:00:00", "status": "KOOSKÕLASTATUD"}]);
+      new Approver()._addApprovalsData([{"uri":"http://base.url/shortname", "timestamp":"2015-01-01T10:00:00", "status": "KOOSKÕLASTATUD"}]);
 
       expect($('tbody .approved').text()).toBe('2015-01-01T10:00:00');
       expect($('tbody .approval-status').text()).toBe('KOOSKÕLASTATUD');
@@ -82,7 +82,7 @@ describe('Approver', function() {
       loadFixtures('table.html');
       parametrizeTemplateRow();
 
-      new Approver()._addApprovalsData([{"id":"http://base.url/shortname", "timestamp":"2016-01-01T10:00:00", "status": "KOOSKÕLASTATUD"}]);
+      new Approver()._addApprovalsData([{"uri":"http://base.url/shortname", "timestamp":"2016-01-01T10:00:00", "status": "KOOSKÕLASTATUD"}]);
 
       expect($('tbody .approved').text()).toBe('2016-01-01T10:00:00');
       expect($('tbody .approval-status').text()).toBe('KOOSKÕLASTATUD');

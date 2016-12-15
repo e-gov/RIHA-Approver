@@ -37,11 +37,11 @@ public class ApprovalControllerTest {
 
     String result = controller.updateApprovalStatus("http://base.url/infosystem", "MITTE KOOSKÕLASTATUD");
 
-    JSONAssert.assertEquals("{\"id\":\"http://base.url/infosystem\",\"timestamp\":\"2016-12-12T08:10:10\",\"status\":\"MITTE KOOSKÕLASTATUD\"}", result, true);
+    JSONAssert.assertEquals("{\"uri\":\"http://base.url/infosystem\",\"timestamp\":\"2016-12-12T08:10:10\",\"status\":\"MITTE KOOSKÕLASTATUD\"}", result, true);
     ArgumentCaptor<Approval> approvalCaptor = ArgumentCaptor.forClass(Approval.class);
     verify(storageService).saveInfosystemApproval(approvalCaptor.capture());
     Approval approval = approvalCaptor.getValue();
-    assertEquals(approval.getId(), "http://base.url/infosystem");
+    assertEquals(approval.getUri(), "http://base.url/infosystem");
     assertEquals(approval.getTimestamp(), "2016-12-12T08:10:10");
     assertEquals(approval.getStatus(), "MITTE KOOSKÕLASTATUD");
   }
@@ -53,8 +53,8 @@ public class ApprovalControllerTest {
 
     String result = controller.approvals();
 
-    String expected = "[{\"id\":\"http://base.url/shortname1\",\"timestamp\":\"2016-01-01T10:00:00\",\"status\":\"MITTE KOOSKÕLASTATUD\"}," +
-      "{\"id\":\"http://base.url/shortname2\",\"timestamp\":\"2015-10-10T01:10:10\",\"status\":\"KOOSKÕLASTATUD\"}]";
+    String expected = "[{\"uri\":\"http://base.url/shortname1\",\"timestamp\":\"2016-01-01T10:00:00\",\"status\":\"MITTE KOOSKÕLASTATUD\"}," +
+      "{\"uri\":\"http://base.url/shortname2\",\"timestamp\":\"2015-10-10T01:10:10\",\"status\":\"KOOSKÕLASTATUD\"}]";
     JSONAssert.assertEquals(expected, result, true);
   }
 }

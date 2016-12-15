@@ -38,10 +38,10 @@ public class ApprovalStorageServiceTest {
     List<Approval> result = service.allApprovals();
 
     assertEquals(2, result.size());
-    assertEquals("http://base.url1/shortname-1", result.get(0).getId());
+    assertEquals("http://base.url1/shortname-1", result.get(0).getUri());
     assertEquals("2016-01-01T10:00:00", result.get(0).getTimestamp());
     assertEquals("MITTE KOOSKÕLASTATUD", result.get(0).getStatus());
-    assertEquals("http://base.url2/shortname-2", result.get(1).getId());
+    assertEquals("http://base.url2/shortname-2", result.get(1).getUri());
     assertEquals("2015-10-10T01:10:10", result.get(1).getTimestamp());
     assertEquals("KOOSKÕLASTATUD", result.get(1).getStatus());
   }
