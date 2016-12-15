@@ -3,3 +3,4 @@ target/
 *.iws
 *.ipr
 *.iml
+node_modules/
