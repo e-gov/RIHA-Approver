@@ -1,4 +1,4 @@
-package ee.ria.riha;
+package ee.ria.riha.conf;
 
 import freemarker.core.HTMLOutputFormat;
 import freemarker.template.TemplateException;
