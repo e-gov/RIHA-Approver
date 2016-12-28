@@ -2,7 +2,7 @@
 
 function Approver(infosystemsUrl) {
 
-  var approvalsUrl = '/approvals/';
+  var approvalsUrl = '/approvals';
 
   var self = this;
 
@@ -31,7 +31,7 @@ function Approver(infosystemsUrl) {
 
   self._addApprovalsData = function (data) {
     data.forEach(function (approval) {
-      var row = $('tbody tr[data-id="' + approval.id + '"]');
+      var row = $('tbody tr[data-id="' + approval.uri + '"]');
       $(row.find('.approved')).text(approval.timestamp);
       $(row.find('.approval-status')).text(approval.status);
     })
@@ -47,23 +47,18 @@ function Approver(infosystemsUrl) {
       });
   };
 
-  self._timeSince = function (timestamp) {
-    return timestamp;
-//     return moment.utc(timestamp).local().fromNow();
-  };
-
   self._createTableRows = function(data) {
     var template = $('#row-template').html();
 
     var tbody = $('tbody');
     data.forEach(function (infosystem) {
       var newRow = $(template);
-      newRow.attr('data-id', infosystem.meta.URI);
+      newRow.attr('data-id', infosystem.uri);
       newRow.attr('title', JSON.stringify(infosystem));
-      newRow.find('.owner').text(infosystem.owner);
+      newRow.find('.owner').text(infosystem.owner.code);
       newRow.find('.name').text(infosystem.name);
-      newRow.find('.last-modified').text(infosystem.status ? self._timeSince(infosystem.status.timestamp) : '');
-      newRow.find('.status').text(infosystem.status ? infosystem.status.staatus : '');
+      newRow.find('.last-modified').text(infosystem.meta && infosystem.meta.system_status ? infosystem.meta.system_status.timestamp : '');
+      newRow.find('.status').text(infosystem.meta && infosystem.meta.system_status ?  infosystem.meta.system_status.status : '');
       tbody.append(newRow);
     });
   }

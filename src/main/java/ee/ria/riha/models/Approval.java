@@ -4,12 +4,12 @@ import lombok.Getter;
 
 @Getter
 public class Approval {
-  String id;
+  String uri;
   String timestamp;
   String status;
 
-  public Approval(String id, String timestamp, String status) {
-    this.id = id;
+  public Approval(String uri, String timestamp, String status) {
+    this.uri = uri;
     this.timestamp = timestamp;
     this.status = status;
   }
