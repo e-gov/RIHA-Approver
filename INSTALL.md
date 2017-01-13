@@ -7,7 +7,7 @@
  * Install Java 8
 
  ## Package
- ```mvn package```
+ ```mvn clean package```
 
  ## Configure
 Into application.properties file:
