@@ -1,10 +1,9 @@
 ## Before install
-
+See the Ubuntu example for details
  * Install karma for JS unit tests
- ```
- npm install karma-jasmine karma-junit-reporter karma-jasmine-jquery karma-jasmine-ajax karma-coverage karma-phantomjs2-launcher jasmine-core
- ```
  * Install Java 8
+
+**NB!** Make sure the internet is reachable using the git:// protocol (TCP on 9418), some of the karma packages attempt a github clone and fail silently, if network is not available
 
  ## Package
  ```mvn clean package```
@@ -25,7 +24,7 @@ infosystems.url=http://ec2-35-160-53-79.us-west-2.compute.amazonaws.com:8081/sys
 ### Ubuntu
  * Ubuntu 14.04 will have problems regarding node: the version from the main repo is too old to work properly
  Try this:
- 
+
 ```
 sudo apt-get install nodejs
 sudo apt-get install npm
