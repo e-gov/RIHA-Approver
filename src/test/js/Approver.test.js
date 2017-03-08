@@ -9,6 +9,7 @@ describe('Approver', function() {
         "name": "Siseministeerium"
       },
       "documentation": "eesti_kirikute_koguduste_ja_koguduste_liitude_register",
+      "purpose" : "Lorem ipsum",
       "meta": {
         "system_status": {
           "status": "INFOSYS_STAATUS_LOPETATUD",
@@ -29,6 +30,7 @@ describe('Approver', function() {
         "name": "Haridus- ja Teadusministeerium"
       },
       "documentation": "opilaste_ja_uliopilaste_register",
+      "purpose" : "Lorem ipsum",
       "meta": {
         "system_status": {
           "status": "INFOSYS_STAATUS_LOPETATUD",
@@ -47,6 +49,7 @@ describe('Approver', function() {
     loadFixtures('table.html');
     var approver = new Approver();
 
+    approver._indexData(data);
     approver._createTableRows(data);
 
     var rows = $('tbody tr');
@@ -62,7 +65,7 @@ describe('Approver', function() {
   describe('adds approval', function() {
     function parametrizeTemplateRow() {
       $('tbody').append($('#row-template').html());
-      $('tbody tr').attr('data-id', 'http://base.url/shortname');
+      $('tbody tr').attr('data-id', 'http://base.url:8090/Eesti%20kirikuregister');
       $('tbody td.last-modified').text('2016-01-01T10:00:00');
     }
 
@@ -70,7 +73,9 @@ describe('Approver', function() {
       loadFixtures('table.html');
       parametrizeTemplateRow();
 
-      new Approver()._addApprovalsData([{"uri":"http://base.url/shortname", "timestamp":"2015-01-01T10:00:00", "status": "KOOSKÕLASTATUD"}]);
+      var ap = new Approver();
+      ap._indexData(data);
+      ap._addApprovalsData([{"uri":"http://base.url:8090/Eesti%20kirikuregister", "timestamp":"2015-01-01T10:00:00", "status": "KOOSKÕLASTATUD"}]);
 
       expect($('tbody .approved').text()).toBe('2015-01-01T10:00:00');
       expect($('tbody .approval-status').text()).toBe('KOOSKÕLASTATUD');
@@ -80,7 +85,9 @@ describe('Approver', function() {
       loadFixtures('table.html');
       parametrizeTemplateRow();
 
-      new Approver()._addApprovalsData([{"uri":"http://base.url/shortname", "timestamp":"2016-01-01T10:00:00", "status": "KOOSKÕLASTATUD"}]);
+      var ap = new Approver();
+      ap._indexData(data);
+      ap._addApprovalsData([{"uri":"http://base.url:8090/Eesti%20kirikuregister", "timestamp":"2016-01-01T10:00:00", "status": "KOOSKÕLASTATUD"}]);
 
       expect($('tbody .approved').text()).toBe('2016-01-01T10:00:00');
       expect($('tbody .approval-status').text()).toBe('KOOSKÕLASTATUD');
@@ -90,7 +97,7 @@ describe('Approver', function() {
   describe('Approve button', function() {
     it('changes info system status to Approved and sets approval timestamp', function() {
       setFixtures(
-        '<tr data-id="1000-RIA">' +
+        '<tr data-id="http://base.url:8090/Eesti%20kirikuregister">' +
           '<td class="approved"></td>' +
           '<td class="approval-status"></td>' +
           '<td class="approve">' +
@@ -98,10 +105,12 @@ describe('Approver', function() {
             '<button data-status="MITTE KOOSKÕLASTATUD">ei kooskõlasta</button>' +
           '</td>' +
         '</tr>');
-      spyOn($, 'post').and.returnValue(promise({id: 'http://base.url/shortname', timestamp: '2016-12-05T15:29:00.128468', status: 'KOOSKÕLASTATUD'}));
+      spyOn($, 'post').and.returnValue(promise({id: 'http://base.url:8090/Eesti%20kirikuregister', timestamp: '2016-12-05T15:29:00.128468', status: 'KOOSKÕLASTATUD'}));
       var event  = {target: $('button[data-status="KOOSKÕLASTATUD"]')};
 
-      new Approver().approveInfosystem(event);
+      var ap = new Approver();
+      ap._indexData(data);
+      ap.approveInfosystem(event);
 
       expect($('.approved').text()).toBe('2016-12-05T15:29:00.128468');
       expect($('.approval-status').text()).toBe('KOOSKÕLASTATUD');
