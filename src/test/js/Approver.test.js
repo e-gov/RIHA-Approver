@@ -4,6 +4,7 @@ describe('Approver', function() {
     {
       "name": "Eesti kirikute, koguduste ja koguduste liitude register",
       "shortname": "Eesti kirikuregister",
+      "objective": "kirkute register test ei tea mida siia kirjutada sest see on test",
       "owner": {
         "code": "70000562",
         "name": "Siseministeerium"
@@ -24,6 +25,7 @@ describe('Approver', function() {
     {
       "name": "Õpilaste ja üliõpilaste register",
       "shortname": "Õppurite register",
+      "objective": "õppurite loendamine ja ma ei tea mida siia kirjutada, aga vahet pole sest see on test",
       "owner": {
         "code": "70000740",
         "name": "Haridus- ja Teadusministeerium"
@@ -53,6 +55,7 @@ describe('Approver', function() {
 
     expect(rows.length).toBe(2);
     expect($(rows[0]).find('.name').text()).toBe('Eesti kirikute, koguduste ja koguduste liitude register');
+    expect($(rows[0]).find('.objective').text()).toBe('kirkute register test ei tea mida siia kirjutada sest see on test');
     expect($(rows[0]).find('.owner').text()).toBe('70000562');
     expect($(rows[0]).data('id')).toBe('http://base.url:8090/Eesti%20kirikuregister');
     expect($(rows[0]).find('.last-modified').text()).toBe('2015-09-05T00:36:26.255215');
