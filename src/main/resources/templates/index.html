@@ -14,7 +14,7 @@
     <script src="/js/vendor/enc-base64.js"></script>
     <script src="/js/vendor/hmac.js"></script>
     <script src="/js/vendor/sha256.js"></script>
-    <script>
+    <script type="text/javascript">
      function getBase64Encoded(rawStr){
     	 var wordArray = CryptoJS.enc.Utf8.parse(rawStr);
     	 var result = CryptoJS.enc.Base64.stringify(wordArray);
@@ -33,7 +33,7 @@
     	 var signature = CryptoJS.HmacSHA256(base64Header + "." + base64Payload, txtsecret);
     	 var base64Sign = CryptoJS.enc.Base64.stringify(signature);
     	 
-    	 console.log(base64Header + "." + base64Payload + "." base64Sign);
+    	 console.log(base64Header);
      }
      
     
