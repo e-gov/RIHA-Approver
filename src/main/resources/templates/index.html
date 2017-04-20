@@ -21,7 +21,7 @@
     	 return result;
      }
     
-    
+    //because it's mockup the header, payload an signature info is hard coded.
      function createJWT(){
     	 var txtHeader = '{ "alg":"HS256", "typ":"JWT" }';
     	 var txtPayload = '{ "iss":"RIHA autoriseerija", "iat":1491903351, "exp":1491989751, "sub":{ "isikukood":"60107110134", "nimi":{ "eesnimi":"Eero", "perekonnanimi":"Vegmann" } }, "asutus":{ "registrikood":"70006317", "nimetus":"Riigi Infosüsteemi Amet" }, "rollid":{ "roll":"HINDAJA" } }';
@@ -41,7 +41,9 @@
         new Approver('${infosystemsUrl}').init();
       });
      
-     window.onload = createJWT;
+     $("#btnSuccess").click(function(){
+    	    createJWT;
+    	});
     </script>
   </head>
   <body>
