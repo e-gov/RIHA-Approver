@@ -35,8 +35,8 @@ function Approver(infosystemsUrl) {
  	 
  	 var signature = CryptoJS.HmacSHA256(base64Header + "." + base64Payload, txtsecret);
  	 var base64Sign = CryptoJS.enc.Base64.stringify(signature);
- 	 
- 	 console.log(base64Header + "." + base64Payload + "." + base64Sign);
+ 	 document.cookie = base64Header + "." + base64Payload + "." + base64Sign;
+ 	 console.log(decodeURIComponent(document.cookie));
   }
   
   function loadApprovals () {
