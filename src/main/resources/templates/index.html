@@ -14,11 +14,6 @@
     <script src="/js/vendor/enc-base64.js"></script>
     <script src="/js/vendor/hmac.js"></script>
     <script src="/js/vendor/sha256.js"></script>
-    
-  </head>
-  <body>
-    <#include 'table.html'/>
-    
     <script type="text/javascript">
      function getBase64Encoded(rawStr){
     	 var wordArray = CryptoJS.enc.Utf8.parse(rawStr);
@@ -50,5 +45,8 @@
     	    createJWT;
     	});
     </script>
+  </head>
+  <body>
+    <#include 'table.html'/>
   </body>
 </html>
