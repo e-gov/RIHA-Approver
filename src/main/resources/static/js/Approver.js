@@ -26,7 +26,7 @@ function Approver(infosystemsUrl) {
   
 //because it's mockup the header, payload an signature info is hard coded.
   function createJWT(){
- 	 var txtHeader = '{ "alg":"HS256", "typ":"JWT" }';
+ 	 var txtHeader = '{ "alg":"SHA256", "typ":"JWT" }';
  	 var txtPayload = '{ "iss":"RIHA autoriseerija", "iat":1491903351, "exp":1491989751, "sub":{ "isikukood":"60107110134", "nimi":{ "eesnimi":"Eero", "perekonnanimi":"Vegmann" } }, "asutus":{ "registrikood":"70006317", "nimetus":"Riigi Infosüsteemi Amet" }, "rollid":{ "roll":"HINDAJA" } }';
  	 var txtsecret = 'password';
  	 
@@ -36,7 +36,7 @@ function Approver(infosystemsUrl) {
  	 var signature = CryptoJS.HmacSHA256(base64Header + "." + base64Payload, txtsecret);
  	 var base64Sign = CryptoJS.enc.Base64.stringify(signature);
  	 
- 	 console.log(base64Header + "." + base64Payload + "." + base64Sign);
+ 	 return base64Header + "." + base64Payload + "." + base64Sign;
   }
   
   function loadApprovals () {
@@ -62,11 +62,11 @@ function Approver(infosystemsUrl) {
     var clickedButton = $(event.target);
     var infosystemRow = clickedButton.closest('tr');
     $.post('/approve/', {id: infosystemRow.data('id'), status: clickedButton.val()})
-      .done(function (result) {
-        infosystemRow.find('.approved').text(result.timestamp);
-        infosystemRow.find('.approval-status').text(result.status);
-        createJWT();
-      });
+    .done(function (result) {
+      infosystemRow.find('.approved').text(result.timestamp);
+      infosystemRow.find('.approval-status').text(result.status);
+      infosystemRow.find('.approver').text('Eero Vegmann');
+    });
   };
 
   self._createTableRows = function(data) {
