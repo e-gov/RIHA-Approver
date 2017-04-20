@@ -18,6 +18,27 @@ function Approver(infosystemsUrl) {
     });
   }
 
+  function getBase64Encoded(rawStr){
+ 	 var wordArray = CryptoJS.enc.Utf8.parse(rawStr);
+ 	 var result = CryptoJS.enc.Base64.stringify(wordArray);
+ 	 return result;
+  }
+  
+//because it's mockup the header, payload an signature info is hard coded.
+  function createJWT(){
+ 	 var txtHeader = '{ "alg":"HS256", "typ":"JWT" }';
+ 	 var txtPayload = '{ "iss":"RIHA autoriseerija", "iat":1491903351, "exp":1491989751, "sub":{ "isikukood":"60107110134", "nimi":{ "eesnimi":"Eero", "perekonnanimi":"Vegmann" } }, "asutus":{ "registrikood":"70006317", "nimetus":"Riigi Infosüsteemi Amet" }, "rollid":{ "roll":"HINDAJA" } }';
+ 	 var txtsecret = 'password';
+ 	 
+ 	 var base64Header = getBase64Encoded(txtHeader);
+ 	 var base64Payload = getBase64Encoded(txtPayload);
+ 	 
+ 	 var signature = CryptoJS.HmacSHA256(base64Header + "." + base64Payload, txtsecret);
+ 	 var base64Sign = CryptoJS.enc.Base64.stringify(signature);
+ 	 
+ 	 console.log(base64Header + "." + base64Payload + "." + base64Sign);
+  }
+  
   function loadApprovals () {
     $.getJSON(approvalsUrl, function (data) {
       self._addApprovalsData(data);
@@ -44,6 +65,7 @@ function Approver(infosystemsUrl) {
       .done(function (result) {
         infosystemRow.find('.approved').text(result.timestamp);
         infosystemRow.find('.approval-status').text(result.status);
+        createJWT();
       });
   };
 
