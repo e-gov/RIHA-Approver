@@ -26,7 +26,7 @@ function Approver(infosystemsUrl) {
   
 //because it's mockup the header, payload an signature info is hard coded.
   function createJWT(){
- 	 var txtHeader = '{ "alg":"HS256", "typ":"JWT" }';
+ 	 var txtHeader = '{ "alg":"SHA256", "typ":"JWT" }';
  	 var txtPayload = '{ "iss":"RIHA autoriseerija", "iat":1491903351, "exp":1491989751, "sub":{ "isikukood":"60107110134", "nimi":{ "eesnimi":"Eero", "perekonnanimi":"Vegmann" } }, "asutus":{ "registrikood":"70006317", "nimetus":"Riigi Infosüsteemi Amet" }, "rollid":{ "roll":"HINDAJA" } }';
  	 var txtsecret = 'password';
  	 
@@ -35,7 +35,9 @@ function Approver(infosystemsUrl) {
  	 
  	 var signature = CryptoJS.HmacSHA256(base64Header + "." + base64Payload, txtsecret);
  	 var base64Sign = CryptoJS.enc.Base64.stringify(signature);
- 	 document.cookie = base64Header + "." + base64Payload + "." + base64Sign;
+ 	 
+ 	 var token = base64Header + "." + base64Payload + "." + base64Sign;
+ 	 document.cookie = 'Json_Web_Token=' + token;
  	 console.log(decodeURIComponent(document.cookie));
   }
   
