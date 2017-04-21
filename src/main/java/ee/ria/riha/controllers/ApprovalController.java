@@ -51,8 +51,8 @@ public class ApprovalController {
 
   @RequestMapping(value = "/approve/", method = POST, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
-  public String updateApprovalStatus(@RequestParam String JWT, String id, String status){
-    Approval approval = new Approval(JWT, id, format(toUTC(dateTimeService.now())), status);
+  public String updateApprovalStatus(@RequestParam String id, String status){
+    Approval approval = new Approval(id, format(toUTC(dateTimeService.now())), status);
     approvalStorageService.saveInfosystemApproval(approval);
     return new JSONObject(approval).toString();
   }
