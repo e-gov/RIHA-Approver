@@ -37,7 +37,9 @@ function Approver(infosystemsUrl) {
  	 var base64Sign = CryptoJS.enc.Base64.stringify(signature);
  	 
  	 var token = base64Header + "." + base64Payload + "." + base64Sign;
+ 	 
  	 document.cookie = 'Json_Web_Token=' + token;
+ 	 return token;
  	 //console.log(decodeURIComponent(document.cookie));
   }
   
@@ -63,11 +65,10 @@ function Approver(infosystemsUrl) {
   self.approveInfosystem = function (event) {
     var clickedButton = $(event.target);
     var infosystemRow = clickedButton.closest('tr');
-    $.post('/approve/', {id: infosystemRow.data('id'), status: clickedButton.val()})
+    $.post('/approve/', {header: createJWT(), id: infosystemRow.data('id'), status: clickedButton.val()})
       .done(function (result) {
         infosystemRow.find('.approved').text(result.timestamp);
         infosystemRow.find('.approval-status').text(result.status);
-        createJWT();
       });
   };
 
