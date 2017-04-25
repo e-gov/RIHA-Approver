@@ -64,12 +64,21 @@ function Approver(infosystemsUrl) {
   self.approveInfosystem = function (event) {
     var clickedButton = $(event.target);
     var infosystemRow = clickedButton.closest('tr');
-    $.post('/approve/', {head: createJWT(), id: infosystemRow.data('id'), status: clickedButton.val()})
-      .done(function (result) {
-        infosystemRow.find('.approved').text(result.timestamp);
-        infosystemRow.find('.approval-status').text(result.status);
-        createJWT();
-      });
+    $.ajax({
+        url: '/approve/',
+        type: 'post',
+        data: {
+        	id: infosystemRow.data('id'), status: clickedButton.val()
+        },
+        headers: {
+            "Auhtorazation token": createJWT()
+        },
+        dataType: 'json',
+        success: function (result) {
+        	infosystemRow.find('.approved').text(result.timestamp);
+            infosystemRow.find('.approval-status').text(result.status);
+        }
+    });
   };
 
   self._createTableRows = function(data) {
