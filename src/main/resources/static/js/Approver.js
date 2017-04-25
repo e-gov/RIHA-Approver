@@ -64,8 +64,7 @@ function Approver(infosystemsUrl) {
   self.approveInfosystem = function (event) {
     var clickedButton = $(event.target);
     var infosystemRow = clickedButton.closest('tr');
-    $.post('/approve/', 
-    	headers: {'Authorization' : createJWT() },	{id: infosystemRow.data('id'), status: clickedButton.val()})
+    $.post('/approve/', {head: createJWT(), id: infosystemRow.data('id'), status: clickedButton.val()})
       .done(function (result) {
         infosystemRow.find('.approved').text(result.timestamp);
         infosystemRow.find('.approval-status').text(result.status);
