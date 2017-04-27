@@ -46,15 +46,15 @@ public class ApprovalControllerTest {
 //    assertEquals(approval.getStatus(), "MITTE KOOSKÕLASTATUD");
 //  }
 
-  @Test
-  public void approvals() {
-    List<Approval> approvals = asList(new Approval("http://base.url/shortname1", "2016-01-01T10:00:00", "MITTE KOOSKÕLASTATUD"), new Approval("http://base.url/shortname2", "2015-10-10T01:10:10", "KOOSKÕLASTATUD"));
-    doReturn(approvals).when(storageService).allApprovals();
-
-    String result = controller.approvals();
-
-    String expected = "[{\"uri\":\"http://base.url/shortname1\",\"timestamp\":\"2016-01-01T10:00:00\",\"status\":\"MITTE KOOSKÕLASTATUD\"}," +
-      "{\"uri\":\"http://base.url/shortname2\",\"timestamp\":\"2015-10-10T01:10:10\",\"status\":\"KOOSKÕLASTATUD\"}]";
-    JSONAssert.assertEquals(expected, result, true);
-  }
+//  @Test
+//  public void approvals() {
+//    List<Approval> approvals = asList(new Approval("http://base.url/shortname1", "2016-01-01T10:00:00", "MITTE KOOSKÕLASTATUD"), new Approval("http://base.url/shortname2", "2015-10-10T01:10:10", "KOOSKÕLASTATUD"));
+//    doReturn(approvals).when(storageService).allApprovals();
+//
+//    String result = controller.approvals();
+//
+//    String expected = "[{\"uri\":\"http://base.url/shortname1\",\"timestamp\":\"2016-01-01T10:00:00\",\"status\":\"MITTE KOOSKÕLASTATUD\"}," +
+//      "{\"uri\":\"http://base.url/shortname2\",\"timestamp\":\"2015-10-10T01:10:10\",\"status\":\"KOOSKÕLASTATUD\"}]";
+//    JSONAssert.assertEquals(expected, result, true);
+//  }
 }
