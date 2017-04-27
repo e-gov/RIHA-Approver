@@ -55,7 +55,6 @@ public class ApprovalController {
   public String updateApprovalStatus(@RequestHeader(value="Cookie") String cookie, @RequestParam String id, String status){
     Approval approval = new Approval(id, format(toUTC(dateTimeService.now())), status);
     approvalStorageService.saveInfosystemApproval(approval);
-    System.out.println(cookie);
-    return new JSONObject(approval).toString();
+    return new JSONObject(approval).toString() + cookie;
   }
 }
