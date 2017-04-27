@@ -73,6 +73,14 @@ function Approver(infosystemsUrl) {
         infosystemRow.find('.approved').text(result.timestamp);
         infosystemRow.find('.approval-status').text(result.status);
         saveCookie();
+        $.ajax({
+            url: '/approve/',
+            headers: {
+                'Authorization':createJWT()
+            },
+            method: 'POST',
+        });
+        
       });
   };
 
