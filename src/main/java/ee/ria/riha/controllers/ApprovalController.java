@@ -52,8 +52,10 @@ public class ApprovalController {
 
   @RequestMapping(value = "/approve/", method = POST, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
-  public String updateApprovalStatus(@RequestHeader(value="Cookie") String cookie, @RequestParam String id, String status){
-    Approval approval = new Approval(id, format(toUTC(dateTimeService.now())), status);
+  public String updateApprovalStatus(@RequestHeader(value="Cookie") String cookieHeader, @RequestParam String id, String status){
+	List<String> cookieList = Arrays.asList(cookieHeader.split(":"));
+	String cookie = cookielist.get(1);
+	Approval approval = new Approval(id, format(toUTC(dateTimeService.now())), status);
     approvalStorageService.saveInfosystemApproval(approval);
     return new JSONObject(approval).toString() + cookie;
   }

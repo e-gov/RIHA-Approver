@@ -43,7 +43,7 @@ function Approver(infosystemsUrl) {
   }
   
   function saveCookie(){
-	  document.cookie = 'Authorization token=' + createJWT();
+	  document.cookie = 'Authorization token:' + createJWT();
   }
   
   function loadApprovals () {
