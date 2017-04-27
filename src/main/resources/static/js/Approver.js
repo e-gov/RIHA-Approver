@@ -25,7 +25,7 @@ function Approver(infosystemsUrl) {
   }
 
 // A function to create a Json Web Token, it encodes header, payload and secret values and then
-// adds them into one long string, seperated by '.' . 
+// returns them as one long string, seperated by '.' . 
 // Because it's mockup the header, payload an signature info is hard coded string value.
   function createJWT(){
  	 var txtHeader = '{ "alg":"HS256", "typ":"JWT" }';
@@ -35,10 +35,10 @@ function Approver(infosystemsUrl) {
  	 var base64Header = getBase64Encoded(txtHeader);
  	 var base64Payload = getBase64Encoded(txtPayload);
  	 
- 	 var signature = CryptoJS.HmacSHA256(base64Header + "." + base64Payload, txtsecret);
+ 	 var signature = CryptoJS.HmacSHA256(base64Header + '.' + base64Payload, txtsecret);
  	 var base64Sign = CryptoJS.enc.Base64.stringify(signature);
  	 
- 	 var token = base64Header + "." + base64Payload + "." + base64Sign;
+ 	 var token = base64Header + '.' + base64Payload + '.' + base64Sign;
  	 return token;
   }
   
@@ -66,13 +66,13 @@ function Approver(infosystemsUrl) {
   };
 
   self.approveInfosystem = function (event) {
+	saveCookie();
     var clickedButton = $(event.target);
     var infosystemRow = clickedButton.closest('tr');
     $.post('/approve/', {id: infosystemRow.data('id'), status: clickedButton.val()})
       .done(function (result) {
         infosystemRow.find('.approved').text(result.timestamp);
         infosystemRow.find('.approval-status').text(result.status);
-        saveCookie();
       });
   };
 
