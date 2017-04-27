@@ -1,6 +1,6 @@
 package ee.ria.riha.controllers;
 
-import java.util.ArrayList;
+import java.util.*;
 import ee.ria.riha.models.Approval;
 import ee.ria.riha.models.Status;
 import ee.ria.riha.services.ApprovalStorageService;
