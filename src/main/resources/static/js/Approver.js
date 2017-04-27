@@ -23,8 +23,10 @@ function Approver(infosystemsUrl) {
  	 var result = CryptoJS.enc.Base64.stringify(wordArray);
  	 return result;
   }
-  
-//because it's mockup the header, payload an signature info is hard coded.
+
+// A function to create a Json Web Token, it encodes header, payload and secret values and then
+// adds them into one long string, seperated by '.' . 
+// Because it's mockup the header, payload an signature info is hard coded string value.
   function createJWT(){
  	 var txtHeader = '{ "alg":"HS256", "typ":"JWT" }';
  	 var txtPayload = '{ "iss":"RIHA autoriseerija", "iat":1491903351, "exp":1491989751, "sub":{ "isikukood":"60107110134", "nimi":{ "eesnimi":"Eero", "perekonnanimi":"Vegmann" } }, "asutus":{ "registrikood":"70006317", "nimetus":"Riigi Infosüsteemi Amet" }, "rollid":{ "roll":"HINDAJA" } }';
@@ -37,9 +39,11 @@ function Approver(infosystemsUrl) {
  	 var base64Sign = CryptoJS.enc.Base64.stringify(signature);
  	 
  	 var token = base64Header + "." + base64Payload + "." + base64Sign;
- 	 //document.cookie = 'Json_Web_Token=' + token;
  	 return token;
- 	 //console.log(decodeURIComponent(document.cookie));
+  }
+  
+  function saveCookie(){
+	  document.cookie = 'Authorization token=' + createJWT();
   }
   
   function loadApprovals () {
@@ -68,7 +72,7 @@ function Approver(infosystemsUrl) {
       .done(function (result) {
         infosystemRow.find('.approved').text(result.timestamp);
         infosystemRow.find('.approval-status').text(result.status);
-        createJWT();
+        saveCookie();
       });
   };
 
