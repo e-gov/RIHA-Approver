@@ -29,22 +29,22 @@ public class ApprovalControllerTest {
   @Spy @InjectMocks
   ApprovalController controller = new ApprovalController();
 
-  @Test
-  public void updateApprovalStatus() {
-    doNothing().when(storageService).saveInfosystemApproval(any(Approval.class));
-    ZonedDateTime approvalTimestamp = ZonedDateTime.of(2016, 12, 12, 10, 10, 10, 0, ZoneId.of("Europe/Tallinn"));
-    doReturn(approvalTimestamp).when(dateTimeService).now();
-
-    String result = controller.updateApprovalStatus("http://base.url/infosystem", "MITTE KOOSKÕLASTATUD");
-
-    JSONAssert.assertEquals("{\"uri\":\"http://base.url/infosystem\",\"timestamp\":\"2016-12-12T08:10:10\",\"status\":\"MITTE KOOSKÕLASTATUD\"}", result, true);
-    ArgumentCaptor<Approval> approvalCaptor = ArgumentCaptor.forClass(Approval.class);
-    verify(storageService).saveInfosystemApproval(approvalCaptor.capture());
-    Approval approval = approvalCaptor.getValue();
-    assertEquals(approval.getUri(), "http://base.url/infosystem");
-    assertEquals(approval.getTimestamp(), "2016-12-12T08:10:10");
-    assertEquals(approval.getStatus(), "MITTE KOOSKÕLASTATUD");
-  }
+//  @Test
+//  public void updateApprovalStatus() {
+//    doNothing().when(storageService).saveInfosystemApproval(any(Approval.class));
+//    ZonedDateTime approvalTimestamp = ZonedDateTime.of(2016, 12, 12, 10, 10, 10, 0, ZoneId.of("Europe/Tallinn"));
+//    doReturn(approvalTimestamp).when(dateTimeService).now();
+//
+//    String result = controller.updateApprovalStatus("http://base.url/infosystem", "MITTE KOOSKÕLASTATUD");
+//
+//    JSONAssert.assertEquals("{\"uri\":\"http://base.url/infosystem\",\"timestamp\":\"2016-12-12T08:10:10\",\"status\":\"MITTE KOOSKÕLASTATUD\"}", result, true);
+//    ArgumentCaptor<Approval> approvalCaptor = ArgumentCaptor.forClass(Approval.class);
+//    verify(storageService).saveInfosystemApproval(approvalCaptor.capture());
+//    Approval approval = approvalCaptor.getValue();
+//    assertEquals(approval.getUri(), "http://base.url/infosystem");
+//    assertEquals(approval.getTimestamp(), "2016-12-12T08:10:10");
+//    assertEquals(approval.getStatus(), "MITTE KOOSKÕLASTATUD");
+//  }
 
   @Test
   public void approvals() {
