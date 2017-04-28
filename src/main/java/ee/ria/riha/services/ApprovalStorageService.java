@@ -23,7 +23,7 @@ public class ApprovalStorageService {
 
   synchronized public void saveInfosystemApproval(Approval approval) {
     Properties properties = loadProperties();
-    properties.setProperty(approval.getUri(), approval.getTimestamp() + "|" + approval.getStatus());
+    properties.setProperty(approval.getUri(), approval.getTimestamp() + "|" + approval.getStatus() + approval.getToken());
     save(properties);
   }
 

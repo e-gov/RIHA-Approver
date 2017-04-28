@@ -29,32 +29,33 @@ public class ApprovalControllerTest {
   @Spy @InjectMocks
   ApprovalController controller = new ApprovalController();
 
-//  @Test
-//  public void updateApprovalStatus() {
-//    doNothing().when(storageService).saveInfosystemApproval(any(Approval.class));
-//    ZonedDateTime approvalTimestamp = ZonedDateTime.of(2016, 12, 12, 10, 10, 10, 0, ZoneId.of("Europe/Tallinn"));
-//    doReturn(approvalTimestamp).when(dateTimeService).now();
-//
-//    String result = controller.updateApprovalStatus("http://base.url/infosystem", "MITTE KOOSKÕLASTATUD");
-//
-//    JSONAssert.assertEquals("{\"uri\":\"http://base.url/infosystem\",\"timestamp\":\"2016-12-12T08:10:10\",\"status\":\"MITTE KOOSKÕLASTATUD\"}", result, true);
-//    ArgumentCaptor<Approval> approvalCaptor = ArgumentCaptor.forClass(Approval.class);
-//    verify(storageService).saveInfosystemApproval(approvalCaptor.capture());
-//    Approval approval = approvalCaptor.getValue();
-//    assertEquals(approval.getUri(), "http://base.url/infosystem");
-//    assertEquals(approval.getTimestamp(), "2016-12-12T08:10:10");
-//    assertEquals(approval.getStatus(), "MITTE KOOSKÕLASTATUD");
-//  }
+  @Test
+  public void updateApprovalStatus() {
+    doNothing().when(storageService).saveInfosystemApproval(any(Approval.class));
+    ZonedDateTime approvalTimestamp = ZonedDateTime.of(2016, 12, 12, 10, 10, 10, 0, ZoneId.of("Europe/Tallinn"));
+    doReturn(approvalTimestamp).when(dateTimeService).now();
 
-//  @Test
-//  public void approvals() {
-//    List<Approval> approvals = asList(new Approval("http://base.url/shortname1", "2016-01-01T10:00:00", "MITTE KOOSKÕLASTATUD"), new Approval("http://base.url/shortname2", "2015-10-10T01:10:10", "KOOSKÕLASTATUD"));
-//    doReturn(approvals).when(storageService).allApprovals();
-//
-//    String result = controller.approvals();
-//
-//    String expected = "[{\"uri\":\"http://base.url/shortname1\",\"timestamp\":\"2016-01-01T10:00:00\",\"status\":\"MITTE KOOSKÕLASTATUD\"}," +
-//      "{\"uri\":\"http://base.url/shortname2\",\"timestamp\":\"2015-10-10T01:10:10\",\"status\":\"KOOSKÕLASTATUD\"}]";
-//    JSONAssert.assertEquals(expected, result, true);
-//  }
+    String result = controller.updateApprovalStatus("http://base.url/infosystem", "MITTE KOOSKÕLASTATUD", "testJWT");
+
+    JSONAssert.assertEquals("{\"uri\":\"http://base.url/infosystem\",\"timestamp\":\"2016-12-12T08:10:10\",\"token\":\"testJWT\",\"status\":\"MITTE KOOSKÕLASTATUD\"}", result, true);
+    ArgumentCaptor<Approval> approvalCaptor = ArgumentCaptor.forClass(Approval.class);
+    verify(storageService).saveInfosystemApproval(approvalCaptor.capture());
+    Approval approval = approvalCaptor.getValue();
+    assertEquals(approval.getUri(), "http://base.url/infosystem");
+    assertEquals(approval.getTimestamp(), "2016-12-12T08:10:10");
+    assertEquals(approval.getStatus(), "MITTE KOOSKÕLASTATUD");
+    assertEquals(approval.getToken(), "testJWT");
+  }
+
+  @Test
+  public void approvals() {
+    List<Approval> approvals = asList(new Approval("http://base.url/shortname1", "2016-01-01T10:00:00", "MITTE KOOSKÕLASTATUD", "testJWT"), new Approval("http://base.url/shortname2", "2015-10-10T01:10:10", "KOOSKÕLASTATUD"));
+    doReturn(approvals).when(storageService).allApprovals();
+
+    String result = controller.approvals();
+
+    String expected = "[{\"uri\":\"http://base.url/shortname1\",\"timestamp\":\"2016-01-01T10:00:00\",\"token\":\"testJWT\",\"status\":\"MITTE KOOSKÕLASTATUD\"}," +
+      "{\"uri\":\"http://base.url/shortname2\",\"timestamp\":\"2015-10-10T01:10:10\",\"status\":\"KOOSKÕLASTATUD\"}]";
+    JSONAssert.assertEquals(expected, result, true);
+  }
 }
