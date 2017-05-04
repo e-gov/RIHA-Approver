@@ -5,10 +5,21 @@ function Approver(infosystemsUrl) {
   var approvalsUrl = '/approvals';
 
   var self = this;
-
+  
   self.init = function() {
     loadInfosystems();
-    $('body').on('click', '.approve button', self.approveInfosystem);
+    $('body').on('click', '.approve button', function(){
+    	var firstName = $('#first_name').val();
+    	var lastName = $('#last_name').val();
+    	var regCode = $('#register_code').val();
+    	var instName = $('#institution_name').val();
+    	
+    	if(firstName == '' || lastName == '' || regCode == ''  || instName == ''){
+    		alert('Palun täitke kõik tekstiväljad!');
+    	} else {
+    		self.approveInfosystem;
+    	}
+    });
   };
 
   function loadInfosystems() {
