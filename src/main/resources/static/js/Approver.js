@@ -17,7 +17,7 @@ function Approver(infosystemsUrl) {
     	if(firstName == '' || lastName == '' || regCode == ''  || instName == ''){
     		alert('Palun täitke kõik tekstiväljad!');
     	} else {
-    		self.approveInfosystem;
+    		self.approveInfosystem();
     	}
     });
   };
