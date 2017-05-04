@@ -43,11 +43,14 @@ function Approver(infosystemsUrl) {
   }
   
   function saveCookie(){
-	  document.cookie = 'Authorization token:' + createJWT();
+	  document.cookie = 'Authorization token=' + createJWT();
   }
   
-  function clearCookie(){
-	  document.cookie = "Authorization token:; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  function clearCookie(cookie_name){
+	  var cookie_date = new Date ( );  // current date & time
+	  cookie_date.setTime ( cookie_date.getTime() - 1 );
+	  document.cookie = cookie_name += "=; expires=" + cookie_date.toGMTString();
+
   }
   
   function loadApprovals () {
