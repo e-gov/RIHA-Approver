@@ -5,21 +5,10 @@ function Approver(infosystemsUrl) {
   var approvalsUrl = '/approvals';
 
   var self = this;
-  
+
   self.init = function() {
     loadInfosystems();
-    $('body').on('click', '.approve button', function(){
-    	var firstName = $('#first_name').val();
-    	var lastName = $('#last_name').val();
-    	var regCode = $('#register_code').val();
-    	var instName = $('#institution_name').val();
-    	
-    	if(firstName == '' || lastName == '' || regCode == ''  || instName == ''){
-    		alert('Palun täitke kõik tekstiväljad!');
-    	} else {
-    		self.approveInfosystem();
-    	}
-    });
+    $('body').on('click', '.approve button', self.approveInfosystem);
   };
 
   function loadInfosystems() {
@@ -77,14 +66,28 @@ function Approver(infosystemsUrl) {
   };
 
   self.approveInfosystem = function (event) {
-	saveCookie();
+	
     var clickedButton = $(event.target);
     var infosystemRow = clickedButton.closest('tr');
-    $.post('/approve/', {id: infosystemRow.data('id'), status: clickedButton.val()})
-      .done(function (result) {
-        infosystemRow.find('.approved').text(result.timestamp);
-        infosystemRow.find('.approval-status').text(result.status);
-      });
+    
+    var firstName = $('#first_name').val();
+    var lastName = $('#last_name').val();
+    var regCode = $('#register_code').val();
+    var instName = $('#institution_name').val();
+    
+    if(firstName == '' || lastName == '' || regCode == '' || instName = ''){
+    	alert('Palun täidke kõik väljad!');
+    } else {
+    	saveCookie();
+    	
+    	$.post('/approve/', {id: infosystemRow.data('id'), status: clickedButton.val()})
+        .done(function (result) {
+          infosystemRow.find('.approved').text(result.timestamp);
+          infosystemRow.find('.approval-status').text(result.status);
+        });
+    }
+    
+    
   };
 
   self._createTableRows = function(data) {
