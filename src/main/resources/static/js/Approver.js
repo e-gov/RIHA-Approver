@@ -46,6 +46,10 @@ function Approver(infosystemsUrl) {
 	  document.cookie = 'Authorization token:' + createJWT();
   }
   
+  function clearCookie(){
+	  document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  }
+  
   function loadApprovals () {
     $.getJSON(approvalsUrl, function (data) {
       self._addApprovalsData(data);
@@ -85,6 +89,7 @@ function Approver(infosystemsUrl) {
           infosystemRow.find('.approved').text(result.timestamp);
           infosystemRow.find('.approval-status').text(result.status);
         });
+    	clearCookie();
     }
     
     
