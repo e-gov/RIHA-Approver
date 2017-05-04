@@ -29,7 +29,7 @@ function Approver(infosystemsUrl) {
 // Because it's mockup the header, payload an signature info is hard coded string value.
   function createJWT(){
  	 var txtHeader = '{ "alg":"HS256", "typ":"JWT" }';
- 	 var txtPayload = '{ "iss":"RIHA autoriseerija", "iat":1491903351, "exp":1491989751, "sub":{ "isikukood":"60107110134", "nimi":{ "eesnimi":"Eero", "perekonnanimi":"Vegmann" } }, "asutus":{ "registrikood":"70006317", "nimetus":"Riigi Infosüsteemi Amet" }, "rollid":{ "roll":"HINDAJA" } }';
+ 	 var txtPayload = '{ "iss":"RIHA autoriseerija", "iat":1491903351, "exp":1491989751, "sub":{ "isikukood":"60107110134", "nimi":{ "eesnimi":"'+$('#first_name').val()+'", "perekonnanimi":"'+$('#last_name').val()+'" } }, "asutus":{ "registrikood":"'+$('#register_code').val()+'", "nimetus":"'+$('#institution_name').val()+'" }, "rollid":{ "roll":"HINDAJA" } }';
  	 var txtsecret = 'password';
  	 
  	 var base64Header = getBase64Encoded(txtHeader);
