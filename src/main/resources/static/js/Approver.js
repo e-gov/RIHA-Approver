@@ -75,7 +75,7 @@ function Approver(infosystemsUrl) {
     var regCode = $('#register_code').val();
     var instName = $('#institution_name').val();
     
-    if(firstName == '' || lastName == '' || regCode == '' || instName = ''){
+    if(firstName == '' || lastName == '' || regCode == '' || instName == ''){
     	alert('Palun täidke kõik väljad!');
     } else {
     	saveCookie();
