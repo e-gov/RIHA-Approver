@@ -25,7 +25,7 @@ function Approver(infosystemsUrl) {
   }
 
 // A function to create a Json Web Token, it encodes header, payload and secret values and then
-// returns them as one long string, seperated by '.' . 
+// returns them as one long string, separated by '.' . 
 // Because it's mockup the header, payload an signature info is hard coded string value.
   function createJWT(){
  	 var txtHeader = '{ "alg":"HS256", "typ":"JWT" }';
