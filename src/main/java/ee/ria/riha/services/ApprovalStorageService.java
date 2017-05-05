@@ -32,8 +32,7 @@ public class ApprovalStorageService {
     //todo review to use get..., setProperty
     return loadProperties().entrySet().stream().map(property -> {
       String[] value = ((String)property.getValue()).split("\\|");
-      List<String> JWTList = Arrays.asList(value[2].split("."));
-      return new Approval((String)property.getKey(), value[0], value[1], JWTList.get(1));
+      return new Approval((String)property.getKey(), value[0], value[1], value[2]);
     }).collect(Collectors.toList());
   }
 

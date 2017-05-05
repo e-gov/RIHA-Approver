@@ -46,7 +46,6 @@ function Approver(infosystemsUrl) {
 	  document.cookie = 'Authorization token=' + createJWT();
   }
   
-  //Cookies get cleared by setting their expiration dates to something that has already expired
   function clearCookie(){
 	  var name= 'Authorization token';
 	  document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';

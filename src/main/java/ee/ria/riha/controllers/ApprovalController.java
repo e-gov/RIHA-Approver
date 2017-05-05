@@ -54,8 +54,6 @@ public class ApprovalController {
   @RequestMapping(value = "/approve/", method = POST, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
   public String updateApprovalStatus(@RequestHeader(value="Cookie") String cookieHeader, @RequestParam String id, String status){
-	//Some string manipulation needed because JWT has many "=" so it is easier to change the first one
-	// into ":" and split the cookie name from its value with that
 	String modifiedCookie = cookieHeader.replaceFirst("=", ":");
 	List<String> cookieList = Arrays.asList(modifiedCookie.split(":"));
 	String cookie = cookieList.get(1);
