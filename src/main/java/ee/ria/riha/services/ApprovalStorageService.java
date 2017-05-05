@@ -34,7 +34,8 @@ public class ApprovalStorageService {
       String[] value = ((String)property.getValue()).split("\\|");
       //value2 is JWT
       String JWT = value[2];
-      return new Approval((String)property.getKey(), value[0], value[1], JWT);
+      String JWTBody = JWT.substring(JWT.indexOf('.'), JWT.lastIndexOf('.'));
+      return new Approval((String)property.getKey(), value[0], value[1], JWTBody);
     }).collect(Collectors.toList());
   }
 
