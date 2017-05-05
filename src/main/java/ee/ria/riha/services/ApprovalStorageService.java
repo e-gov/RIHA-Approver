@@ -35,8 +35,9 @@ public class ApprovalStorageService {
       String[] value = ((String)property.getValue()).split("\\|");
       String JWTBody = extractJWTBody(value[2]);
       String decodedBody = decodeBase64(JWTBody);
+      String filteredToken = tokenStringFormatting(decodedBody);
       
-      return new Approval((String)property.getKey(), value[0], value[1], decodedBody);
+      return new Approval((String)property.getKey(), value[0], value[1], filteredToken);
     }).collect(Collectors.toList());
   }
   
@@ -52,6 +53,12 @@ public class ApprovalStorageService {
 	  String decodedString = new String(byteArray);
 	  
 	  return decodedString.replace("\"", "");
+  }
+  
+  public String tokenStringFormatting(String token){
+	  String approverName = token.substring(token.indexOf("nimi"), token.indexOf("} },")+3);
+	  String approverInstitution = token.substring(token.indexOf("asutus"), token.indexOf("}, rollid")+2);
+	  return approverName + " " + approverInstitution;
   }
   
   public List<Approval> approvedApprovals() {
