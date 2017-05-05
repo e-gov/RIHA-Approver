@@ -35,9 +35,14 @@ public class ApprovalStorageService {
       String[] value = ((String)property.getValue()).split("\\|");
       String JWTBody = extractJWTBody(value[2]);
       
-      byte[] decoded = Base64.decodeBase64("YWJjZGVmZw==");
-      String test = new String(decoded, "UTF-8") + "\n";
-      return new Approval((String)property.getKey(), value[0], value[1], test);
+      
+      String string = "SmF2YWNvZGVnZWVrcw==";
+      byte[] byteArray = Base64.decodeBase64(string.getBytes());
+      String decodedString = new String(byteArray);
+      
+      //System.out.println(string + " = " + decodedString);
+      
+      return new Approval((String)property.getKey(), value[0], value[1], string + " = " + decodedString);
     }).collect(Collectors.toList());
   }
   
