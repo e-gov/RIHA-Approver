@@ -54,11 +54,11 @@ public class ApprovalStorageService {
 	  
 	  return decodedString.replace("\"", "");
   }
-  
+  //A method which takes in a decoded token and formats it to extract only wanted data
   public String tokenStringFormatting(String token){
 	  String approverName = token.substring(token.indexOf("nimi"), token.indexOf("} },")+3);
-	  String approverInstitution = token.substring(token.indexOf("asutus"), token.indexOf("}, rollid")+2);
-	  return approverName + " " + approverInstitution;
+	  String approverInstitution = token.substring(token.indexOf("asutus"), token.indexOf("}, rollid"));
+	  return approverName + ", " + approverInstitution;
   }
   
   public List<Approval> approvedApprovals() {
