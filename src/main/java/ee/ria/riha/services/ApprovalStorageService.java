@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.util.*;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
@@ -31,10 +32,8 @@ public class ApprovalStorageService {
     //todo review to use get..., setProperty
     return loadProperties().entrySet().stream().map(property -> {
       String[] value = ((String)property.getValue()).split("\\|");
-      String JWT = value[2];
-      String[] JWTArray = JWT.split(".");
-      String JWTBody = JWTArray[1];
-      return new Approval((String)property.getKey(), value[0], value[1], JWTBody);
+      List<String> JWTList = Arrays.asList(value[2].split("."));
+      return new Approval((String)property.getKey(), value[0], value[1], JWTList.get(1));
     }).collect(Collectors.toList());
   }
 
