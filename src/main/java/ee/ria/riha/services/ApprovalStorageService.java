@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.apache.commons.codec.binary.Base64;
 
 import java.io.*;
 import java.util.*;
@@ -34,11 +35,13 @@ public class ApprovalStorageService {
       String[] value = ((String)property.getValue()).split("\\|");
       String JWTBody = extractJWTBody(value[2]);
       
-      return new Approval((String)property.getKey(), value[0], value[1], JWTBody);
+      byte[] decoded = Base64.decodeBase64("YWJjZGVmZw==");
+      String test = new String(decoded, "UTF-8") + "\n";
+      return new Approval((String)property.getKey(), value[0], value[1], test);
     }).collect(Collectors.toList());
   }
   
-  //A method for extracting JSON Web Tokens body from full JWT 
+  //A method for extracting JSON Web Tokens body from full JWT
   public String extractJWTBody(String token){
 	  String fullJWT = token;
 	  return fullJWT.substring(fullJWT.indexOf('.') + 1, fullJWT.lastIndexOf('.'));
