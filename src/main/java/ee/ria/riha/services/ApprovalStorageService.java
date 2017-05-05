@@ -50,7 +50,8 @@ public class ApprovalStorageService {
   public String decodeBase64(String str){
 	  byte[] byteArray = Base64.decodeBase64(str.getBytes());
 	  String decodedString = new String(byteArray);
-	  return decodedString;
+	  
+	  return decodedString.replace("\"", "");
   }
   
   public List<Approval> approvedApprovals() {
