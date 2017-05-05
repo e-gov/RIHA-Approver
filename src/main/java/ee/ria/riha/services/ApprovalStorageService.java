@@ -32,11 +32,16 @@ public class ApprovalStorageService {
     //todo review to use get..., setProperty
     return loadProperties().entrySet().stream().map(property -> {
       String[] value = ((String)property.getValue()).split("\\|");
-      //value2 is JWT
-      String JWT = value[2];
-      String JWTBody = JWT.substring(JWT.indexOf('.'), JWT.lastIndexOf('.'));
+      String JWTBody = extractJWTBody(value[2]);
+      
       return new Approval((String)property.getKey(), value[0], value[1], JWTBody);
     }).collect(Collectors.toList());
+  }
+  
+  //A method for extracting JSON Web Tokens body from full JWT 
+  public String extractJWTBody(String token){
+	  String fullJWT = token;
+	  return fullJWT.substring(fullJWT.indexOf('.') + 1, fullJWT.lastIndexOf('.'));
   }
 
   public List<Approval> approvedApprovals() {
