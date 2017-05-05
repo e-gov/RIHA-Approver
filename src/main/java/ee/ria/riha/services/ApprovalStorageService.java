@@ -34,12 +34,9 @@ public class ApprovalStorageService {
     return loadProperties().entrySet().stream().map(property -> {
       String[] value = ((String)property.getValue()).split("\\|");
       String JWTBody = extractJWTBody(value[2]);
-      byte[] byteArray = Base64.decodeBase64(JWTBody.getBytes());
-      String decodedString = new String(byteArray);
+      String decodedBody = decodeBase64(JWTBody);
       
-      //System.out.println(string + " = " + decodedString);
-      
-      return new Approval((String)property.getKey(), value[0], value[1], decodedString);
+      return new Approval((String)property.getKey(), value[0], value[1], decodedBody);
     }).collect(Collectors.toList());
   }
   
@@ -49,6 +46,13 @@ public class ApprovalStorageService {
 	  return fullJWT.substring(fullJWT.indexOf('.') + 1, fullJWT.lastIndexOf('.'));
   }
 
+  //A method which takes in a base64 encoded string and returns the decoded version of it
+  public String decodeBase64(String str){
+	  byte[] byteArray = Base64.decodeBase64(str.getBytes());
+	  String decodedString = new String(byteArray);
+	  return decodedString;
+  }
+  
   public List<Approval> approvedApprovals() {
     return allApprovals().stream().filter(a -> a.getStatus().equals(Status.APPROVED.getValue())).collect(Collectors.toList());
   }
