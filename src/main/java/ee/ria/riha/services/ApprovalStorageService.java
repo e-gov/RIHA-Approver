@@ -58,7 +58,7 @@ public class ApprovalStorageService {
   public String tokenStringFormatting(String token){
 	  String approverName = token.substring(token.indexOf("nimi"), token.indexOf("} },")+3);
 	  String approverInstitution = token.substring(token.indexOf("asutus"), token.indexOf("}, rollid"));
-	  return approverName + ", " + approverInstitution +"\n";
+	  return approverName + ", " + approverInstitution;
   }
   
   public List<Approval> approvedApprovals() {
