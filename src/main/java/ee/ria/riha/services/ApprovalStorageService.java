@@ -36,9 +36,8 @@ public class ApprovalStorageService {
       String JWTBody = extractJWTBody(value[2]);
       String decodedBody = decodeBase64(JWTBody);
       String filteredToken = tokenStringFormatting(decodedBody);
-      //vb üle salvestada kuna property.getKey väärtuse tunneb ära, seega peame selle väärtust muutma...
-      String key = "Toots";
-      return new Approval(key, value[0], value[1], filteredToken);
+      
+      return new Approval((String)property.getKey(), value[0], value[1], filteredToken);
     }).collect(Collectors.toList());
   }
   
