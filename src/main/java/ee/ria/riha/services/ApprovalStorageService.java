@@ -80,7 +80,7 @@ public class ApprovalStorageService {
       try (InputStream inputStream = new FileInputStream(file)) {
       Properties properties = new Properties();
       properties.load(inputStream);
-      return new Properties();
+      return properties;
     }
     catch (IOException e) {
       logger.error("Could not load approvals", e);
