@@ -41,20 +41,6 @@ public class ApprovalStorageService {
     }).collect(Collectors.toList());
   }
   
-  public List<Approval> approvalsLog() {
-	    //todo review to use get..., setProperty
-	    return loadProperties().entrySet().stream().map(property -> {
-	      String[] value = ((String)property.getValue()).split("\\|");
-	      String JWTBody = extractJWTBody(value[2]);
-	      String decodedBody = decodeBase64(JWTBody);
-	      String filteredToken = tokenStringFormatting(decodedBody);
-	      
-	      double x = Math.random();
-	      
-	      return new Approval(x + (String)property.getKey(), value[0], value[1], filteredToken);
-	    }).collect(Collectors.toList());
-	  }
-  
   //A method for extracting JSON Web Tokens body from full JWT
   public String extractJWTBody(String token){
 	  String fullJWT = token;
@@ -94,7 +80,7 @@ public class ApprovalStorageService {
       try (InputStream inputStream = new FileInputStream(file)) {
       Properties properties = new Properties();
       properties.load(inputStream);
-      return properties;
+      return new Properties();
     }
     catch (IOException e) {
       logger.error("Could not load approvals", e);
