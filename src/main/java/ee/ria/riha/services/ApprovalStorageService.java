@@ -37,7 +37,7 @@ public class ApprovalStorageService {
       String decodedBody = decodeBase64(JWTBody);
       String filteredToken = tokenStringFormatting(decodedBody);
       
-      return new Approval((String)property.getKey(), value[0], value[1], filteredToken);
+      return new Approval((String)property.getKey(), value[0], value[1], filteredToken + (String)property.getKey());
     }).collect(Collectors.toList());
   }
   
