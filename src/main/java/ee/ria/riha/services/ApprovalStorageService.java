@@ -49,7 +49,7 @@ public class ApprovalStorageService {
 	      String decodedBody = decodeBase64(JWTBody);
 	      String filteredToken = tokenStringFormatting(decodedBody);
 	      
-	      Integer x = (int) Math.random();
+	      double x = Math.random();
 	      
 	      return new Approval(x + (String)property.getKey(), value[0], value[1], filteredToken);
 	    }).collect(Collectors.toList());
