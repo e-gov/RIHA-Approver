@@ -41,25 +41,19 @@ public class ApprovalStorageService {
     }).collect(Collectors.toList());
   }
   
-	public List<String[]> approvalValues() {
-		// todo review to use get..., setProperty
-		return loadProperties().entrySet().stream().map(property -> {
-			String[] value = ((String) property.getValue()).split("\\|");
-			String JWTBody = extractJWTBody(value[2]);
-			String decodedBody = decodeBase64(JWTBody);
-			String filteredToken = tokenStringFormatting(decodedBody);
-
-			return value;
-		}).collect(Collectors.toList());
-	}
-  
-	public List<Approval> approvalsLog() {
-		List<String[]> values = approvalValues();
-		for (String[] strings : values) {
-			System.out.println(strings);
-		}
-		return null;
-	}
+  public List<Approval> approvalsLog() {
+	    //todo review to use get..., setProperty
+	    return loadProperties().entrySet().stream().map(property -> {
+	      String[] value = ((String)property.getValue()).split("\\|");
+	      String JWTBody = extractJWTBody(value[2]);
+	      String decodedBody = decodeBase64(JWTBody);
+	      String filteredToken = tokenStringFormatting(decodedBody);
+	      
+	      Integer x = (int) Math.random();
+	      
+	      return new Approval(x + (String)property.getKey(), value[0], value[1], filteredToken);
+	    }).collect(Collectors.toList());
+	  }
   
   //A method for extracting JSON Web Tokens body from full JWT
   public String extractJWTBody(String token){
