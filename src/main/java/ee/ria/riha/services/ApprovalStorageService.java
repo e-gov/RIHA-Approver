@@ -55,11 +55,7 @@ public class ApprovalStorageService {
 	public List<String> approvalLog(List<String> data){
 		List<String> approvals = new ArrayList<String>();
 		for (String string : data) {
-			String[] values = string.split("|");
-			approvals.add(values[0]);
-			approvals.add(values[1]);
-			approvals.add(values[2]);
-			approvals.add(values[3]);
+			approvals.add(string);
 		}
 		return approvals;
 	}
