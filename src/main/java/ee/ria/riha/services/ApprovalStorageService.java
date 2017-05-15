@@ -2,6 +2,7 @@ package ee.ria.riha.services;
 
 import ee.ria.riha.models.Approval;
 import ee.ria.riha.models.Status;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,12 @@ import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 @Service
 public class ApprovalStorageService {
-
   @Autowired DateTimeService dateTimeService;
-
   private Logger logger = LoggerFactory.getLogger(ApprovalStorageService.class);
   
 
@@ -29,7 +29,7 @@ public class ApprovalStorageService {
     properties.setProperty(approval.getUri(), approval.getTimestamp() + "|" + approval.getStatus() + "|" + approval.getToken());
     save(properties);
   }
-
+  
   public List<Approval> allApprovals() {
     //todo review to use get..., setProperty
     return loadProperties().entrySet().stream().map(property -> {
@@ -54,10 +54,12 @@ public class ApprovalStorageService {
 	}
 	
 	public List<String> approvalLog(List<String> data){
+		UsingLogger LOGGER = new UsingLogger();
 		List<String> approvals = new ArrayList<String>();
 		for (String string : data) {
 			approvals.add(string);
 		}
+		LOGGER.logApprovals(approvals.toString());
 		return approvals;
 	}
   
