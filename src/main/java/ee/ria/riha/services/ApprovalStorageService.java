@@ -48,14 +48,14 @@ public class ApprovalStorageService {
 			String decodedBody = decodeBase64(JWTBody);
 			String filteredToken = tokenStringFormatting(decodedBody);
 			
-			return (String)property.getKey() + "|" + value[0] + "|" + value[1] + "|" + filteredToken;
+			return (String)property.getKey() + " | " + value[0] + " | " + value[1] + " | " + filteredToken;
 		}).collect(Collectors.toList());
 	}
 	
 	public List<String> approvalLog(List<String> data){
 		
 		for (String string : data) {
-			loggedApprovals.add(string);
+			loggedApprovals.add(string+"\\n");
 		}
 		return loggedApprovals;
 	}
