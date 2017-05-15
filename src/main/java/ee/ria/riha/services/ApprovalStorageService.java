@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class ApprovalStorageService {
   @Autowired DateTimeService dateTimeService;
   private Logger logger = LoggerFactory.getLogger(ApprovalStorageService.class);
-
+  List<String> loggedApprovals = new ArrayList<String>();
   File file = new File("approvals.db");
 
   synchronized public void saveInfosystemApproval(Approval approval) {
@@ -53,11 +53,11 @@ public class ApprovalStorageService {
 	}
 	
 	public List<String> approvalLog(List<String> data){
-		List<String> approvals = new ArrayList<String>();
+		
 		for (String string : data) {
-			approvals.add(string);
+			loggedApprovals.add(string);
 		}
-		return approvals;
+		return loggedApprovals;
 	}
   
   //A method for extracting JSON Web Tokens body from full JWT
