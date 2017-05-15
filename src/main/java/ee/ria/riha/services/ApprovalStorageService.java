@@ -26,6 +26,11 @@ public class ApprovalStorageService {
   synchronized public void saveInfosystemApproval(Approval approval) {
     Properties properties = loadProperties();
     properties.setProperty(approval.getUri(), approval.getTimestamp() + "|" + approval.getStatus() + "|" + approval.getToken());
+    
+    String JWTBody = extractJWTBody(approval.getToken());
+	String decodedBody = decodeBase64(JWTBody);
+	String filteredToken = tokenStringFormatting(decodedBody);
+    loggedApprovals.add(approval.getUri()+" | "+approval.getTimestamp()+" | "+approval.getStatus()+" | "+filteredToken+"\n");
     save(properties);
   }
   
@@ -36,6 +41,7 @@ public class ApprovalStorageService {
       String JWTBody = extractJWTBody(value[2]);
       String decodedBody = decodeBase64(JWTBody);
       String filteredToken = tokenStringFormatting(decodedBody);
+      
       
       return new Approval((String)property.getKey(), value[0], value[1], filteredToken);
     }).collect(Collectors.toList());
@@ -52,11 +58,7 @@ public class ApprovalStorageService {
 		}).collect(Collectors.toList());
 	}
 	
-	public List<String> approvalLog(List<String> data){
-		
-		for (String string : data) {
-			loggedApprovals.add(string+"\\n");
-		}
+	public List<String> approvalLog(){
 		return loggedApprovals;
 	}
   
