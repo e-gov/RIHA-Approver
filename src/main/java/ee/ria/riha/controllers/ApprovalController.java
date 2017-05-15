@@ -1,5 +1,6 @@
 package ee.ria.riha.controllers;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -8,6 +9,8 @@ import ee.ria.riha.models.Approval;
 import ee.ria.riha.models.Status;
 import ee.ria.riha.services.ApprovalStorageService;
 import ee.ria.riha.services.DateTimeService;
+import ee.ria.riha.services.LoggerClass;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +54,12 @@ public class ApprovalController {
   @RequestMapping(value = "/log", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
   public String approvalLog() {
+	  try {
+          LoggerClass.setup();
+      } catch (IOException e) {
+          e.printStackTrace();
+          throw new RuntimeException("Problems with creating the log files");
+      }
 	LOGGER.setLevel(Level.INFO);
     LOGGER.info(approvalStorageService.approvalLog(approvalStorageService.approvalData()).toString());
     return new JSONArray(approvalStorageService.approvalLog(approvalStorageService.approvalData())).toString();
