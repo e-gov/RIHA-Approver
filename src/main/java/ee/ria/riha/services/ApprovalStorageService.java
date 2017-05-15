@@ -53,12 +53,10 @@ public class ApprovalStorageService {
 	}
 	
 	public List<String> approvalLog(List<String> data){
-		UsingLogger LOGGER = new UsingLogger();
 		List<String> approvals = new ArrayList<String>();
 		for (String string : data) {
 			approvals.add(string);
 		}
-		LOGGER.logApprovals(approvals.toString());
 		return approvals;
 	}
   
