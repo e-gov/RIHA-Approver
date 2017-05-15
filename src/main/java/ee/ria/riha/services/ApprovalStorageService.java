@@ -40,31 +40,6 @@ public class ApprovalStorageService {
       return new Approval((String)property.getKey(), value[0], value[1], filteredToken);
     }).collect(Collectors.toList());
   }
-  
-  public List<String> approvalData() {
-	// todo review to use get..., setProperty
-	return loadProperties().entrySet().stream().map(property -> {
-		String[] value = ((String) property.getValue()).split("\\|");
-		String JWTBody = extractJWTBody(value[2]);
-		String decodedBody = decodeBase64(JWTBody);
-		String filteredToken = tokenStringFormatting(decodedBody);
-
-		return (String) property.getKey() + "|" + value[0] + "|" + value[1] + "|" + filteredToken;
-	}).collect(Collectors.toList());
-  }
-	
-  public List<String> approvalLog(List<String> data){
-	List<String> approvals = new ArrayList<String>();
-	for (String string : data) {
-		String[] values = string.split("|");
-		approvals.add(values[0]);
-		approvals.add(values[1]);
-		approvals.add(values[2]);
-		approvals.add(values[3]);
-	}
-	return approvals;
-  }
-  
 	public List<String> approvalData() {
 		// todo review to use get..., setProperty
 		return loadProperties().entrySet().stream().map(property -> {
