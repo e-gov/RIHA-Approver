@@ -7,7 +7,6 @@ import ee.ria.riha.models.Approval;
 import ee.ria.riha.models.Status;
 import ee.ria.riha.services.ApprovalStorageService;
 import ee.ria.riha.services.DateTimeService;
-import ee.ria.riha.services.LoggerClass;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,7 +27,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 public class ApprovalController {
-	
+
   @Autowired ApprovalStorageService approvalStorageService;
   @Autowired DateTimeService dateTimeService;
 
@@ -51,10 +50,10 @@ public class ApprovalController {
   
   @RequestMapping(value = "/log", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
-  public String approvalLog() {
-	  
+  public String approvalsLog() {
     return new JSONArray(approvalStorageService.approvalLog(approvalStorageService.approvalData())).toString();
   }
+
   
   @RequestMapping(value = "/approvals/approved/", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody

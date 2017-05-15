@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 public class ApprovalStorageService {
   @Autowired DateTimeService dateTimeService;
   private Logger logger = LoggerFactory.getLogger(ApprovalStorageService.class);
-  
 
   File file = new File("approvals.db");
 
