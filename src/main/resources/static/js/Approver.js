@@ -14,7 +14,7 @@ function Approver(infosystemsUrl) {
   
   self.init = function() {
     loadInfosystems();
-    $('body').on('click', '.approve button', self.approveInfosystem);
+    //$('body').on('click', '.approve button', self.approveInfosystem);
     $("#btnApproval").on( "click", function() {
     	console.log("testing123");
     	var modal = document.getElementById('modal');
@@ -104,9 +104,9 @@ function Approver(infosystemsUrl) {
 //        });
 //    	
 //    }
-//    
-//    
-//  };
+    
+    
+  };
 
   self._createTableRows = function(data) {
     var template = $('#row-template').html();
