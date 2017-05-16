@@ -6,7 +6,7 @@ function Approver(infosystemsUrl) {
 
   var self = this;
   
-  var modal = document.getElementById('modal');
+  
 
   var btn = document.getElementById("btnApproval");
   
@@ -15,7 +15,9 @@ function Approver(infosystemsUrl) {
   self.init = function() {
     loadInfosystems();
     $('body').on('click', '.approve button', self.approveInfosystem);
-    $( "#btnApproval" ).on( "click", function() {
+    $("#btnApproval").on( "click", function() {
+    	console.log("testing123");
+    	var modal = document.getElementById('modal');
     	modal.style.display = "block";
     });
   };
@@ -79,32 +81,32 @@ function Approver(infosystemsUrl) {
     })
   };
 
-  self.approveInfosystem = function (event) {
-	
-    var clickedButton = $(event.target);
-    var infosystemRow = clickedButton.closest('tr');
-    
-    var firstName = $('#first_name').val();
-    var lastName = $('#last_name').val();
-    var regCode = $('#register_code').val();
-    var instName = $('#institution_name').val();
-    
-    if(firstName == '' || lastName == '' || regCode == '' || instName == ''){
-    	alert('Palun täidke kõik väljad!');
-    } else {
-    	saveCookie();
-    	
-    	$.post('/approve/', {id: infosystemRow.data('id'), status: clickedButton.val()})
-        .done(function (result) {
-          infosystemRow.find('.approved').text(result.timestamp);
-          infosystemRow.find('.approval-status').text(result.status);
-          clearCookie();
-        });
-    	
-    }
-    
-    
-  };
+//  self.approveInfosystem = function (event) {
+//	
+//    var clickedButton = $(event.target);
+//    var infosystemRow = clickedButton.closest('tr');
+//    
+//    var firstName = $('#first_name').val();
+//    var lastName = $('#last_name').val();
+//    var regCode = $('#register_code').val();
+//    var instName = $('#institution_name').val();
+//    
+//    if(firstName == '' || lastName == '' || regCode == '' || instName == ''){
+//    	alert('Palun täidke kõik väljad!');
+//    } else {
+//    	saveCookie();
+//    	
+//    	$.post('/approve/', {id: infosystemRow.data('id'), status: clickedButton.val()})
+//        .done(function (result) {
+//          infosystemRow.find('.approved').text(result.timestamp);
+//          infosystemRow.find('.approval-status').text(result.status);
+//          clearCookie();
+//        });
+//    	
+//    }
+//    
+//    
+//  };
 
   self._createTableRows = function(data) {
     var template = $('#row-template').html();
