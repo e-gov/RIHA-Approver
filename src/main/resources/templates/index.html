@@ -25,17 +25,23 @@
   <body>
     <#include 'table.html'/>
 
-	<div id="modal" class="modal">
-		<!-- Modal content -->
+	<div id="modal" class="modal fade">
 		<div class="modal-content">
-			<span class="close">&times;</span>
-			<p>Hinnangu pealkiri: </p> <input type="text" name="header" placeholder="Pealkiri">
-			<p>Hinnangu kommentaar: </p> <textarea rows="4" cols="50" placeholder="Kommentaar"></textarea>
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Infosüsteemi Hindamine</h4>
+			</div>
+			<p>Hinnangu pealkiri:</p>
+			<input type="text" name="header" placeholder="Pealkiri">
+			<p>Hinnangu kommentaar:</p>
+			<textarea rows="4" cols="50" placeholder="Kommentaar"></textarea>
 			<br>
-			<button id="btnSuccess" class="btn btn-sm btn-outline-success" value="${approvedStatus}">Kooskõlasta</button>
-            <button class="btn btn-sm btn-outline-danger" value="${notApprovedStatus}">Ei kooskõlasta</button>
+			<button id="btnSuccess" class="btn btn-sm btn-outline-success"
+				value="${approvedStatus}">Kooskõlasta</button>
+			<button class="btn btn-sm btn-outline-danger"
+				value="${notApprovedStatus}">Ei kooskõlasta</button>
 		</div>
 	</div>
-	
+
 </body>
 </html>
