@@ -104,9 +104,7 @@ function Approver(infosystemsUrl) {
 //        });
 //    	
 //    }
-    
-    
-  };
+// };
 
   self._createTableRows = function(data) {
     var template = $('#row-template').html();
