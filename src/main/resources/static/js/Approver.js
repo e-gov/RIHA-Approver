@@ -6,8 +6,6 @@ function Approver(infosystemsUrl) {
 
   var self = this;
   
-  
-
   var btn = document.getElementById("btnApproval");
   
   var span = document.getElementsByClassName("close")[0];
@@ -15,7 +13,7 @@ function Approver(infosystemsUrl) {
   self.init = function() {
     loadInfosystems();
     //$('body').on('click', '.approve button', self.approveInfosystem);
-    $("#btnApproval").on( "click", function() {
+    $('body').on( "click",'.approve button', function() {
     	console.log("testing123");
     	var modal = document.getElementById('modal');
     	modal.style.display = "block";
