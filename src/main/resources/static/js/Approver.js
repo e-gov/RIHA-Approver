@@ -5,12 +5,33 @@ function Approver(infosystemsUrl) {
   var approvalsUrl = '/approvals';
 
   var self = this;
+  
+  var modal = document.getElementById('modal');
 
+  var btn = document.getElementById("btnApproval");
+  
+  var span = document.getElementsByClassName("close")[0];
+
+  
+  btn.onclick = function() {
+	  modal.style.display = "block";
+  }
+  
+  span.onclick = function() {
+	  modal.style.display = "none";
+  }
+  
+  window.onclick = function(event) {
+	  if (event.target == modal) {
+		  modal.style.display = "none";
+	  }
+  }
+  
   self.init = function() {
     loadInfosystems();
     $('body').on('click', '.approve button', self.approveInfosystem);
   };
-
+  
   function loadInfosystems() {
     $.getJSON(infosystemsUrl, function(data) {
       self._createTableRows(data);

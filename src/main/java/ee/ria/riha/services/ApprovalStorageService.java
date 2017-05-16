@@ -38,29 +38,15 @@ public class ApprovalStorageService {
     //todo review to use get..., setProperty
     return loadProperties().entrySet().stream().map(property -> {
       String[] value = ((String)property.getValue()).split("\\|");
-      String JWTBody = extractJWTBody(value[2]);
-      String decodedBody = decodeBase64(JWTBody);
-      String filteredToken = tokenStringFormatting(decodedBody);
-      
+      String filteredToken = formatToken(value[2]);
       
       return new Approval((String)property.getKey(), value[0], value[1], filteredToken);
     }).collect(Collectors.toList());
   }
-	public List<String> approvalData() {
-		// todo review to use get..., setProperty
-		return loadProperties().entrySet().stream().map(property -> {
-			String[] value = ((String) property.getValue()).split("\\|");
-			String JWTBody = extractJWTBody(value[2]);
-			String decodedBody = decodeBase64(JWTBody);
-			String filteredToken = tokenStringFormatting(decodedBody);
-			
-			return (String)property.getKey() + " | " + value[0] + " | " + value[1] + " | " + filteredToken;
-		}).collect(Collectors.toList());
-	}
-	
-	public List<String> approvalLog(){
-		return loggedApprovals;
-	}
+  
+  public List<String> approvalLog(){
+	 return loggedApprovals;
+  }
   
   //A method for extracting JSON Web Tokens body from full JWT
   public String extractJWTBody(String token){
@@ -80,6 +66,11 @@ public class ApprovalStorageService {
 	  String approverName = token.substring(token.indexOf("nimi"), token.indexOf("} },")+3);
 	  String approverInstitution = token.substring(token.indexOf("asutus"), token.indexOf("}, rollid"));
 	  return approverName + ", " + approverInstitution;
+  }
+  //Method which uses previous helper methods to take in token and return decoded and formated string
+  public String formatToken(String token) {
+	  String decodedBody = decodeBase64(extractJWTBody(token));
+	  return tokenStringFormatting(decodedBody);
   }
   
   public List<Approval> approvedApprovals() {
