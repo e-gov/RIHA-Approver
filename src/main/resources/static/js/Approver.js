@@ -24,7 +24,7 @@ function Approver(infosystemsUrl) {
     	        modal.style.display = "none";
     	    }
     	}
-    	console.log(infosystemRow);
+    	console.log(infosystemRow.data('id'));
     });
   };
   
