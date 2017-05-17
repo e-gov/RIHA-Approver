@@ -26,7 +26,9 @@ function Approver(infosystemsUrl) {
     	        modal.style.display = "none";
     	    }
     	}
-    	$('#btnSuccess').on('click', self.addApproval);
+    	$("#btnSuccess").click(function(event) {
+    		addApproval(event, infosystemRow);
+    	});
 //    	btnApprove.onclick = function(event){
 //    		var firstName = $('#first_name').val();
 //    	    var lastName = $('#last_name').val();
@@ -50,14 +52,14 @@ function Approver(infosystemsUrl) {
     });
   };
   
-  self.addApproval = function (event) {
+  function addApproval(event, infosystemRow) {
 	  console.log("This function was called");
 	  var firstName = $('#first_name').val();
 	  var lastName = $('#last_name').val();
 	  var regCode = $('#register_code').val();
 	  var instName = $('#institution_name').val();
 	  var clickedButton = $(event.target);
-	  console.log(infosystemRow.data('id'));
+	  
 	  if(firstName == '' || lastName == '' || regCode == '' || instName == ''){
 		  alert('Palun täidke kõik väljad!');
 	  } else {
