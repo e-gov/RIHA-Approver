@@ -14,7 +14,7 @@ function Approver(infosystemsUrl) {
     	var infosystemRow = clickedButton.closest('tr');
     	
     	var modal = document.getElementById('modal');
-    	var btnSuccess = document.getElementById('btnSuccess');
+    	var approvalButton = document.getElementsByClassName("btn");
     	var span = document.getElementsByClassName("close")[0];
     	modal.style.display = "block";
     	span.onclick = function() {
@@ -25,14 +25,14 @@ function Approver(infosystemsUrl) {
     	        modal.style.display = "none";
     	    }
     	}
-    	console.log(infosystemRow.data('id'));
-    	btnSuccess.onclick = function(event){
+    	
+    	approvalButton.onclick = function(event){
     		var firstName = $('#first_name').val();
     	    var lastName = $('#last_name').val();
     	    var regCode = $('#register_code').val();
     	    var instName = $('#institution_name').val();
     	    var clickedButton = $(event.target);
-    	    console.log(infosystemRow.data('id'));
+    	    
     	    if(firstName == '' || lastName == '' || regCode == '' || instName == ''){
     	    	alert('Palun täidke kõik väljad!');
     	    } else {
@@ -108,31 +108,31 @@ function Approver(infosystemsUrl) {
     })
   };
 
-  self.approveInfosystem = function (event) {
-	
-    var clickedButton = $(event.target);
-    //var infosystemRow = clickedButton.closest('tr');
-    var infosystemRow = "http://base.url:8090/idnfasifunadsufi";
-    
-    var firstName = $('#first_name').val();
-    var lastName = $('#last_name').val();
-    var regCode = $('#register_code').val();
-    var instName = $('#institution_name').val();
-    
-    if(firstName == '' || lastName == '' || regCode == '' || instName == ''){
-    	alert('Palun täidke kõik väljad!');
-    } else {
-    	saveCookie();
-    	
-    	$.post('/approve/', {id: infosystemRow.data('id'), status: clickedButton.val()})
-        .done(function (result) {
-          infosystemRow.find('.approved').text(result.timestamp);
-          infosystemRow.find('.approval-status').text(result.status);
-          clearCookie();
-        });
-    	
-    }
- };
+//  self.approveInfosystem = function (event) {
+//	
+//    var clickedButton = $(event.target);
+//    //var infosystemRow = clickedButton.closest('tr');
+//    var infosystemRow = "http://base.url:8090/idnfasifunadsufi";
+//    
+//    var firstName = $('#first_name').val();
+//    var lastName = $('#last_name').val();
+//    var regCode = $('#register_code').val();
+//    var instName = $('#institution_name').val();
+//    
+//    if(firstName == '' || lastName == '' || regCode == '' || instName == ''){
+//    	alert('Palun täidke kõik väljad!');
+//    } else {
+//    	saveCookie();
+//    	
+//    	$.post('/approve/', {id: infosystemRow.data('id'), status: clickedButton.val()})
+//        .done(function (result) {
+//          infosystemRow.find('.approved').text(result.timestamp);
+//          infosystemRow.find('.approval-status').text(result.status);
+//          clearCookie();
+//        });
+//    	
+//    }
+// };
 
   self._createTableRows = function(data) {
     var template = $('#row-template').html();
