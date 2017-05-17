@@ -10,7 +10,6 @@ function Approver(infosystemsUrl) {
     loadInfosystems();
     //$('body').on('click', '.approve button', self.approveInfosystem);
     $('body').on( "click",'.approve button', function() {
-    	console.log("testing123");
     	var modal = document.getElementById('modal');
     	var span = document.getElementsByClassName("close")[0];
     	modal.style.display = "block";
@@ -22,6 +21,7 @@ function Approver(infosystemsUrl) {
     	        modal.style.display = "none";
     	    }
     	}
+    	//Add button click events here
     });
   };
   
