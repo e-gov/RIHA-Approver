@@ -8,15 +8,12 @@ function Approver(infosystemsUrl) {
   
   self.init = function() {
     loadInfosystems();
-    //$('body').on('click', '.approve button', self.approveInfosystem);
     $('body').on( "click",'.approve button', function(event) {
     	var clickedButton = $(event.target);
     	var infosystemRow = clickedButton.closest('tr');
-    	
     	var modal = document.getElementById('modal');
-    	var btnApprove = document.getElementById('btnSuccess');
-    	var btnDisapprove = document.getElementById('btnDisapprove');
-    	var span = document.getElementsByClassName("close")[0];
+    	var span = document.getElementById('close');
+    	
     	modal.style.display = "block";
     	span.onclick = function() {
     	    modal.style.display = "none";
@@ -29,51 +26,11 @@ function Approver(infosystemsUrl) {
     	$("#btnSuccess").click(function(event) {
     		addApproval(event, infosystemRow);
     	});
-//    	btnApprove.onclick = function(event){
-//    		var firstName = $('#first_name').val();
-//    	    var lastName = $('#last_name').val();
-//    	    var regCode = $('#register_code').val();
-//    	    var instName = $('#institution_name').val();
-//    	    var clickedButton = $(event.target);
-//    	    console.log(infosystemRow.data('id'));
-//    	    if(firstName == '' || lastName == '' || regCode == '' || instName == ''){
-//    	    	alert('Palun täidke kõik väljad!');
-//    	    } else {
-//    	    	saveCookie();
-//    	    	
-//    	    	$.post('/approve/', {id: infosystemRow.data('id'), status: clickedButton.val()})
-//    	        .done(function (result) {
-//    	          infosystemRow.find('.approved').text(result.timestamp);
-//    	          infosystemRow.find('.approval-status').text(result.status);
-//    	          clearCookie();
-//    	        });
-//    	    }
-//    	}
+    	$("#btnDisapprove").click(function(event) {
+    		addApproval(event, infosystemRow);
+    	});
     });
   };
-  
-  function addApproval(event, infosystemRow) {
-	  console.log("This function was called");
-	  var firstName = $('#first_name').val();
-	  var lastName = $('#last_name').val();
-	  var regCode = $('#register_code').val();
-	  var instName = $('#institution_name').val();
-	  var clickedButton = $(event.target);
-	  
-	  if(firstName == '' || lastName == '' || regCode == '' || instName == ''){
-		  alert('Palun täidke kõik väljad!');
-	  } else {
-		  saveCookie();
-		  $.post('/approve/', {
-			  id : infosystemRow.data('id'),
-			  status : clickedButton.val()
-		  }).done(function(result) {
-			  infosystemRow.find('.approved').text(result.timestamp);
-			  infosystemRow.find('.approval-status').text(result.status);
-			  clearCookie();
-		  });
-	  }
-  }
   
   function loadInfosystems() {
     $.getJSON(infosystemsUrl, function(data) {
@@ -133,32 +90,58 @@ function Approver(infosystemsUrl) {
       $(row.find('.approval-status')).text(approval.status);
     })
   };
+  
+  //Function which takes in event (to check which button is clicked) & infosystem row nr to get ID of infosystem
+  //using those, it creates an approval which gets sent via $.post to ApprovalController requestmapping for /approve/
+  function addApproval(event, infosystemRow) {
+	  console.log("This function was called");
+	  var firstName = $('#first_name').val();
+	  var lastName = $('#last_name').val();
+	  var regCode = $('#register_code').val();
+	  var instName = $('#institution_name').val();
+	  var clickedButton = $(event.target);
+	  
+	  if(firstName == '' || lastName == '' || regCode == '' || instName == ''){
+		  alert('Palun täidke kõik väljad!');
+	  } else {
+		  saveCookie();
+		  $.post('/approve/', {
+			  id : infosystemRow.data('id'),
+			  status : clickedButton.val()
+		  }).done(function(result) {
+			  infosystemRow.find('.approved').text(result.timestamp);
+			  infosystemRow.find('.approval-status').text(result.status);
+			  clearCookie();
+		  });
+	  }
+  }
 
-  self.approveInfosystem = function (event) {
-	
-    var clickedButton = $(event.target);
-    //var infosystemRow = clickedButton.closest('tr');
-    var infosystemRow = "http://base.url:8090/idnfasifunadsufi";
-    
-    var firstName = $('#first_name').val();
-    var lastName = $('#last_name').val();
-    var regCode = $('#register_code').val();
-    var instName = $('#institution_name').val();
-    
-    if(firstName == '' || lastName == '' || regCode == '' || instName == ''){
-    	alert('Palun täidke kõik väljad!');
-    } else {
-    	saveCookie();
-    	
-    	$.post('/approve/', {id: infosystemRow.data('id'), status: clickedButton.val()})
-        .done(function (result) {
-          infosystemRow.find('.approved').text(result.timestamp);
-          infosystemRow.find('.approval-status').text(result.status);
-          clearCookie();
-        });
-    	
-    }
- };
+// LEGACY, WILL DELETE ONCE ALL CLEAR IS GIVEN
+//  self.approveInfosystem = function (event) {
+//	
+//    var clickedButton = $(event.target);
+//    //var infosystemRow = clickedButton.closest('tr');
+//    var infosystemRow = "http://base.url:8090/idnfasifunadsufi";
+//    
+//    var firstName = $('#first_name').val();
+//    var lastName = $('#last_name').val();
+//    var regCode = $('#register_code').val();
+//    var instName = $('#institution_name').val();
+//    
+//    if(firstName == '' || lastName == '' || regCode == '' || instName == ''){
+//    	alert('Palun täidke kõik väljad!');
+//    } else {
+//    	saveCookie();
+//    	
+//    	$.post('/approve/', {id: infosystemRow.data('id'), status: clickedButton.val()})
+//        .done(function (result) {
+//          infosystemRow.find('.approved').text(result.timestamp);
+//          infosystemRow.find('.approval-status').text(result.status);
+//          clearCookie();
+//        });
+//    	
+//    }
+// };
 
   self._createTableRows = function(data) {
     var template = $('#row-template').html();
