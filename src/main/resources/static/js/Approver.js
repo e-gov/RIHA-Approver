@@ -12,9 +12,9 @@ function Approver(infosystemsUrl) {
     $('body').on( "click",'.approve button', function(event) {
     	var clickedButton = $(event.target);
     	var infosystemRow = clickedButton.closest('tr');
-    	
     	var modal = document.getElementById('modal');
     	var span = document.getElementsByClassName("close")[0];
+    	var notApproved = document.getElementById('btnNotApproved');
     	modal.style.display = "block";
     	span.onclick = function() {
     	    modal.style.display = "none";
@@ -24,6 +24,7 @@ function Approver(infosystemsUrl) {
     	        modal.style.display = "none";
     	    }
     	}
+    	notApproved.onclick = approval(event);
     });
   };
   
@@ -68,14 +69,15 @@ function Approver(infosystemsUrl) {
 	    var lastName = $('#last_name').val();
 	    var regCode = $('#register_code').val();
 	    var instName = $('#institution_name').val();
-	    var clickedButton = event.value();
+	    //var clickedButton = event.value();
+	    var clickedButton = $(event.target);
 	    
 	    if(firstName == '' || lastName == '' || regCode == '' || instName == ''){
 	    	alert('Palun täidke kõik väljad!');
 	    } else {
 	    	saveCookie();
 	    	
-	    	$.post('/approve/', {id: infosystemRow.data('id'), status: clickedButton})
+	    	$.post('/approve/', {id: infosystemRow.data('id'), status: clickedButton.val()})
 	        .done(function (result) {
 	          infosystemRow.find('.approved').text(result.timestamp);
 	          infosystemRow.find('.approval-status').text(result.status);
