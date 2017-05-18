@@ -15,6 +15,12 @@ function Approver(infosystemsUrl) {
     	var span = document.getElementById('close');
     	
     	modal.style.display = "block";
+    	$("#btnSuccess").off().on('click', function(event) {
+    		addApproval(event, infosystemRow);
+    	});
+    	$("#btnDisapprove").off().on('click',function(event) {
+    		addApproval(event, infosystemRow);
+    	});
     	span.onclick = function() {
     	    modal.style.display = "none";
     	}
@@ -23,12 +29,6 @@ function Approver(infosystemsUrl) {
     	        modal.style.display = "none";
     	    }
     	}
-    	$("#btnSuccess").on('click', function(event) {
-    		addApproval(event, infosystemRow);
-    	});
-    	$("#btnDisapprove").click(function(event) {
-    		addApproval(event, infosystemRow);
-    	});
     });
   };
   
