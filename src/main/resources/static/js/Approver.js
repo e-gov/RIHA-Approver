@@ -114,6 +114,7 @@ function Approver(infosystemsUrl) {
 		  }).done(function(result) {
 			  infosystemRow.find('.approved').text(result.timestamp);
 			  infosystemRow.find('.approval-status').text(result.status);
+			  infosystemRow.find('.approval-comment').text(result.comment);
 			  clearCookie();
 		  });
 	  }
