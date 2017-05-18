@@ -15,11 +15,8 @@ function Approver(infosystemsUrl) {
     	var span = document.getElementById('close');
     	
     	modal.style.display = "block";
-    	$("#btnSuccess").off().on('click', function(event) {
-    		addApproval(event, infosystemRow);
-    	});
-    	$("#btnDisapprove").off().on('click',function(event) {
-    		addApproval(event, infosystemRow);
+    	$("#btnApprove").off().on('click', function() {
+    		addApproval(infosystemRow);
     	});
     	span.onclick = function() {
     	    modal.style.display = "none";
@@ -94,15 +91,13 @@ function Approver(infosystemsUrl) {
   
   //Function which takes in event (to check which button is clicked) & infosystem row nr to get ID of infosystem
   //using those, it creates an approval which gets sent via $.post to ApprovalController requestmapping for /approve/
-  function addApproval(event, infosystemRow) {
-	  console.log("This function was called");
+  function addApproval(infosystemRow) {
 	  var firstName = $('#first_name').val();
 	  var lastName = $('#last_name').val();
 	  var regCode = $('#register_code').val();
 	  var instName = $('#institution_name').val();
 	  var approvalHeader = $('#header').val();
 	  var approvalComment = $('#comment').val();
-	  var clickedButton = $(event.target);
 	  
 	  if(firstName == '' || lastName == '' || regCode == '' || instName == '' || approvalComment.length >= 250){
 		  alert('Palun täidke kõik väljad!');
