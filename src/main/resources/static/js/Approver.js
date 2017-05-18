@@ -102,14 +102,13 @@ function Approver(infosystemsUrl) {
 	  var approvalHeader = $('#header').val();
 	  var approvalComment = $('#comment').val();
 	  var clickedButton = $(event.target);
-	  
+	  +
 	  if(firstName == '' || lastName == '' || regCode == '' || instName == '' || approvalComment.length >= 250){
 		  alert('Palun täidke kõik väljad!');
 	  } else {
 		  saveCookie();
 		  $.post('/approve/', {
 			  id : infosystemRow.data('id'),
-			  status : clickedButton.val(),
 			  header : approvalHeader,
 			  comment : approvalComment
 		  }).done(function(result) {

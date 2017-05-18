@@ -8,11 +8,13 @@ public class Approval {
   String timestamp;
   String status;
   String token;
+  String comment;
 
-  public Approval(String uri, String timestamp, String status, String token) {
+  public Approval(String uri, String timestamp, String status, String token, String comment) {
     this.uri = uri;
     this.timestamp = timestamp;
     this.status = status;
     this.token = token;
+    this.comment = comment;
   }
 }

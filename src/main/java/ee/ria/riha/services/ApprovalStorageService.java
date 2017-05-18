@@ -25,12 +25,12 @@ public class ApprovalStorageService {
 
   synchronized public void saveInfosystemApproval(Approval approval) {
     Properties properties = loadProperties();
-    properties.setProperty(approval.getUri(), approval.getTimestamp() + "|" + approval.getStatus() + "|" + approval.getToken());
+    properties.setProperty(approval.getUri(), approval.getTimestamp() + "|" + approval.getStatus() + "|" + approval.getToken()+ "|" + approval.getComment());
     
     String JWTBody = extractJWTBody(approval.getToken());
 	String decodedBody = decodeBase64(JWTBody);
 	String filteredToken = tokenStringFormatting(decodedBody);
-    loggedApprovals.add(approval.getTimestamp()+" | "+approval.getUri()+" | "+approval.getStatus()+" | "+filteredToken);
+    loggedApprovals.add(approval.getTimestamp()+" | "+approval.getUri()+" | "+approval.getStatus()+" | "+filteredToken+" | "+approval.getComment);
     save(properties);
   }
   
@@ -40,7 +40,7 @@ public class ApprovalStorageService {
       String[] value = ((String)property.getValue()).split("\\|");
       String filteredToken = formatToken(value[2]);
       
-      return new Approval((String)property.getKey(), value[0], value[1], filteredToken);
+      return new Approval((String)property.getKey(), value[0], value[1], filteredToken, value[3]);
     }).collect(Collectors.toList());
   }
   
