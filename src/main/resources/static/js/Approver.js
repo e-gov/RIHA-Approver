@@ -103,13 +103,15 @@ function Approver(infosystemsUrl) {
 	  var approvalComment = $('#comment').val();
 	  var clickedButton = $(event.target);
 	  
-	  if(firstName == '' || lastName == '' || regCode == '' || instName == '' || approvalComment.length <= 250){
+	  if(firstName == '' || lastName == '' || regCode == '' || instName == '' || approvalComment.length >= 250){
 		  alert('Palun täidke kõik väljad!');
 	  } else {
 		  saveCookie();
 		  $.post('/approve/', {
 			  id : infosystemRow.data('id'),
-			  status : clickedButton.val()
+			  status : clickedButton.val(),
+			  header : approvalHeader,
+			  comment : approvalComment
 		  }).done(function(result) {
 			  infosystemRow.find('.approved').text(result.timestamp);
 			  infosystemRow.find('.approval-status').text(result.status);
