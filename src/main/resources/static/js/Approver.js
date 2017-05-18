@@ -99,9 +99,11 @@ function Approver(infosystemsUrl) {
 	  var lastName = $('#last_name').val();
 	  var regCode = $('#register_code').val();
 	  var instName = $('#institution_name').val();
+	  var approvalHeader = $('#header').val();
+	  var approvalComment = $('#comment').val();
 	  var clickedButton = $(event.target);
 	  
-	  if(firstName == '' || lastName == '' || regCode == '' || instName == ''){
+	  if(firstName == '' || lastName == '' || regCode == '' || instName == '' || approvalComment.length <= 250){
 		  alert('Palun täidke kõik väljad!');
 	  } else {
 		  saveCookie();
