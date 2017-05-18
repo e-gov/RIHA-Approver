@@ -160,6 +160,7 @@ function Approver(infosystemsUrl) {
       newRow.find('.objective').text(infosystem.objective);
       newRow.find('.last-modified').text(infosystem.meta && infosystem.meta.system_status ? infosystem.meta.system_status.timestamp : '');
       newRow.find('.status').text(infosystem.meta && infosystem.meta.system_status ?  infosystem.meta.system_status.status : '');
+      newRow.find('.approval-comment').text(infosystem.meta && infosystem.meta.system_status ?  infosystem.meta.system_status.comment : '');
       tbody.append(newRow);
     });
   }
