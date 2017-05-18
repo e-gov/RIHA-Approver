@@ -23,7 +23,7 @@ function Approver(infosystemsUrl) {
     	        modal.style.display = "none";
     	    }
     	}
-    	$("#btnSuccess").click(function(event) {
+    	$("#btnSuccess").on('click', function(event) {
     		addApproval(event, infosystemRow);
     	});
     	$("#btnDisapprove").click(function(event) {
