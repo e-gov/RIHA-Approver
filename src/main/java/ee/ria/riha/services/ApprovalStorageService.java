@@ -30,7 +30,7 @@ public class ApprovalStorageService {
     String JWTBody = extractJWTBody(approval.getToken());
 	String decodedBody = decodeBase64(JWTBody);
 	String filteredToken = tokenStringFormatting(decodedBody);
-    loggedApprovals.add(approval.getTimestamp()+ " | " +approval.getUri()+ " | "+ approval.getStatus() +" | "+ approval.getComment() +" | "+ filteredToken);
+    loggedApprovals.add(approval.getTimestamp()+ " | " +approval.getUri()+ " | "+ approval.getStatus() +" | "+ approval.getComment().replace("\n"," ") +" | "+ filteredToken);
     save(properties);
   }
   
