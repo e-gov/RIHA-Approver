@@ -33,13 +33,7 @@ function Approver(infosystemsUrl) {
     	}
     });
     $('body').on("click",'.approve #btnApprovalLog', function(event){
-    	var clickedButton = $(event.target);
-    	var infosystemRow = clickedButton.closest('tr');
-		$.post('/log/', {
-			  id : infosystemRow.data('id')
-		  	}).done(function(result) {
-			  self._redirect('/log/');
-		  	});
+    	self._redirect('/log');
 	});
   };
   
