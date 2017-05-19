@@ -19,10 +19,14 @@ function Approver(infosystemsUrl) {
     		addApproval(infosystemRow, modal);
     	});
     	span.onclick = function() {
+    		$("input").val("");
+			$("textarea").val("");
     	    modal.style.display = "none";
     	}
     	window.onclick = function(event) {
     	    if (event.target == modal) {
+    	    	$("input").val("");
+  			  	$("textarea").val("");
     	        modal.style.display = "none";
     	    }
     	}
