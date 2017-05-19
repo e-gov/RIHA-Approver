@@ -27,13 +27,15 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 public class ApprovalController {
-
+	String infosysId = "";
+	
   @Autowired ApprovalStorageService approvalStorageService;
   @Autowired DateTimeService dateTimeService;
 
   @Value("${infosystems.url}")
   private String infosystemsUrl;
 
+  
   @RequestMapping(value = "/", method = GET)
   public String index(Model model) {
     model.addAttribute("approvedStatus", Status.APPROVED.getValue());
@@ -48,13 +50,19 @@ public class ApprovalController {
     return new JSONArray(approvalStorageService.allApprovals()).toString();
   }
 
-  @RequestMapping(value = "/log", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping(value = "/logSave/", method = POST, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
-  public String approvalsLog() {
-    return new JSONArray(approvalStorageService.approvalLog()).toString() + " |||| " +infosystemsUrl;
+  public String approvalsSave(@RequestParam String id) {
+    return infosysId = id;
   }
   
-  @RequestMapping(value = "/approvals/approved/", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping(value = "/logGet", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public String approva12lsLog() {
+    return new JSONArray(approvalStorageService.approvalLog(infosysId)).toString();
+  }
+  
+  @RequestMapping(value = "/approvals/approved/", method = POST, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
   public String approvedApprovals() {
     return new JSONArray(approvalStorageService.approvedApprovals()).toString();
