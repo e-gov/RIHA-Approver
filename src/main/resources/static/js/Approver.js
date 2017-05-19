@@ -16,20 +16,13 @@ function Approver(infosystemsUrl) {
     	
     	modal.style.display = "block";
     	$("#btnApprove").off().on('click', function() {
-    		addApproval(infosystemRow);
-    		$("input").empty();
-    		$("textarea").empty();
-    		modal.style.display = "none";
+    		addApproval(infosystemRow, modal);
     	});
     	span.onclick = function() {
-    		$("input").empty();
-    		$("textarea").empty();
     	    modal.style.display = "none";
     	}
     	window.onclick = function(event) {
     	    if (event.target == modal) {
-    	    	$("input").empty();
-    	    	$("textarea").empty();
     	        modal.style.display = "none";
     	    }
     	}
@@ -98,7 +91,7 @@ function Approver(infosystemsUrl) {
   
   //Function which takes in event (to check which button is clicked) & infosystem row nr to get ID of infosystem
   //using those, it creates an approval which gets sent via $.post to ApprovalController requestmapping for /approve/
-  function addApproval(infosystemRow) {
+  function addApproval(infosystemRow, modal) {
 	  var firstName = $('#first_name').val();
 	  var lastName = $('#last_name').val();
 	  var regCode = $('#register_code').val();
@@ -119,6 +112,10 @@ function Approver(infosystemsUrl) {
 			  infosystemRow.find('.approval-status').text(result.status);
 			  infosystemRow.find('.approval-comment').text(result.comment);
 			  clearCookie();
+			  //clearing input field values
+			  $("input").val("");
+			  $("textarea").val("");
+			  modal.style.display = "none";
 		  });
 	  }
   }
