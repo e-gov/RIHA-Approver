@@ -17,12 +17,19 @@ function Approver(infosystemsUrl) {
     	modal.style.display = "block";
     	$("#btnApprove").off().on('click', function() {
     		addApproval(infosystemRow);
+    		$("input").empty();
+    		$("textarea").empty();
+    		modal.style.display = "none";
     	});
     	span.onclick = function() {
+    		$("input").empty();
+    		$("textarea").empty();
     	    modal.style.display = "none";
     	}
     	window.onclick = function(event) {
     	    if (event.target == modal) {
+    	    	$("input").empty();
+    	    	$("textarea").empty();
     	        modal.style.display = "none";
     	    }
     	}
