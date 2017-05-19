@@ -8,7 +8,7 @@ function Approver(infosystemsUrl) {
   
   self.init = function() {
     loadInfosystems();
-    $('#btnApproval').on("click", function(event) {
+    $('body').on("click",'.approve #btnApproval', function(event) {
     	var clickedButton = $(event.target);
     	var infosystemRow = clickedButton.closest('tr');
     	var modal = document.getElementById('modal');
@@ -22,23 +22,23 @@ function Approver(infosystemsUrl) {
     		addApproval(infosystemRow, modal);
     	});
     	
-    	$("#btnArppovalLog").off().on('click', function(){
-    		$.post('/log/', {
-  			  id : infosystemRow.data('id')
-  		  	}).done(function(result) {
-  			  self._redirect('/log/');
-  		  	});
-    	});
-    	
     	span.onclick = function() {
     	    modal.style.display = "none";
     	}
+    	
     	window.onclick = function(event) {
     	    if (event.target == modal) {
     	        modal.style.display = "none";
     	    }
     	}
     });
+    $('body').on("click",'.approve #btnApprovalLog', function(){
+		$.post('/log/', {
+			  id : infosystemRow.data('id')
+		  	}).done(function(result) {
+			  self._redirect('/log/');
+		  	});
+	});
   };
   
   function loadInfosystems() {
