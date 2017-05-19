@@ -51,7 +51,7 @@ public class ApprovalController {
   @RequestMapping(value = "/log", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
   public String approvalsLog() {
-    return new JSONArray(approvalStorageService.approvalLog() + " |||| " +infosystemsUrl).toString();
+    return new JSONArray(approvalStorageService.approvalLog()).toString() + " |||| " +infosystemsUrl;
   }
   
   @RequestMapping(value = "/approvals/approved/", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
