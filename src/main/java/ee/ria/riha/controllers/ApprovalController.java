@@ -48,10 +48,10 @@ public class ApprovalController {
     return new JSONArray(approvalStorageService.allApprovals()).toString();
   }
   
-  @RequestMapping(value = "/log", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping(value = "/log/", method = POST, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
-  public String approvalsLog() {
-    return new JSONArray(approvalStorageService.approvalLog()).toString();
+  public String approvalsLog(@RequestParam String id) {
+    return new JSONArray(approvalStorageService.approvalLog(id)).toString();
   }
 
   

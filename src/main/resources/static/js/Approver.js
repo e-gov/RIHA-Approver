@@ -8,7 +8,7 @@ function Approver(infosystemsUrl) {
   
   self.init = function() {
     loadInfosystems();
-    $('body').on( "click",'.approve button', function(event) {
+    $('#btnApproval').on("click", function(event) {
     	var clickedButton = $(event.target);
     	var infosystemRow = clickedButton.closest('tr');
     	var modal = document.getElementById('modal');
@@ -21,6 +21,15 @@ function Approver(infosystemsUrl) {
     	$("#btnApprove").off().on('click', function() {
     		addApproval(infosystemRow, modal);
     	});
+    	
+    	$("#btnArppovalLog").off().on('click', function(){
+    		$.post('/log/', {
+  			  id : infosystemRow.data('id')
+  		  	}).done(function(result) {
+  			  self._redirect('/log/');
+  		  	});
+    	});
+    	
     	span.onclick = function() {
     	    modal.style.display = "none";
     	}
@@ -38,6 +47,10 @@ function Approver(infosystemsUrl) {
       loadApprovals();
     });
   }
+  
+  self._redirect = function(url) {
+		window.location = url;
+  };
 
   function getBase64Encoded(rawStr){
  	 var wordArray = CryptoJS.enc.Utf8.parse(rawStr);
