@@ -9,6 +9,7 @@ function Approver(infosystemsUrl) {
   self.init = function() {
     loadInfosystems();
     $('body').on("click",'.approve #btnApproval', function(event) {
+
     	var clickedButton = $(event.target);
     	var infosystemRow = clickedButton.closest('tr');
     	var modal = document.getElementById('modal');
@@ -33,12 +34,12 @@ function Approver(infosystemsUrl) {
     	}
     });
     $('body').on("click",'.approve #btnApprovalLog', function(event){
-    	$.post('/logSave/', {
-			  id : infosystemRow.data('id')
-		  }).done(function(result) {
-			  self._redirect('/logGet');
-		  });
-    	
+//    	$.post('/logSave/', {
+//			  id : infosystemRow.data('id')
+//		  }).done(function(result) {
+//			  self._redirect('/logGet');
+//		  });
+    	self._redirect('/log');
 	});
   };
   
@@ -48,10 +49,6 @@ function Approver(infosystemsUrl) {
       loadApprovals();
     });
   }
-  
-  self._redirect = function(url) {
-		window.location = url;
-  };
 
   function getBase64Encoded(rawStr){
  	 var wordArray = CryptoJS.enc.Utf8.parse(rawStr);

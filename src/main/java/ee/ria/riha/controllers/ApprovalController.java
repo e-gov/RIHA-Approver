@@ -49,17 +49,11 @@ public class ApprovalController {
   public String approvals() {
     return new JSONArray(approvalStorageService.allApprovals()).toString();
   }
-
-  @RequestMapping(value = "/logSave/", method = POST, produces = MediaType.APPLICATION_JSON_VALUE)
-  @ResponseBody
-  public String approvalsSave(@RequestParam String id) {
-    return infosysId = id;
-  }
   
-  @RequestMapping(value = "/logGet", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping(value = "/log", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
-  public String approva12lsLog() {
-    return new JSONArray(approvalStorageService.approvalLog(infosysId)).toString();
+  public String approvalsLog() {
+    return new JSONArray(approvalStorageService.approvalLog()).toString();
   }
   
   @RequestMapping(value = "/approvals/approved/", method = POST, produces = MediaType.APPLICATION_JSON_VALUE)
