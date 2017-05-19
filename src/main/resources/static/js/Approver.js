@@ -14,19 +14,18 @@ function Approver(infosystemsUrl) {
     	var modal = document.getElementById('modal');
     	var span = document.getElementById('close');
     	
+    	$("input").val("");
+		$("textarea").val("");
+    	
     	modal.style.display = "block";
     	$("#btnApprove").off().on('click', function() {
     		addApproval(infosystemRow, modal);
     	});
     	span.onclick = function() {
-    		$("input").val("");
-			$("textarea").val("");
     	    modal.style.display = "none";
     	}
     	window.onclick = function(event) {
     	    if (event.target == modal) {
-    	    	$("input").val("");
-  			  	$("textarea").val("");
     	        modal.style.display = "none";
     	    }
     	}
@@ -103,8 +102,8 @@ function Approver(infosystemsUrl) {
 	  var approvalHeader = $('#header').val();
 	  var approvalComment = $('#comment').val();
 	  
-	  if(firstName == '' || lastName == '' || regCode == '' || instName == '' || approvalComment.length >= 250){
-		  alert('Palun täidke kõik väljad!');
+	  if(firstName == '' || lastName == '' || regCode == '' || instName == '' || approvalHeader == '' || approvalComment.length >= 250){
+		  alert('Palun täidke kõik väljad või hinnangu kommentaar on liiga pikk!');
 	  } else {
 		  saveCookie();
 		  $.post('/approve/', {
@@ -116,9 +115,6 @@ function Approver(infosystemsUrl) {
 			  infosystemRow.find('.approval-status').text(result.status);
 			  infosystemRow.find('.approval-comment').text(result.comment);
 			  clearCookie();
-			  //clearing input field values
-			  $("input").val("");
-			  $("textarea").val("");
 			  modal.style.display = "none";
 		  });
 	  }
