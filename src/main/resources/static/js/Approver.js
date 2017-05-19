@@ -49,7 +49,11 @@ function Approver(infosystemsUrl) {
       loadApprovals();
     });
   }
-
+  
+  self._redirect = function(url) {
+		window.location = url;
+  };
+  
   function getBase64Encoded(rawStr){
  	 var wordArray = CryptoJS.enc.Utf8.parse(rawStr);
  	 var result = CryptoJS.enc.Base64.stringify(wordArray);
