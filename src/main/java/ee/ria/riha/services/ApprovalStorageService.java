@@ -44,14 +44,14 @@ public class ApprovalStorageService {
     }).collect(Collectors.toList());
   }
   
-  public List<String> approvalLog(String uri){
-	 List<String> filteredApprovals = new ArrayList<String>();
-	 for (String string : loggedApprovals) {
-		if(string.contains(uri)){
-			filteredApprovals.add(string);
-		}
-	 }
-	 return filteredApprovals;
+  public List<String> approvalLog(){
+//	 List<String> filteredApprovals = new ArrayList<String>();
+//	 for (String string : loggedApprovals) {
+//		if(string.contains(uri)){
+//			filteredApprovals.add(string);
+//		}
+//	 }
+	 return loggedApprovals;
   }
   
   //A method for extracting JSON Web Tokens body from full JWT
