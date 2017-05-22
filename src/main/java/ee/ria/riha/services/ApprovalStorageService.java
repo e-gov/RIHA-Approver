@@ -44,13 +44,14 @@ public class ApprovalStorageService {
     }).collect(Collectors.toList());
   }
   
+  //A method which takes in info-system ID and filters global list of approvals for any approval made to the info-system that matches the ID
   public List<String> approvalLog(String id){
 	  List<String> filteredLog = new ArrayList<String>();
 	  for (String string : loggedApprovals) {
 		if (string.contains(id)) {
 			filteredLog.add(string);
 		}
-	}
+	  }
 	 return filteredLog;
   }
   
@@ -70,7 +71,7 @@ public class ApprovalStorageService {
   //A method which takes in a decoded token and formats it to extract only wanted data
   public String tokenStringFormatting(String token){
 	  String approverName = token.substring(token.indexOf("nimi"), token.indexOf("} },")+3);
-	  String approverInstitution = token.substring(token.indexOf("asutus"), token.indexOf("}, rollid"));
+	  String approverInstitution = token.substring(token.indexOf("asutus"), token.indexOf(", rollid"));
 	  return approverName + ", " + approverInstitution;
   }
   //Method which uses previous helper methods to take in token and return decoded and formated string
