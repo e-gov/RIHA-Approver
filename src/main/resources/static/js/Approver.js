@@ -34,6 +34,8 @@ function Approver(infosystemsUrl) {
     	}
     });
     $('body').on("click",'.approve #btnApprovalLog', function(event){
+    	var clickedButton = $(event.target);
+    	var infosystemRow = clickedButton.closest('tr');
     	$.post('/infosys/', {
 			  id : infosystemRow.data('id')
 		  }).done(function(result) {
