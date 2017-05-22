@@ -34,12 +34,11 @@ function Approver(infosystemsUrl) {
     	}
     });
     $('body').on("click",'.approve #btnApprovalLog', function(event){
-//    	$.post('/logSave/', {
-//			  id : infosystemRow.data('id')
-//		  }).done(function(result) {
-//			  self._redirect('/logGet');
-//		  });
-    	self._redirect('/log');
+    	$.post('/infosys/', {
+			  id : infosystemRow.data('id')
+		  }).done(function(result) {
+			  self._redirect('/log');
+		  });
 	});
   };
   

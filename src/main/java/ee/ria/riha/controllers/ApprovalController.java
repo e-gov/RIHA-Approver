@@ -50,10 +50,16 @@ public class ApprovalController {
     return new JSONArray(approvalStorageService.allApprovals()).toString();
   }
   
+  @RequestMapping(value = "/infosys/", method = POST, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public void saveInfosysID(@RequestParam String id) {
+	  infosysId = id;
+  }
+  
   @RequestMapping(value = "/log", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
   public String approvalsLog() {
-    return new JSONArray(approvalStorageService.approvalLog()).toString();
+    return new JSONArray(approvalStorageService.approvalLog(infosysId)).toString() + " || " + infosysId;
   }
   
   @RequestMapping(value = "/approvals/approved/", method = POST, produces = MediaType.APPLICATION_JSON_VALUE)
