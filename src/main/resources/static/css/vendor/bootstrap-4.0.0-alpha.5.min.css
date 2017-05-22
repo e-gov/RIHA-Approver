@@ -38,6 +38,7 @@
     color: white;
     float: right;
     font-size: 28px;
+    margin-top: 5px;
     font-weight: bold;
 }
 
@@ -50,12 +51,6 @@
 
 /* Modal Content */
 .modal-header {
-    padding: 2px 16px;
-    background-color: #66b3ff;
-    color: white;
-}
-/* Modal Content */
-.modal-footer {
     padding: 2px 16px;
     background-color: #66b3ff;
     color: white;
