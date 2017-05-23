@@ -74,9 +74,14 @@ public class ApprovalStorageService {
   }
   //A method which takes in a decoded token and formats it to extract only wanted data
   public String tokenStringFormatting(String token){
-	  String approverName = token.substring(token.indexOf("nimi"), token.indexOf("} },")+3);
-	  String approverInstitution = token.substring(token.indexOf("asutus"), token.indexOf(", rollid"));
-	  return approverName + ", " + approverInstitution;
+	  if(token.isEmpty()){
+		  return "";
+	  } else{
+		  String approverName = token.substring(token.indexOf("nimi"), token.indexOf("} },")+3);
+		  String approverInstitution = token.substring(token.indexOf("asutus"), token.indexOf(", rollid"));
+		  return approverName + ", " + approverInstitution;
+	  }
+	  
   }
   //Method which uses previous helper methods to take in token and return decoded and formated string
   public String formatToken(String token) {
