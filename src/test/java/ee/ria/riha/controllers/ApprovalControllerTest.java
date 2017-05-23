@@ -37,14 +37,14 @@ public class ApprovalControllerTest {
 
     String result = controller.updateApprovalStatus("Authorization token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ", "http://base.url/infosystem", "MITTE KOOSKÕLASTATUD", "kommentaar");
 
-    JSONAssert.assertEquals("{\"uri\":\"http://base.url/infosystem\",\"timestamp\":\"2016-12-12T08:10:10\",\"status\":\"MITTE KOOSKÕLASTATUD\",\"token\":\"testJWT\",\"comment\":\"kommentaar\"}", result, true);
+    JSONAssert.assertEquals("{\"uri\":\"http://base.url/infosystem\",\"timestamp\":\"2016-12-12T08:10:10\",\"status\":\"MITTE KOOSKÕLASTATUD\",\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ\",\"comment\":\"kommentaar\"}", result, true);
     ArgumentCaptor<Approval> approvalCaptor = ArgumentCaptor.forClass(Approval.class);
     verify(storageService).saveInfosystemApproval(approvalCaptor.capture());
     Approval approval = approvalCaptor.getValue();
     assertEquals(approval.getUri(), "http://base.url/infosystem");
     assertEquals(approval.getTimestamp(), "2016-12-12T08:10:10");
     assertEquals(approval.getStatus(), "MITTE KOOSKÕLASTATUD");
-    assertEquals(approval.getToken(), "testJWT");
+    assertEquals(approval.getToken(), "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ");
     assertEquals(approval.getComment(), "kommentaar");
   }
 
