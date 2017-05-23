@@ -73,14 +73,16 @@ public class ApprovalStorageServiceTest {
 						"eyAiYWxnIjoiSFMyNTYiLCAidHlwIjoiSldUIiB9.eyAiaXNzIjoiUklIQSBhdXRvcmlzZWVyaWphIiwgImlhdCI6MTQ5MTkwMzM1MSwgImV4cCI6MTQ5MTk4OTc1MSwgInN1YiI6eyAiaXNpa3Vrb29kIjoiNjAxMDcxMTAxMzQiLCAibmltaSI6eyAiZWVzbmltaSI6IlRhYXZpIiwgInBlcmVrb25uYW5pbWkiOiJNZWluYmVyZyIgfSB9LCAiYXN1dHVzIjp7ICJyZWdpc3RyaWtvb2QiOiIxMjM0ODkzMTI2NCIsICJuaW1ldHVzIjoiUklIQSIgfSwgInJvbGxpZCI6eyAicm9sbCI6IkhJTkRBSkEiIH0gfQ==.Kp6HKn1enwbyOELpfw80HOP/xLN48dGy8Xt78C5zbCY=",
 						"kommentaar"));
 
-    assertEquals("2016-12-12T08:05:08.4567|MITTE KOOSKÕLASTATUD", approvals().getProperty("http://base.url/infosystem-name"));
-  }
+		assertEquals(
+				"2016-12-12T08:05:08.4567|MITTE KOOSKÕLASTATUD|eyAiYWxnIjoiSFMyNTYiLCAidHlwIjoiSldUIiB9.eyAiaXNzIjoiUklIQSBhdXRvcmlzZWVyaWphIiwgImlhdCI6MTQ5MTkwMzM1MSwgImV4cCI6MTQ5MTk4OTc1MSwgInN1YiI6eyAiaXNpa3Vrb29kIjoiNjAxMDcxMTAxMzQiLCAibmltaSI6eyAiZWVzbmltaSI6IlRhYXZpIiwgInBlcmVrb25uYW5pbWkiOiJNZWluYmVyZyIgfSB9LCAiYXN1dHVzIjp7ICJyZWdpc3RyaWtvb2QiOiIxMjM0ODkzMTI2NCIsICJuaW1ldHVzIjoiUklIQSIgfSwgInJvbGxpZCI6eyAicm9sbCI6IkhJTkRBSkEiIH0gfQ==.Kp6HKn1enwbyOELpfw80HOP/xLN48dGy8Xt78C5zbCY=|kommentaar",
+				approvals().getProperty("http://base.url/infosystem-name"));
+	  }
 
   @Test
   public void saveInfosystemApproval_existingFileWithData() throws IOException {
     Properties existingApprovals = approvals();
 		existingApprovals.setProperty("http://base.url/other-infosystem-name",
-				"2016-12-12T01:01:01|KOOSKÕLASTATUD|eyAiaXNzIjoiUklIQSBhdXRvcmlzZWVyaWphIiwgImlhdCI6MTQ5MTkwMzM1MSwgImV4cCI6MTQ5MTk4OTc1MSwgInN1YiI6eyAiaXNpa3Vrb29kIjoiNjAxMDcxMTAxMzQiLCAibmltaSI6eyAiZWVzbmltaSI6IlRhYXZpIiwgInBlcmVrb25uYW5pbWkiOiJNZWluYmVyZyIgfSB9LCAiYXN1dHVzIjp7ICJyZWdpc3RyaWtvb2QiOiIxMjM0ODkzMTI2NCIsICJuaW1ldHVzIjoiUklIQSIgfSwgInJvbGxpZCI6eyAicm9sbCI6IkhJTkRBSkEiIH0gfQ|comment");
+				"2016-12-12T01:01:01|KOOSKÕLASTATUD|eyAiaXNzIjoiUklIQSBhdXRvcmlzZWVyaWphIiwgImlhdCI6MTQ5MTkwMzM1MSwgImV4cCI6MTQ5MTk4OTc1MSwgInN1YiI6eyAiaXNpa3Vrb29kIjoiNjAxMDcxMTAxMzQiLCAibmltaSI6eyAiZWVzbmltaSI6IlRhYXZpIiwgInBlcmVrb25uYW5pbWkiOiJNZWluYmVyZyIgfSB9LCAiYXN1dHVzIjp7ICJyZWdpc3RyaWtvb2QiOiIxMjM0ODkzMTI2NCIsICJuaW1ldHVzIjoiUklIQSIgfSwgInJvbGxpZCI6eyAicm9sbCI6IkhJTkRBSkEiIH0gfQ|kommentaar");
 	    existingApprovals.store(Files.newOutputStream(storageFilePath), null);
 
 		service.saveInfosystemApproval(
