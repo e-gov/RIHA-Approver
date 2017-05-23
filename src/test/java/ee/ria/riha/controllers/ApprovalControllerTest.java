@@ -37,14 +37,14 @@ public class ApprovalControllerTest {
 
     String result = controller.updateApprovalStatus("http://base.url/infosystem", "MITTE KOOSKÕLASTATUD", "testJWT", "kommentaar");
 
-    JSONAssert.assertEquals("{\"uri\":\"http://base.url/infosystem\",\"timestamp\":\"2016-12-12T08:10:10\",\"token\":\"testJWT\",\"status\":\"MITTE KOOSKÕLASTATUD\",\"comment\":\"kommentaar\"}", result, true);
+    JSONAssert.assertEquals("{\"uri\":\"http://base.url/infosystem\",\"timestamp\":\"2016-12-12T08:10:10\",\"status\":\"MITTE KOOSKÕLASTATUD\",\"token\":\"testJWT\",\"comment\":\"kommentaar\"}", result, true);
     ArgumentCaptor<Approval> approvalCaptor = ArgumentCaptor.forClass(Approval.class);
     verify(storageService).saveInfosystemApproval(approvalCaptor.capture());
     Approval approval = approvalCaptor.getValue();
     assertEquals(approval.getUri(), "http://base.url/infosystem");
     assertEquals(approval.getTimestamp(), "2016-12-12T08:10:10");
-    assertEquals(approval.getToken(), "testJWT");
     assertEquals(approval.getStatus(), "MITTE KOOSKÕLASTATUD");
+    assertEquals(approval.getToken(), "testJWT");
     assertEquals(approval.getComment(), "kommentaar");
   }
 
