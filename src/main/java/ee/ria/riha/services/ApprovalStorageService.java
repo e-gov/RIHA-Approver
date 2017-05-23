@@ -58,7 +58,11 @@ public class ApprovalStorageService {
   //A method for extracting JSON Web Tokens body from full JWT
   public String extractJWTBody(String token){
 	  String fullJWT = token;
-	  return fullJWT.substring(fullJWT.indexOf('.') + 1, fullJWT.lastIndexOf('.'));
+	  if(fullJWT.contains(".")){
+		  return fullJWT.substring(fullJWT.indexOf('.') + 1, fullJWT.lastIndexOf('.'));
+	  } else {
+		  return "";
+	  }
   }
 
   //A method which takes in a base64 encoded string and returns the decoded version of it
