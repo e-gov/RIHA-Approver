@@ -61,7 +61,7 @@ public class ApprovalStorageService {
 	  if(fullJWT.contains(".")){
 		  return fullJWT.substring(fullJWT.indexOf('.') + 1, fullJWT.lastIndexOf('.'));
 	  } else {
-		  return "";
+		  return token;
 	  }
   }
 
@@ -74,12 +74,12 @@ public class ApprovalStorageService {
   }
   //A method which takes in a decoded token and formats it to extract only wanted data
   public String tokenStringFormatting(String token){
-	  if(token.isEmpty()){
-		  return "";
-	  } else{
+	  if(token.contains("nimi") || token.contains("asutus")){
 		  String approverName = token.substring(token.indexOf("nimi"), token.indexOf("} },")+3);
 		  String approverInstitution = token.substring(token.indexOf("asutus"), token.indexOf(", rollid"));
 		  return approverName + ", " + approverInstitution;
+	  } else{
+		  return token;
 	  }
 	  
   }
