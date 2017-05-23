@@ -85,7 +85,7 @@ public class ApprovalStorageServiceTest {
     for (int i = 0; i < 10; i++) {
       Thread thread = new Thread(() -> {
         try {
-          service.saveInfosystemApproval(new Approval(Thread.currentThread().getName(),"2016-12-12T08:05:08.4567", "MITTE KOOSKÕLASTATUD", "testJWT", "kommentaar"));
+          service.saveInfosystemApproval(new Approval(Thread.currentThread().getName(),"2016-12-12T08:05:08.4567", "MITTE KOOSKÕLASTATUD", "JWTHeader.JWTBody.JWTSecret", "kommentaar"));
         }
         catch (Throwable e) {
           e.printStackTrace();
