@@ -41,18 +41,20 @@ public class ApprovalStorageServiceTest {
     assertEquals("http://base.url1/shortname-1", result.get(0).getUri());
     assertEquals("2016-01-01T10:00:00", result.get(0).getTimestamp());
     assertEquals("MITTE KOOSKÕLASTATUD", result.get(0).getStatus());
-	assertEquals("comment", result.get(0).getComment());
-	assertEquals(
+    assertEquals(
 			"eyAiaXNzIjoiUklIQSBhdXRvcmlzZWVyaWphIiwgImlhdCI6MTQ5MTkwMzM1MSwgImV4cCI6MTQ5MTk4OTc1MSwgInN1YiI6eyAiaXNpa3Vrb29kIjoiNjAxMDcxMTAxMzQiLCAibmltaSI6eyAiZWVzbmltaSI6IlRhYXZpIiwgInBlcmVrb25uYW5pbWkiOiJNZWluYmVyZyIgfSB9LCAiYXN1dHVzIjp7ICJyZWdpc3RyaWtvb2QiOiIxMjM0ODkzMTI2NCIsICJuaW1ldHVzIjoiUklIQSIgfSwgInJvbGxpZCI6eyAicm9sbCI6IkhJTkRBSkEiIH0gfQ",
 			result.get(0).getToken());
+	assertEquals("comment", result.get(0).getComment());
+	
 	
     assertEquals("http://base.url2/shortname-2", result.get(1).getUri());
     assertEquals("2015-10-10T01:10:10", result.get(1).getTimestamp());
     assertEquals("KOOSKÕLASTATUD", result.get(1).getStatus());
-	assertEquals("comment", result.get(1).getComment());
-	assertEquals(
+    assertEquals(
 			"eyAiaXNzIjoiUklIQSBhdXRvcmlzZWVyaWphIiwgImlhdCI6MTQ5MTkwMzM1MSwgImV4cCI6MTQ5MTk4OTc1MSwgInN1YiI6eyAiaXNpa3Vrb29kIjoiNjAxMDcxMTAxMzQiLCAibmltaSI6eyAiZWVzbmltaSI6IlRhYXZpIiwgInBlcmVrb25uYW5pbWkiOiJNZWluYmVyZyIgfSB9LCAiYXN1dHVzIjp7ICJyZWdpc3RyaWtvb2QiOiIxMjM0ODkzMTI2NCIsICJuaW1ldHVzIjoiUklIQSIgfSwgInJvbGxpZCI6eyAicm9sbCI6IkhJTkRBSkEiIH0gfQ",
 			result.get(1).getToken());
+	assertEquals("comment", result.get(1).getComment());
+	
   }
 
   @Test
@@ -78,7 +80,6 @@ public class ApprovalStorageServiceTest {
 				"2016-12-12T08:05:08.4567|MITTE KOOSKÕLASTATUD|eyAiYWxnIjoiSFMyNTYiLCAidHlwIjoiSldUIiB9.eyAiaXNzIjoiUklIQSBhdXRvcmlzZWVyaWphIiwgImlhdCI6MTQ5MTkwMzM1MSwgImV4cCI6MTQ5MTk4OTc1MSwgInN1YiI6eyAiaXNpa3Vrb29kIjoiNjAxMDcxMTAxMzQiLCAibmltaSI6eyAiZWVzbmltaSI6IlRhYXZpIiwgInBlcmVrb25uYW5pbWkiOiJNZWluYmVyZyIgfSB9LCAiYXN1dHVzIjp7ICJyZWdpc3RyaWtvb2QiOiIxMjM0ODkzMTI2NCIsICJuaW1ldHVzIjoiUklIQSIgfSwgInJvbGxpZCI6eyAicm9sbCI6IkhJTkRBSkEiIH0gfQ==.Kp6HKn1enwbyOELpfw80HOP/xLN48dGy8Xt78C5zbCY=|kommentaar",
 				approvals().getProperty("http://base.url/infosystem-name"));
 	  }
-
   @Test
   public void saveInfosystemApproval_existingFileWithData() throws IOException {
     Properties existingApprovals = approvals();
@@ -93,9 +94,13 @@ public class ApprovalStorageServiceTest {
 
     Properties approvals = approvals();
     assertEquals(2, approvals.size());
-    assertEquals("2016-12-12T08:05:08.4567|MITTE KOOSKÕLASTATUD", approvals.getProperty("http://base.url/infosystem-name"));
-    assertEquals("2016-12-12T01:01:01|KOOSKÕLASTATUD", approvals.getProperty("http://base.url/other-infosystem-name"));
-  }
+		assertEquals(
+				"2016-12-12T08:05:08.4567|MITTE KOOSKÕLASTATUD|eyAiaXNzIjoiUklIQSBhdXRvcmlzZWVyaWphIiwgImlhdCI6MTQ5MTkwMzM1MSwgImV4cCI6MTQ5MTk4OTc1MSwgInN1YiI6eyAiaXNpa3Vrb29kIjoiNjAxMDcxMTAxMzQiLCAibmltaSI6eyAiZWVzbmltaSI6IlRhYXZpIiwgInBlcmVrb25uYW5pbWkiOiJNZWluYmVyZyIgfSB9LCAiYXN1dHVzIjp7ICJyZWdpc3RyaWtvb2QiOiIxMjM0ODkzMTI2NCIsICJuaW1ldHVzIjoiUklIQSIgfSwgInJvbGxpZCI6eyAicm9sbCI6IkhJTkRBSkEiIH0gfQ|kommentaar",
+				approvals.getProperty("http://base.url/infosystem-name"));
+		assertEquals(
+				"2016-12-12T01:01:01|KOOSKÕLASTATUD|eyAiaXNzIjoiUklIQSBhdXRvcmlzZWVyaWphIiwgImlhdCI6MTQ5MTkwMzM1MSwgImV4cCI6MTQ5MTk4OTc1MSwgInN1YiI6eyAiaXNpa3Vrb29kIjoiNjAxMDcxMTAxMzQiLCAibmltaSI6eyAiZWVzbmltaSI6IlRhYXZpIiwgInBlcmVrb25uYW5pbWkiOiJNZWluYmVyZyIgfSB9LCAiYXN1dHVzIjp7ICJyZWdpc3RyaWtvb2QiOiIxMjM0ODkzMTI2NCIsICJuaW1ldHVzIjoiUklIQSIgfSwgInJvbGxpZCI6eyAicm9sbCI6IkhJTkRBSkEiIH0gfQ|kommentaar",
+				approvals.getProperty("http://base.url/other-infosystem-name"));
+	  }
 
   @Test
   public void saveInfosystemApproval_isThreadSafe() throws IOException, InterruptedException {
