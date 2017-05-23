@@ -43,8 +43,8 @@ public class ApprovalControllerTest {
     Approval approval = approvalCaptor.getValue();
     assertEquals(approval.getUri(), "http://base.url/infosystem");
     assertEquals(approval.getTimestamp(), "2016-12-12T08:10:10");
-    assertEquals(approval.getStatus(), "MITTE KOOSKÕLASTATUD");
     assertEquals(approval.getToken(), "testJWT");
+    assertEquals(approval.getStatus(), "MITTE KOOSKÕLASTATUD");
     assertEquals(approval.getComment(), "kommentaar");
   }
 

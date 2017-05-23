@@ -42,7 +42,7 @@ public class ApprovalStorageServiceTest {
     assertEquals("2016-01-01T10:00:00", result.get(0).getTimestamp());
     assertEquals("MITTE KOOSKÕLASTATUD", result.get(0).getStatus());
     assertEquals(
-			"eyAiaXNzIjoiUklIQSBhdXRvcmlzZWVyaWphIiwgImlhdCI6MTQ5MTkwMzM1MSwgImV4cCI6MTQ5MTk4OTc1MSwgInN1YiI6eyAiaXNpa3Vrb29kIjoiNjAxMDcxMTAxMzQiLCAibmltaSI6eyAiZWVzbmltaSI6IlRhYXZpIiwgInBlcmVrb25uYW5pbWkiOiJNZWluYmVyZyIgfSB9LCAiYXN1dHVzIjp7ICJyZWdpc3RyaWtvb2QiOiIxMjM0ODkzMTI2NCIsICJuaW1ldHVzIjoiUklIQSIgfSwgInJvbGxpZCI6eyAicm9sbCI6IkhJTkRBSkEiIH0gfQ",
+			"nimi:{ eesnimi:Taavi, perekonnanimi:Meinberg } }, asutus:{ registrikood:12348931264, nimetus:RIHA }",
 			result.get(0).getToken());
 	assertEquals("comment", result.get(0).getComment());
 	
@@ -51,7 +51,7 @@ public class ApprovalStorageServiceTest {
     assertEquals("2015-10-10T01:10:10", result.get(1).getTimestamp());
     assertEquals("KOOSKÕLASTATUD", result.get(1).getStatus());
     assertEquals(
-			"eyAiaXNzIjoiUklIQSBhdXRvcmlzZWVyaWphIiwgImlhdCI6MTQ5MTkwMzM1MSwgImV4cCI6MTQ5MTk4OTc1MSwgInN1YiI6eyAiaXNpa3Vrb29kIjoiNjAxMDcxMTAxMzQiLCAibmltaSI6eyAiZWVzbmltaSI6IlRhYXZpIiwgInBlcmVrb25uYW5pbWkiOiJNZWluYmVyZyIgfSB9LCAiYXN1dHVzIjp7ICJyZWdpc3RyaWtvb2QiOiIxMjM0ODkzMTI2NCIsICJuaW1ldHVzIjoiUklIQSIgfSwgInJvbGxpZCI6eyAicm9sbCI6IkhJTkRBSkEiIH0gfQ",
+			"nimi:{ eesnimi:Taavi, perekonnanimi:Meinberg } }, asutus:{ registrikood:12348931264, nimetus:RIHA }",
 			result.get(1).getToken());
 	assertEquals("comment", result.get(1).getComment());
 	
