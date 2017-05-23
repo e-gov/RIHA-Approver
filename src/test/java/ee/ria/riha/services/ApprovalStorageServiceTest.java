@@ -31,8 +31,8 @@ public class ApprovalStorageServiceTest {
   @Test
   public void allApprovals() {
     Properties properties = new Properties();
-    properties.setProperty("http://base.url2/shortname-2", "2015-10-10T01:10:10|KOOSKÕLASTATUD|eyAiaXNzIjoiUklIQSBhdXRvcmlzZWVyaWphIiwgImlhdCI6MTQ5MTkwMzM1MSwgImV4cCI6MTQ5MTk4OTc1MSwgInN1YiI6eyAiaXNpa3Vrb29kIjoiNjAxMDcxMTAxMzQiLCAibmltaSI6eyAiZWVzbmltaSI6IlRhYXZpIiwgInBlcmVrb25uYW5pbWkiOiJNZWluYmVyZyIgfSB9LCAiYXN1dHVzIjp7ICJyZWdpc3RyaWtvb2QiOiIxMjM0ODkzMTI2NCIsICJuaW1ldHVzIjoiUklIQSIgfSwgInJvbGxpZCI6eyAicm9sbCI6IkhJTkRBSkEiIH0gfQ|comment");
-    properties.setProperty("http://base.url1/shortname-1", "2016-01-01T10:00:00|MITTE KOOSKÕLASTATUD|eyAiaXNzIjoiUklIQSBhdXRvcmlzZWVyaWphIiwgImlhdCI6MTQ5MTkwMzM1MSwgImV4cCI6MTQ5MTk4OTc1MSwgInN1YiI6eyAiaXNpa3Vrb29kIjoiNjAxMDcxMTAxMzQiLCAibmltaSI6eyAiZWVzbmltaSI6IlRhYXZpIiwgInBlcmVrb25uYW5pbWkiOiJNZWluYmVyZyIgfSB9LCAiYXN1dHVzIjp7ICJyZWdpc3RyaWtvb2QiOiIxMjM0ODkzMTI2NCIsICJuaW1ldHVzIjoiUklIQSIgfSwgInJvbGxpZCI6eyAicm9sbCI6IkhJTkRBSkEiIH0gfQ|comment");
+    properties.setProperty("http://base.url2/shortname-2", "2015-10-10T01:10:10|KOOSKÕLASTATUD|comment|eyAiaXNzIjoiUklIQSBhdXRvcmlzZWVyaWphIiwgImlhdCI6MTQ5MTkwMzM1MSwgImV4cCI6MTQ5MTk4OTc1MSwgInN1YiI6eyAiaXNpa3Vrb29kIjoiNjAxMDcxMTAxMzQiLCAibmltaSI6eyAiZWVzbmltaSI6IlRhYXZpIiwgInBlcmVrb25uYW5pbWkiOiJNZWluYmVyZyIgfSB9LCAiYXN1dHVzIjp7ICJyZWdpc3RyaWtvb2QiOiIxMjM0ODkzMTI2NCIsICJuaW1ldHVzIjoiUklIQSIgfSwgInJvbGxpZCI6eyAicm9sbCI6IkhJTkRBSkEiIH0gfQ");
+    properties.setProperty("http://base.url1/shortname-1", "2016-01-01T10:00:00|MITTE KOOSKÕLASTATUD|comment|eyAiaXNzIjoiUklIQSBhdXRvcmlzZWVyaWphIiwgImlhdCI6MTQ5MTkwMzM1MSwgImV4cCI6MTQ5MTk4OTc1MSwgInN1YiI6eyAiaXNpa3Vrb29kIjoiNjAxMDcxMTAxMzQiLCAibmltaSI6eyAiZWVzbmltaSI6IlRhYXZpIiwgInBlcmVrb25uYW5pbWkiOiJNZWluYmVyZyIgfSB9LCAiYXN1dHVzIjp7ICJyZWdpc3RyaWtvb2QiOiIxMjM0ODkzMTI2NCIsICJuaW1ldHVzIjoiUklIQSIgfSwgInJvbGxpZCI6eyAicm9sbCI6IkhJTkRBSkEiIH0gfQ");
     doReturn(properties).when(service).loadProperties();
 
     List<Approval> result = service.allApprovals();
@@ -41,17 +41,18 @@ public class ApprovalStorageServiceTest {
     assertEquals("http://base.url1/shortname-1", result.get(0).getUri());
     assertEquals("2016-01-01T10:00:00", result.get(0).getTimestamp());
     assertEquals("MITTE KOOSKÕLASTATUD", result.get(0).getStatus());
-		assertEquals(
-				"eyAiaXNzIjoiUklIQSBhdXRvcmlzZWVyaWphIiwgImlhdCI6MTQ5MTkwMzM1MSwgImV4cCI6MTQ5MTk4OTc1MSwgInN1YiI6eyAiaXNpa3Vrb29kIjoiNjAxMDcxMTAxMzQiLCAibmltaSI6eyAiZWVzbmltaSI6IlRhYXZpIiwgInBlcmVrb25uYW5pbWkiOiJNZWluYmVyZyIgfSB9LCAiYXN1dHVzIjp7ICJyZWdpc3RyaWtvb2QiOiIxMjM0ODkzMTI2NCIsICJuaW1ldHVzIjoiUklIQSIgfSwgInJvbGxpZCI6eyAicm9sbCI6IkhJTkRBSkEiIH0gfQ",
-				result.get(0).getToken());
 	assertEquals("comment", result.get(0).getComment());
+	assertEquals(
+			"eyAiaXNzIjoiUklIQSBhdXRvcmlzZWVyaWphIiwgImlhdCI6MTQ5MTkwMzM1MSwgImV4cCI6MTQ5MTk4OTc1MSwgInN1YiI6eyAiaXNpa3Vrb29kIjoiNjAxMDcxMTAxMzQiLCAibmltaSI6eyAiZWVzbmltaSI6IlRhYXZpIiwgInBlcmVrb25uYW5pbWkiOiJNZWluYmVyZyIgfSB9LCAiYXN1dHVzIjp7ICJyZWdpc3RyaWtvb2QiOiIxMjM0ODkzMTI2NCIsICJuaW1ldHVzIjoiUklIQSIgfSwgInJvbGxpZCI6eyAicm9sbCI6IkhJTkRBSkEiIH0gfQ",
+			result.get(0).getToken());
+	
     assertEquals("http://base.url2/shortname-2", result.get(1).getUri());
     assertEquals("2015-10-10T01:10:10", result.get(1).getTimestamp());
     assertEquals("KOOSKÕLASTATUD", result.get(1).getStatus());
-		assertEquals(
-				"eyAiaXNzIjoiUklIQSBhdXRvcmlzZWVyaWphIiwgImlhdCI6MTQ5MTkwMzM1MSwgImV4cCI6MTQ5MTk4OTc1MSwgInN1YiI6eyAiaXNpa3Vrb29kIjoiNjAxMDcxMTAxMzQiLCAibmltaSI6eyAiZWVzbmltaSI6IlRhYXZpIiwgInBlcmVrb25uYW5pbWkiOiJNZWluYmVyZyIgfSB9LCAiYXN1dHVzIjp7ICJyZWdpc3RyaWtvb2QiOiIxMjM0ODkzMTI2NCIsICJuaW1ldHVzIjoiUklIQSIgfSwgInJvbGxpZCI6eyAicm9sbCI6IkhJTkRBSkEiIH0gfQ",
-				result.get(1).getToken());
 	assertEquals("comment", result.get(1).getComment());
+	assertEquals(
+			"eyAiaXNzIjoiUklIQSBhdXRvcmlzZWVyaWphIiwgImlhdCI6MTQ5MTkwMzM1MSwgImV4cCI6MTQ5MTk4OTc1MSwgInN1YiI6eyAiaXNpa3Vrb29kIjoiNjAxMDcxMTAxMzQiLCAibmltaSI6eyAiZWVzbmltaSI6IlRhYXZpIiwgInBlcmVrb25uYW5pbWkiOiJNZWluYmVyZyIgfSB9LCAiYXN1dHVzIjp7ICJyZWdpc3RyaWtvb2QiOiIxMjM0ODkzMTI2NCIsICJuaW1ldHVzIjoiUklIQSIgfSwgInJvbGxpZCI6eyAicm9sbCI6IkhJTkRBSkEiIH0gfQ",
+			result.get(1).getToken());
   }
 
   @Test
