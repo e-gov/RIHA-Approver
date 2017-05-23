@@ -60,7 +60,10 @@ public class ApprovalStorageServiceTest {
 
   @Test
   public void saveInfosystemApproval_noExistingFile() throws IOException {
-    service.saveInfosystemApproval(new Approval("http://base.url/infosystem-name","2016-12-12T08:05:08.4567", "MITTE KOOSKÕLASTATUD", "testJWT", "kommentaar"));
+		service.saveInfosystemApproval(
+				new Approval("http://base.url/infosystem-name", "2016-12-12T08:05:08.4567", "MITTE KOOSKÕLASTATUD",
+						"eyAiYWxnIjoiSFMyNTYiLCAidHlwIjoiSldUIiB9.eyAiaXNzIjoiUklIQSBhdXRvcmlzZWVyaWphIiwgImlhdCI6MTQ5MTkwMzM1MSwgImV4cCI6MTQ5MTk4OTc1MSwgInN1YiI6eyAiaXNpa3Vrb29kIjoiNjAxMDcxMTAxMzQiLCAibmltaSI6eyAiZWVzbmltaSI6IlRhYXZpIiwgInBlcmVrb25uYW5pbWkiOiJNZWluYmVyZyIgfSB9LCAiYXN1dHVzIjp7ICJyZWdpc3RyaWtvb2QiOiIxMjM0ODkzMTI2NCIsICJuaW1ldHVzIjoiUklIQSIgfSwgInJvbGxpZCI6eyAicm9sbCI6IkhJTkRBSkEiIH0gfQ==.Kp6HKn1enwbyOELpfw80HOP/xLN48dGy8Xt78C5zbCY=",
+						"kommentaar"));
 
     assertEquals("2016-12-12T08:05:08.4567|MITTE KOOSKÕLASTATUD", approvals().getProperty("http://base.url/infosystem-name"));
   }
@@ -84,9 +87,12 @@ public class ApprovalStorageServiceTest {
     List<Thread> threads = new ArrayList<>();
     for (int i = 0; i < 10; i++) {
       Thread thread = new Thread(() -> {
-        try {
-          service.saveInfosystemApproval(new Approval(Thread.currentThread().getName(),"2016-12-12T08:05:08.4567", "MITTE KOOSKÕLASTATUD", "JWTHeader.JWTBody.JWTSecret", "kommentaar"));
-        }
+				try {
+					service.saveInfosystemApproval(new Approval(Thread.currentThread().getName(),
+							"2016-12-12T08:05:08.4567", "MITTE KOOSKÕLASTATUD",
+							"eyAiYWxnIjoiSFMyNTYiLCAidHlwIjoiSldUIiB9.eyAiaXNzIjoiUklIQSBhdXRvcmlzZWVyaWphIiwgImlhdCI6MTQ5MTkwMzM1MSwgImV4cCI6MTQ5MTk4OTc1MSwgInN1YiI6eyAiaXNpa3Vrb29kIjoiNjAxMDcxMTAxMzQiLCAibmltaSI6eyAiZWVzbmltaSI6IlRhYXZpIiwgInBlcmVrb25uYW5pbWkiOiJNZWluYmVyZyIgfSB9LCAiYXN1dHVzIjp7ICJyZWdpc3RyaWtvb2QiOiIxMjM0ODkzMTI2NCIsICJuaW1ldHVzIjoiUklIQSIgfSwgInJvbGxpZCI6eyAicm9sbCI6IkhJTkRBSkEiIH0gfQ==.Kp6HKn1enwbyOELpfw80HOP/xLN48dGy8Xt78C5zbCY=",
+							"kommentaar"));
+				}
         catch (Throwable e) {
           e.printStackTrace();
         }
