@@ -133,8 +133,10 @@ describe('Approver', function() {
 		
 		spyEvent = spyOnEvent('#btnApproval', 'click');
 		$('#btnApproval').trigger( "click" );
-		$('#first_name').val( "Joosep" );
+		
+		spyOn($.fn, "val").and.returnValue("Joosep");
 		var result = $("#first_name").val();
+		
 		expect('click').toHaveBeenTriggeredOn('#btnApproval');
 		expect(spyEvent).toHaveBeenTriggered();
 		expect(result).toHaveValue("Joosep");
