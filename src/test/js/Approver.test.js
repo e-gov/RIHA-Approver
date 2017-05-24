@@ -138,7 +138,7 @@ describe('Approver', function() {
 		
 		expect('click').toHaveBeenTriggeredOn('#btnApproval');
 		expect(spyEvent).toHaveBeenTriggered();
-		expect($('#first_name').text()).toBe('Joosep');
+		expect($('#first_name').val()).toBe('Joosep');
 	});
 	  
     it('changes info system status to Approved and sets approval timestamp', function() {
