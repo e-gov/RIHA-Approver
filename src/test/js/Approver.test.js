@@ -133,12 +133,12 @@ describe('Approver', function() {
 		
 		spyEvent = spyOnEvent('#btnApproval', 'click');
 		$('#btnApproval').trigger( "click" );
-		       
+		$('#first_name').val( "Joosep" );
 		var modal = document.getElementById('modal');
 		
 		expect('click').toHaveBeenTriggeredOn('#btnApproval');
 		expect(spyEvent).toHaveBeenTriggered();
-		expect(modal.style.display).toBe('block');
+		expect($('#first_name').text()).toBe('Joosep');
 	});
 	  
     it('changes info system status to Approved and sets approval timestamp', function() {
@@ -155,7 +155,7 @@ describe('Approver', function() {
       var event  = {target: $('button[data-status="KOOSKÕLASTATUD"]')};
       var infosystemRow = "1000-RIA";
       
-      new Approver().addApprovalTest(infosystemRow, modal);
+      //new Approver().addApprovalTest(infosystemRow);
 
       expect($('.approved').text()).toBe('2016-12-05T15:29:00.128468');
       expect($('.approval-status').text()).toBe('KOOSKÕLASTATUD');
