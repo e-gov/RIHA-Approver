@@ -139,7 +139,7 @@ describe('Approver', function() {
 		
 		expect('click').toHaveBeenTriggeredOn('#btnApproval');
 		expect(spyEvent).toHaveBeenTriggered();
-		expect(result).toHaveValue("Joosep");
+		expect(result).toBe("Joosep");
 	});
 	  
     it('changes info system status to Approved and sets approval timestamp', function() {
