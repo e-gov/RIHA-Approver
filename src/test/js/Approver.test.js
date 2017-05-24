@@ -134,11 +134,10 @@ describe('Approver', function() {
 		spyEvent = spyOnEvent('#btnApproval', 'click');
 		$('#btnApproval').trigger( "click" );
 		$('#first_name').val( "Joosep" );
-		var modal = document.getElementById('modal');
-		
+		var result = $("#first_name").val();
 		expect('click').toHaveBeenTriggeredOn('#btnApproval');
 		expect(spyEvent).toHaveBeenTriggered();
-		expect($('#first_name').val()).toHaveValue("Joosep");
+		expect(result).toHaveValue("Joosep");
 	});
 	  
     it('changes info system status to Approved and sets approval timestamp', function() {
