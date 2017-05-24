@@ -91,7 +91,7 @@ describe('Approver', function() {
       expect($('tbody .approval-status').text()).toBe('KOOSKÕLASTATUD');
     });
   });
-  
+  //Needs to be rewritten to account for latest approval method
   describe('Approve button', function() {
     it('changes info system status to Approved and sets approval timestamp', function() {
       setFixtures(
@@ -99,14 +99,15 @@ describe('Approver', function() {
           '<td class="approved"></td>' +
           '<td class="approval-status"></td>' +
           '<td class="approve">' +
-            '<button data-status="KOOSKÕLASTATUD">kooskõlasta</button>' +
-            '<button data-status="MITTE KOOSKÕLASTATUD">ei kooskõlasta</button>' +
+            '<button id="btnApproval" class="btn btn-sm btn-outline-primary" data-status="KOOSKÕLASTATUD">hinda</button>' +
           '</td>' +
         '</tr>');
-      spyOn($, 'post').and.returnValue(promise({id: 'http://base.url/shortname', timestamp: '2016-12-05T15:29:00.128468', status: 'KOOSKÕLASTATUD'}));
+      spyOn($, 'post').and.returnValue(promise({id: 'http://base.url/shortname', timestamp: '2016-12-05T15:29:00.128468', status: 'KOOSKÕLASTATUD', comment: "kommentaar"}));
       var event  = {target: $('button[data-status="KOOSKÕLASTATUD"]')};
-
-      new Approver().approveInfosystem(event);
+      var modal = document.getElementById('modal');
+      var infosystemRow = "1000-RIA";
+      
+      new Approver().addApproval(infosystemRow, modal);
 
       expect($('.approved').text()).toBe('2016-12-05T15:29:00.128468');
       expect($('.approval-status').text()).toBe('KOOSKÕLASTATUD');
