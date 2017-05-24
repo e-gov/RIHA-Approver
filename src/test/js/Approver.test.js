@@ -93,7 +93,7 @@ describe('Approver', function() {
   });
 
   describe('Approve button', function() {
-	it ("should invoke modal call method", function() {
+	it ("invokes modal call method", function() {
 		setFixtures(
 		    '<tr data-id="1000-RIA">' +
 		        '<td class="approved"></td>' +
@@ -134,8 +134,11 @@ describe('Approver', function() {
 		spyEvent = spyOnEvent('#btnApproval', 'click');
 		$('#btnApproval').trigger( "click" );
 		       
+		var modal = document.getElementById('modal');
+		
 		expect('click').toHaveBeenTriggeredOn('#btnApproval');
 		expect(spyEvent).toHaveBeenTriggered();
+		expect(modal.style.display).toBe('block');
 	});
 	  
     it('changes info system status to Approved and sets approval timestamp', function() {
