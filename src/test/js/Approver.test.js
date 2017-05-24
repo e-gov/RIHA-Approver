@@ -129,7 +129,7 @@ describe('Approver', function() {
 				'</div>'+
 				'<br>'+
 			'</div>'+
-		'</div>'+);
+		'</div>');
 		
 		spyEvent = spyOnEvent('#btnApproval', 'click');
 		$('#btnApproval').trigger( "click" );
