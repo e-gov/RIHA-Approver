@@ -107,7 +107,7 @@ describe('Approver', function() {
       var modal = document.getElementById('modal');
       var infosystemRow = "1000-RIA";
       
-      new Approver().addApproval(infosystemRow, modal);
+      addApproval(infosystemRow, modal);
 
       expect($('.approved').text()).toBe('2016-12-05T15:29:00.128468');
       expect($('.approval-status').text()).toBe('KOOSKÕLASTATUD');
