@@ -131,7 +131,7 @@ function Approver(infosystemsUrl) {
 			  infosystemRow.find('.approval-status').text(result.status);
 			  infosystemRow.find('.approval-comment').text(result.comment);
 			  clearCookie();
-			  modal.style.display = "none";
+			  $("#modal").css("display", "none");
 		  });
 	  }
   }
