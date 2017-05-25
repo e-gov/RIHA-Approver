@@ -93,7 +93,7 @@ describe('Approver', function() {
   });
 
   describe('Approve button', function() {
-	it ("invokes modal call method & fills an inputfield", function() {
+	it ("invokes modal call method & fills #first_name value", function() {
 		setFixtures(
 		    '<tr data-id="1000-RIA">' +
 		        '<td class="approved"></td>' +
