@@ -181,7 +181,7 @@ describe('Approver', function() {
     		'</div>');
       spyOn($, 'post').and.returnValue(promise({id: 'http://base.url/shortname', timestamp: '2016-12-05T15:29:00.128468', status: 'KOOSKÕLASTATUD', comment: "kommentaar"}));
       var event  = {target: $('button[data-status="KOOSKÕLASTATUD"]')};
-      var infosystemRow = "1000-RIA";
+      var infosystemRow = $('#btnApproval').closest('tr');
       var modal = {target: $('#modal')};
       
       spyOn($.fn, "val").and.returnValue("kommentaar");
