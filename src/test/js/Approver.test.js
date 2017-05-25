@@ -139,7 +139,7 @@ describe('Approver', function() {
 		
 		var result = $("#first_name").val();
 		
-		expect(firstName).toBe("Test");
+		expect(firstName.val()).toBe("Test");
 		expect('click').toHaveBeenTriggeredOn('#btnApproval');
 		expect(spyEvent).toHaveBeenTriggered();
 		
