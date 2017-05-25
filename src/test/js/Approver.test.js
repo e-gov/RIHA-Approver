@@ -143,20 +143,47 @@ describe('Approver', function() {
 	});
 	  
     it('changes info system status to Approved and sets approval timestamp', function() {
-      setFixtures(
-        '<tr data-id="1000-RIA">' +
-          '<td class="approved"></td>' +
-          '<td class="approval-status"></td>' +
-          '<td class="approval-comment"></td>' +
-          '<td class="approve">' +
-            '<button id="btnApproval" class="btn btn-sm btn-outline-primary" data-status="KOOSKÕLASTATUD">hinda</button>' +
-          '</td>' +
-        '</tr>');
+    	setFixtures(
+    		    '<tr data-id="1000-RIA">' +
+    		        '<td class="approved"></td>' +
+    		        '<td class="approval-status"></td>' +
+    		        '<td class="approval-comment"></td>' +
+    		        '<td class="approve">' +
+    		            '<button id="btnApproval" class="btn btn-sm btn-outline-primary" data-status="KOOSKÕLASTATUD">hinda</button>' +
+    		        '</td>' +
+    			'</tr>'+
+    			'<div id="modal" class="modal">'+
+    			'<div class="modal-content">'+
+    				'<div class="modal-header">'+
+    					'<button type="button" id="close"class="close" data-dismiss="modal">&times;</button>'+
+    					'<h3 class="modal-title">Infosüsteemi Hindamine</h3>'+
+    				'</div>'+
+    				'<div class="modal-body">'+
+    					'<br>'+
+    					'<p>Hinnangu pealkiri:</p>'+
+    					'<input id="header" type="text" name="header" placeholder="Pealkiri">'+
+    					'<br>'+
+    					'<br>'+
+    					'<p>Hinnangu kommentaar:</p>'+
+    					'<textarea id="comment" rows="4" cols="50" placeholder="Kommentaar"></textarea>'+
+    					'<br>'+
+    					'<input type="text" id="first_name" placeholder="Eesnimi"/>'+
+    					'<input type="text" id="last_name" placeholder="Perekonnanimi"/>'+
+    	  				'<br>'+ 
+    	  				'<input type="number" id="register_code" placeholder="Registrikood"/>'+
+    	 				'<input type="text" id="institution_name" placeholder="Ettevõtte nimetus"/>'+
+    	 				'<br>'+
+    	 				'<br>'+
+    	 				'<button id="btnApprove" class="btn btn-sm btn-outline-primary">Hinda</button>'+
+    				'</div>'+
+    				'<br>'+
+    			'</div>'+
+    		'</div>');
       spyOn($, 'post').and.returnValue(promise({id: 'http://base.url/shortname', timestamp: '2016-12-05T15:29:00.128468', status: 'KOOSKÕLASTATUD', comment: "kommentaar"}));
       var event  = {target: $('button[data-status="KOOSKÕLASTATUD"]')};
       var infosystemRow = "1000-RIA";
-      
-      //new Approver().addApprovalTest(infosystemRow);
+      var modal = {target: $('#modal')};
+      new Approver()._addApproval(infosystemRow, modal);
 
       expect($('.approved').text()).toBe('2016-12-05T15:29:00.128468');
       expect($('.approval-status').text()).toBe('KOOSKÕLASTATUD');
