@@ -93,8 +93,8 @@ describe('Approver', function() {
   });
 
   describe('Approve button', function() {
-	it ("invokes modal call method", function() {
-		setFixtures(
+	it ("invokes modal call method & fills an inputfield", function() {
+		var fixture = setFixtures(
 		    '<tr data-id="1000-RIA">' +
 		        '<td class="approved"></td>' +
 		        '<td class="approval-status"></td>' +
@@ -120,7 +120,7 @@ describe('Approver', function() {
 					'<br>'+
 					'<input type="text" id="first_name" placeholder="Eesnimi"/>'+
 	  				'<input type="text" id="last_name" placeholder="Perekonnanimi"/>'+
-	  				'<br>'+
+	  				'<br>'+ 
 	  				'<input type="number" id="register_code" placeholder="Registrikood"/>'+
 	 				'<input type="text" id="institution_name" placeholder="Ettevõtte nimetus"/>'+
 	 				'<br>'+
@@ -131,14 +131,18 @@ describe('Approver', function() {
 			'</div>'+
 		'</div>');
 		
+		var firstName = fixture.find('#first_name');
 		spyEvent = spyOnEvent('#btnApproval', 'click');
 		$('#btnApproval').trigger( "click" );
-		
+		firstname.val("Test");
 		spyOn($.fn, "val").and.returnValue("Joosep");
+		
 		var result = $("#first_name").val();
 		
+		expect(firstname).toBe("Test");
 		expect('click').toHaveBeenTriggeredOn('#btnApproval');
 		expect(spyEvent).toHaveBeenTriggered();
+		
 		expect(result).toBe("Joosep");
 	});
 	  
