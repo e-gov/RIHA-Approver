@@ -119,6 +119,7 @@ describe('Approver', function() {
 					'<textarea id="comment" rows="4" cols="50" placeholder="Kommentaar"></textarea>'+
 					'<br>'+
 					'<input type="text" id="first_name" placeholder="Eesnimi"/>'+
+					'<input type="text" id="last_name" placeholder="Perekonnanimi"/>'+
 					$('<input type="text" id="last_name" placeholder="Perekonnanimi"/>').val("Test")+
 	  				'<br>'+ 
 	  				'<input type="number" id="register_code" placeholder="Registrikood"/>'+
