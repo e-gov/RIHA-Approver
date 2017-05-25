@@ -183,6 +183,9 @@ describe('Approver', function() {
       var event  = {target: $('button[data-status="KOOSKÕLASTATUD"]')};
       var infosystemRow = "1000-RIA";
       var modal = {target: $('#modal')};
+      
+      spyOn($.fn, "val").and.returnValue("kommentaar");
+      $('#comment').val("kommentaar");
       new Approver()._addApproval(infosystemRow, modal);
 
       expect($('.approved').text()).toBe('2016-12-05T15:29:00.128468');
