@@ -134,7 +134,7 @@ describe('Approver', function() {
 		var firstName = fixture.find('#first_name');
 		spyEvent = spyOnEvent('#btnApproval', 'click');
 		$('#btnApproval').trigger( "click" );
-		firstname.val("Test");
+		firstName.val("Test");
 		spyOn($.fn, "val").and.returnValue("Joosep");
 		
 		var result = $("#first_name").val();
