@@ -94,7 +94,7 @@ describe('Approver', function() {
 
   describe('Approve button', function() {
 	it ("invokes modal call method & fills an inputfield", function() {
-		var fixture = setFixtures(
+		setFixtures(
 		    '<tr data-id="1000-RIA">' +
 		        '<td class="approved"></td>' +
 		        '<td class="approval-status"></td>' +
@@ -130,16 +130,15 @@ describe('Approver', function() {
 				'<br>'+
 			'</div>'+
 		'</div>');
+		setFixtures($('<input type="text" id="first_name" placeholder="Eesnimi"/>').val("Test"));
 		
-		var firstName = fixture.find('#first_name');
 		spyEvent = spyOnEvent('#btnApproval', 'click');
 		$('#btnApproval').trigger( "click" );
-		firstName.val("Test");
 		spyOn($.fn, "val").and.returnValue("Joosep");
 		
 		var result = $("#first_name").val();
 		
-		expect(firstName.val()).toBe("Test");
+		expect($('#first_name')).toHaveValue("Test");
 		expect('click').toHaveBeenTriggeredOn('#btnApproval');
 		expect(spyEvent).toHaveBeenTriggered();
 		
