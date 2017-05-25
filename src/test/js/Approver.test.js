@@ -120,7 +120,6 @@ describe('Approver', function() {
 					'<br>'+
 					'<input type="text" id="first_name" placeholder="Eesnimi"/>'+
 					'<input type="text" id="last_name" placeholder="Perekonnanimi"/>'+
-					$('<input type="text" id="last_name" placeholder="Perekonnanimi"/>').val("Test")+
 	  				'<br>'+ 
 	  				'<input type="number" id="register_code" placeholder="Registrikood"/>'+
 	 				'<input type="text" id="institution_name" placeholder="Ettevõtte nimetus"/>'+
@@ -138,7 +137,6 @@ describe('Approver', function() {
 		
 		var result = $("#first_name").val();
 		
-		expect($('#last_name')).toHaveValue("Test");
 		expect('click').toHaveBeenTriggeredOn('#btnApproval');
 		expect(spyEvent).toHaveBeenTriggered();
 		expect(result).toBe("Joosep");
