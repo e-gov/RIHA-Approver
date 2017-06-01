@@ -48,7 +48,8 @@ public class ApprovalStorageService {
   public List<String> approvalLog(String id){
 	  List<String> filteredLog = new ArrayList<String>();
 	  for (String string : loggedApprovals) {
-		if (string.contains(id)) {
+		String approvalID = string.substring(string.indexOf("|")+1, string.indexOf("|", string.indexOf("|") + 1)).trim();
+		if (approvalID.equals(id)) {
 			filteredLog.add(string);
 		}
 	  }
