@@ -9,14 +9,49 @@
     <script src="/js/vendor/jquery-3.1.1.min.js"></script>
     <script src="/js/vendor/jquery.dataTables.min.js"></script>
     <script src="/js/vendor/jquery.dataTables.bootstrap4.min.js"></script>
+    <script src="/js/vendor/core.js"></script>
+    <script src="/js/vendor/enc-base64.js"></script>
+    <script src="/js/vendor/hmac.js"></script>
+    <script src="/js/vendor/sha256.js"></script>
     <script src="/js/Approver.js"></script>
-    <script>
-      $(function() {
+    <script type="text/javascript">
+    
+     $(function() {
         new Approver('${infosystemsUrl}').init();
       });
+
     </script>
   </head>
   <body>
     <#include 'table.html'/>
-  </body>
+
+	<div id="modal" class="modal">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" id="close"class="close" data-dismiss="modal">&times;</button>
+				<h3 class="modal-title">Infosüsteemi Hindamine</h3>
+			</div>
+			<div class="modal-body">
+				<br>
+				<p>Hinnangu pealkiri:</p>
+				<input id="header" type="text" name="header" placeholder="Pealkiri">
+				<br>
+				<br>
+				<p>Hinnangu kommentaar:</p>
+				<textarea id="comment" rows="4" cols="50" placeholder="Kommentaar"></textarea>
+				<br>
+				<input type="text" id="first_name" placeholder="Eesnimi"/>
+  				<input type="text" id="last_name" placeholder="Perekonnanimi"/>
+  				<br>
+  				<input type="number" id="register_code" placeholder="Registrikood"/>
+ 				<input type="text" id="institution_name" placeholder="Ettevõtte nimetus"/>
+ 				<br>
+ 				<br>
+ 				<button id="btnApprove" class="btn btn-sm btn-outline-primary">Hinda</button>
+			</div>
+			<br>
+		</div>
+	</div>
+
+</body>
 </html>
