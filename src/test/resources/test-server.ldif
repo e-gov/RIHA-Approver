@@ -22,7 +22,7 @@ objectclass: organizationalPerson
 objectclass: inetOrgPerson
 cn: Ben Alex
 sn: Alex
-uid: 12345678901
+pager: 12345678901
 
 dn: cn=User Doe,ou=people,dc=springframework,dc=org
 objectclass: top
@@ -31,7 +31,7 @@ objectclass: organizationalPerson
 objectclass: inetOrgPerson
 cn: User Doe
 sn: Doe
-uid: 10987654321
+pager: 10987654321
 
 dn: cn=administrators,ou=groups,dc=springframework,dc=org
 objectClass: groupOfNames

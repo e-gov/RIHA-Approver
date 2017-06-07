@@ -42,6 +42,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${ldap.auth.groupSearchBase}")
     private String groupSearchBase;
 
+    @Value("${ldap.auth.groupRoleAttribute}")
+    private String groupRoleAttribute;
+
     @Value("${ldap.auth.userSearchFilter}")
     private String userSearchFilter;
 
@@ -55,6 +58,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${ldap.baseDn}")
     private String ldapBaseDn;
 
+    @Value("${ldap.login}")
+    private String ldapLogin;
+
+    @Value("${ldap.password}")
+    private String ldapPassword;
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -64,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public UserDetailsService ldapUserDetailsService() {
         DefaultLdapAuthoritiesPopulator authoritiesPopulator = new DefaultLdapAuthoritiesPopulator(contextSource(), groupSearchBase);
-        authoritiesPopulator.setGroupRoleAttribute("ou");
+        authoritiesPopulator.setGroupRoleAttribute(groupRoleAttribute);
         authoritiesPopulator.setDefaultRole("ROLE_USER");
 
         return new LdapUserDetailsService(
@@ -74,9 +83,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public DefaultSpringSecurityContextSource contextSource() {
-        return new DefaultSpringSecurityContextSource(
+        DefaultSpringSecurityContextSource defaultSpringSecurityContextSource = new DefaultSpringSecurityContextSource(
                 Collections.singletonList("ldap://" + ldapHost + ":" + ldapPort + "/"),
                 ldapBaseDn);
+        defaultSpringSecurityContextSource.setReferral("follow");
+        defaultSpringSecurityContextSource.setUserDn(ldapLogin);
+        defaultSpringSecurityContextSource.setPassword(ldapPassword);
+
+        return defaultSpringSecurityContextSource;
     }
 
     @Bean
