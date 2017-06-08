@@ -29,7 +29,7 @@ import java.util.Collections;
 @Configuration
 @EnableWebSecurity
 @EnableConfigurationProperties
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -124,13 +124,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         );
         http.addFilterBefore(estonianIdCardPreAuthenticatedFilter(), BasicAuthenticationFilter.class);
 
+
         http.authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .anyRequest()
-                .authenticated()
+                .fullyAuthenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login");
+                .loginPage("/login")
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/accessDenied");
     }
 
 }

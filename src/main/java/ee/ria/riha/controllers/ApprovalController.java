@@ -15,12 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.security.RolesAllowed;
+
 import static ee.ria.riha.services.DateTimeService.format;
 import static ee.ria.riha.services.DateTimeService.toUTC;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
+@RolesAllowed("ROLE_APPROVER")
 public class ApprovalController {
 
   @Autowired ApprovalStorageService approvalStorageService;

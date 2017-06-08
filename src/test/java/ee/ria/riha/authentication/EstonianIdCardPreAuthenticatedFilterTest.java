@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrlPattern;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -38,23 +39,23 @@ public class EstonianIdCardPreAuthenticatedFilterTest {
     }
 
     @Test
-    public void shouldRedirectAdminUserWithValidCertificateToFrontPage() throws Exception {
+    public void shouldRedirectUserWithApproverRoleAndValidCertificateToFrontPage() throws Exception {
         mvc.perform(
                 get("/")
                         .header(sslHeaderField, "serialNumber=12345678901;personalName=John"))
                 .andExpect(status().isOk())
-                .andExpect(authenticated().withRoles("ADMIN", "USER"))
+                .andExpect(authenticated().withRoles("ADMIN", "APPROVER", "USER"))
                 .andExpect(view().name("index"));
     }
 
     @Test
-    public void shouldRedirectUserWithValidCertificateToFrontPage() throws Exception {
+    public void shouldRedirectUserWithValidCertificateButWithoutApproverRoleToDeniedPage() throws Exception {
         mvc.perform(
                 get("/")
                         .header(sslHeaderField, "serialNumber=10987654321;personalName=Doe"))
-                .andExpect(status().isOk())
+                .andExpect(status().is4xxClientError())
                 .andExpect(authenticated().withRoles("USER"))
-                .andExpect(view().name("index"));
+                .andExpect(forwardedUrl("/accessDenied"));
     }
 
     @Test

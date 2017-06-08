@@ -41,6 +41,14 @@ description: Application administrators
 member: cn=Admin John,ou=people,dc=springframework,dc=org
 ou: admin
 
+dn: cn=approvers,ou=groups,dc=springframework,dc=org
+objectClass: groupOfNames
+objectClass: top
+cn: approvers
+description: Application approvers
+member: cn=Admin John,ou=people,dc=springframework,dc=org
+ou: approver
+
 dn: cn=users,ou=groups,dc=springframework,dc=org
 objectClass: groupOfNames
 objectClass: top
