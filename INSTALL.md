@@ -49,6 +49,10 @@ sudo apt-get install openjdk-8-jdk
 ## Authentication and authorization
 
 
+### Application user roles
+
+User should have ```ROLE_APPROVER``` role in order to use the application  
+
 ### Requirements
 
  * Apache server (needed to get the user's certificate string with person SSN)  
