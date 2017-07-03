@@ -43,7 +43,6 @@ deploy_development:
     environment:
         name: development
         url: http://$SSH_HOST:$PORT/
-    except:
-        - master
+    when: manual
     tags:
         - riha
