@@ -22,6 +22,9 @@ import static java.util.stream.Collectors.toList;
 public class ApprovalService {
 
     private static final Function<Comment, Approval> commentToApproval = comment -> {
+        if (comment == null) {
+            return null;
+        }
         Approval approval = new Approval();
         approval.setId(comment.getComment_id());
         approval.setInfoSystemId(comment.getInfosystem_uuid());
@@ -31,6 +34,9 @@ public class ApprovalService {
     };
 
     private static final Function<Comment, ApprovalComment> commentToApprovalComment = comment -> {
+        if (comment == null) {
+            return null;
+        }
         ApprovalComment approvalComment = new ApprovalComment();
         approvalComment.setId(comment.getComment_id());
         approvalComment.setComment(comment.getComment());
