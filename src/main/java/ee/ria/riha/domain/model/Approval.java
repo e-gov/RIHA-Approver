@@ -15,7 +15,7 @@ import java.util.UUID;
 public class Approval {
 
     private Long id;
-    private UUID infoSystemId;
+    private UUID infoSystemUuid;
     private String comment;
 
 }

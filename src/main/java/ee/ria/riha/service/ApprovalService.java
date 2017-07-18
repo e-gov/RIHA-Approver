@@ -27,7 +27,7 @@ public class ApprovalService {
         }
         Approval approval = new Approval();
         approval.setId(comment.getComment_id());
-        approval.setInfoSystemId(comment.getInfosystem_uuid());
+        approval.setInfoSystemUuid(comment.getInfosystem_uuid());
         approval.setComment(comment.getComment());
 
         return approval;
@@ -39,6 +39,8 @@ public class ApprovalService {
         }
         ApprovalComment approvalComment = new ApprovalComment();
         approvalComment.setId(comment.getComment_id());
+        approvalComment.setInfoSystemUuid(comment.getInfosystem_uuid());
+        approvalComment.setApprovalId(comment.getComment_parent_id());
         approvalComment.setComment(comment.getComment());
 
         return approvalComment;
