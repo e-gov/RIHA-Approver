@@ -43,4 +43,21 @@ public class ApprovalCommentController {
                 approvalService.listInfoSystemApprovalComments(infoSystemUuid, approvalId, pageable, filterable));
     }
 
+    /**
+     * Get single comment by its id.
+     *
+     * @param infoSystemUuid info system UUID
+     * @param approvalId     approval id
+     * @param commentId      comment id
+     * @return single concrete comment or null
+     */
+    @GetMapping("/systems/{infoSystemUuid}/approvals/{approvalId}/comments/{commentId}")
+    public ResponseEntity<ApprovalComment> getInfoSystemApprovalComment(
+            @PathVariable("infoSystemUuid") UUID infoSystemUuid,
+            @PathVariable("approvalId") Long approvalId,
+            @PathVariable("commentId") Long commentId) {
+        return ResponseEntity.ok(
+                approvalService.getInfoSystemApprovalComment(commentId));
+    }
+
 }

@@ -49,4 +49,17 @@ public class ApprovalController {
         return ResponseEntity.ok(approvalService.listInfoSystemApprovals(infoSystemUuid, pageable, filterable));
     }
 
+    /**
+     * Retrieve single approval by id.
+     *
+     * @param infoSystemUuid info system UUID
+     * @param approvalId     id of an approval
+     * @return approval or null
+     */
+    @GetMapping("/systems/{infoSystemUuid}/approvals/{approvalId}")
+    public ResponseEntity<Approval> getInfoSystemApproval(@PathVariable("infoSystemUuid") UUID infoSystemUuid,
+                                                          @PathVariable("approvalId") Long approvalId) {
+        return ResponseEntity.ok(approvalService.getApproval(approvalId));
+    }
+
 }

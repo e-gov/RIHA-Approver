@@ -14,7 +14,7 @@ import java.util.function.Function;
 import static java.util.stream.Collectors.toList;
 
 /**
- * Info system approvals services.
+ * Info system approvals and comments service
  *
  * @author Valentin Suhnjov
  */
@@ -129,4 +129,19 @@ public class ApprovalService {
     private Filterable addInfoSystemUuid(Filterable filterable, UUID infoSystemUuid) {
         return addFilter(filterable, "infosystem_uuid,=," + infoSystemUuid.toString());
     }
+
+    public Approval getApproval(Long approvalId) {
+        return commentToApproval.apply(commentRepository.get(approvalId));
+    }
+
+    /**
+     * Get single approval comment by id
+     *
+     * @param commentId id of a comment
+     * @return single comment or null
+     */
+    public ApprovalComment getInfoSystemApprovalComment(Long commentId) {
+        return commentToApprovalComment.apply(commentRepository.get(commentId));
+    }
+
 }
