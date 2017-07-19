@@ -57,7 +57,7 @@ public class ApprovalCommentController {
             @PathVariable("approvalId") Long approvalId,
             @PathVariable("commentId") Long commentId) {
         return ResponseEntity.ok(
-                approvalService.getInfoSystemApprovalComment(commentId));
+                approvalService.getInfoSystemApprovalCommentById(commentId));
     }
 
 }

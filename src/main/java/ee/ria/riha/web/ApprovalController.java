@@ -59,7 +59,7 @@ public class ApprovalController {
     @GetMapping("/systems/{infoSystemUuid}/approvals/{approvalId}")
     public ResponseEntity<Approval> getInfoSystemApproval(@PathVariable("infoSystemUuid") UUID infoSystemUuid,
                                                           @PathVariable("approvalId") Long approvalId) {
-        return ResponseEntity.ok(approvalService.getApproval(approvalId));
+        return ResponseEntity.ok(approvalService.getApprovalById(approvalId));
     }
 
 }
