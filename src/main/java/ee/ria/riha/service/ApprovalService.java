@@ -68,7 +68,10 @@ public class ApprovalService {
      * @return paginated list of approvals
      */
     public PagedResponse<Approval> listApprovals(Pageable pageable, Filterable filterable) {
-        PagedResponse<Comment> response = commentRepository.list(pageable, addNullApprovalParentId(filterable));
+        Filterable filter = new FilterRequest(filterable.getFilter(), filterable.getSort(), filterable.getFields())
+                .addFilter(getNullApprovalParentIdFilter());
+
+        PagedResponse<Comment> response = commentRepository.list(pageable, filter);
 
         return new PagedResponse<>(new PageRequest(response.getPage(), response.getSize()),
                                    response.getTotalElements(),
@@ -77,8 +80,8 @@ public class ApprovalService {
                                            .collect(toList()));
     }
 
-    private Filterable addNullApprovalParentId(Filterable filterable) {
-        return addFilter(filterable, "comment_parent_id,isnull,null");
+    private String getNullApprovalParentIdFilter() {
+        return "comment_parent_id,isnull,null";
     }
 
     /**
@@ -93,8 +96,11 @@ public class ApprovalService {
     public PagedResponse<ApprovalComment> listInfoSystemApprovalComments(UUID infoSystemUuid, Long approvalId,
                                                                          Pageable pageable,
                                                                          Filterable filterable) {
-        PagedResponse<Comment> response = commentRepository.list(pageable, addInfoSystemUuid(
-                addParentApprovalId(filterable, approvalId), infoSystemUuid));
+        Filterable filter = new FilterRequest(filterable.getFilter(), filterable.getSort(), filterable.getFields())
+                .addFilter(getInfoSystemUuidFilter(infoSystemUuid))
+                .addFilter(getParentApprovalIdFilter(approvalId));
+
+        PagedResponse<Comment> response = commentRepository.list(pageable, filter);
 
         return new PagedResponse<>(new PageRequest(response.getPage(), response.getSize()),
                                    response.getTotalElements(),
@@ -103,16 +109,8 @@ public class ApprovalService {
                                            .collect(toList()));
     }
 
-    private Filterable addParentApprovalId(Filterable filterable, Long parentApprovalId) {
-        return addFilter(filterable, "comment_parent_id,=," + parentApprovalId);
-    }
-
-    private Filterable addFilter(Filterable filterable, String filter) {
-        String result = filterable.getFilter() != null
-                ? filterable.getFilter() + "," + filter
-                : filter;
-
-        return new FilterRequest(result, filterable.getSort(), filterable.getFields());
+    private String getParentApprovalIdFilter(Long parentApprovalId) {
+        return "comment_parent_id,=," + parentApprovalId;
     }
 
     /**
@@ -125,10 +123,11 @@ public class ApprovalService {
      */
     public PagedResponse<Approval> listInfoSystemApprovals(UUID infoSystemUuid, Pageable pageable,
                                                            Filterable filterable) {
-        PagedResponse<Comment> response = commentRepository.list(pageable,
-                                                                 addNullApprovalParentId(
-                                                                         addInfoSystemUuid(filterable,
-                                                                                           infoSystemUuid)));
+        Filterable filter = new FilterRequest(filterable.getFilter(), filterable.getSort(), filterable.getFields())
+                .addFilter(getNullApprovalParentIdFilter())
+                .addFilter(getInfoSystemUuidFilter(infoSystemUuid));
+
+        PagedResponse<Comment> response = commentRepository.list(pageable, filter);
 
         return new PagedResponse<>(new PageRequest(response.getPage(), response.getSize()),
                                    response.getTotalElements(),
@@ -137,8 +136,8 @@ public class ApprovalService {
                                            .collect(toList()));
     }
 
-    private Filterable addInfoSystemUuid(Filterable filterable, UUID infoSystemUuid) {
-        return addFilter(filterable, "infosystem_uuid,=," + infoSystemUuid.toString());
+    private String getInfoSystemUuidFilter(UUID infoSystemUuid) {
+        return "infosystem_uuid,=," + infoSystemUuid.toString();
     }
 
     public Approval getApproval(Long approvalId) {
