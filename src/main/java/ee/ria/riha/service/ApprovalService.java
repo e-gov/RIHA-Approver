@@ -2,6 +2,7 @@ package ee.ria.riha.service;
 
 import ee.ria.riha.domain.model.Approval;
 import ee.ria.riha.domain.model.ApprovalComment;
+import ee.ria.riha.domain.model.ApprovalStatus;
 import ee.ria.riha.storage.domain.CommentRepository;
 import ee.ria.riha.storage.domain.model.Comment;
 import ee.ria.riha.storage.util.*;
@@ -28,7 +29,13 @@ public class ApprovalService {
         Approval approval = new Approval();
         approval.setId(comment.getComment_id());
         approval.setInfoSystemUuid(comment.getInfosystem_uuid());
+        approval.setTitle(comment.getTitle());
         approval.setComment(comment.getComment());
+        approval.setAuthor_name(comment.getAuthor_name());
+        approval.setAuthor_personal_code(comment.getAuthor_personal_code());
+        approval.setOrganization_name(comment.getOrganization_name());
+        approval.setOrganization_code(comment.getOrganization_code());
+        approval.setStatus(comment.getStatus() != null ? ApprovalStatus.valueOf(comment.getStatus()) : null);
 
         return approval;
     };
@@ -42,6 +49,10 @@ public class ApprovalService {
         approvalComment.setInfoSystemUuid(comment.getInfosystem_uuid());
         approvalComment.setApprovalId(comment.getComment_parent_id());
         approvalComment.setComment(comment.getComment());
+        approvalComment.setAuthor_name(comment.getAuthor_name());
+        approvalComment.setAuthor_personal_code(comment.getAuthor_personal_code());
+        approvalComment.setOrganization_name(comment.getOrganization_name());
+        approvalComment.setOrganization_code(comment.getOrganization_code());
 
         return approvalComment;
     };
