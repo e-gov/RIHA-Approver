@@ -18,10 +18,10 @@ public class Approval {
     private UUID infoSystemUuid;
     private String title;
     private String comment;
-    private String author_name;
-    private String author_personal_code;
-    private String organization_name;
-    private String organization_code;
+    private String authorName;
+    private String authorPersonalCode;
+    private String organizationName;
+    private String organizationCode;
     private ApprovalStatus status;
 
 }
