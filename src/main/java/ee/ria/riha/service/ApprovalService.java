@@ -35,6 +35,7 @@ public class ApprovalService {
         Approval approval = new Approval();
         approval.setId(comment.getComment_id());
         approval.setInfoSystemUuid(comment.getInfosystem_uuid());
+        approval.setDateCreated(comment.getCreation_date());
         approval.setTitle(comment.getTitle());
         approval.setComment(comment.getComment());
         approval.setAuthorName(comment.getAuthor_name());
@@ -53,6 +54,7 @@ public class ApprovalService {
         ApprovalComment approvalComment = new ApprovalComment();
         approvalComment.setId(comment.getComment_id());
         approvalComment.setInfoSystemUuid(comment.getInfosystem_uuid());
+        approvalComment.setDateCreated(comment.getCreation_date());
         approvalComment.setApprovalId(comment.getComment_parent_id());
         approvalComment.setComment(comment.getComment());
         approvalComment.setAuthorName(comment.getAuthor_name());
