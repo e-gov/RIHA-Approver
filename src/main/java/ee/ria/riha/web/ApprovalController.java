@@ -7,9 +7,7 @@ import ee.ria.riha.storage.util.Pageable;
 import ee.ria.riha.storage.util.PagedResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -60,6 +58,19 @@ public class ApprovalController {
     public ResponseEntity<Approval> getInfoSystemApproval(@PathVariable("infoSystemUuid") UUID infoSystemUuid,
                                                           @PathVariable("approvalId") Long approvalId) {
         return ResponseEntity.ok(approvalService.getApprovalById(approvalId));
+    }
+
+    /**
+     * Adds single approval to the info system.
+     *
+     * @param infoSystemUuid info system UUID
+     * @param approval       approval model
+     * @return created approval
+     */
+    @PostMapping("/systems/{infoSystemUuid}/approvals")
+    public ResponseEntity<Approval> createInfoSystemApproval(@PathVariable("infoSystemUuid") UUID infoSystemUuid,
+                                                             @RequestBody Approval approval) {
+        return ResponseEntity.ok(approvalService.createInfoSystemApproval(infoSystemUuid, approval));
     }
 
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 import java.util.function.Function;
 
+import static ee.ria.riha.domain.model.ApprovalStatus.OPEN;
 import static ee.ria.riha.domain.model.ApprovalType.APPROVAL;
 import static ee.ria.riha.domain.model.ApprovalType.COMMENT;
 import static java.util.stream.Collectors.toList;
@@ -60,6 +61,45 @@ public class ApprovalService {
         approvalComment.setOrganizationCode(comment.getOrganization_code());
 
         return approvalComment;
+    };
+
+    private static final Function<Approval, Comment> APPROVAL_TO_COMMENT = approval -> {
+        if (approval == null) {
+            return null;
+        }
+        Comment comment = new Comment();
+        comment.setType(ApprovalType.APPROVAL.name());
+        comment.setComment_id(approval.getId());
+        comment.setInfosystem_uuid(approval.getInfoSystemUuid());
+        comment.setTitle(approval.getTitle());
+        comment.setComment(approval.getComment());
+        comment.setAuthor_name(approval.getAuthorName());
+        comment.setAuthor_personal_code(approval.getAuthorPersonalCode());
+        comment.setOrganization_name(approval.getOrganizationName());
+        comment.setOrganization_code(approval.getOrganizationCode());
+        if (approval.getStatus() != null) {
+            comment.setStatus(approval.getStatus().name());
+        }
+
+        return comment;
+    };
+
+    private static final Function<ApprovalComment, Comment> APPROVAL_COMMENT_TO_COMMENT = approvalComment -> {
+        if (approvalComment == null) {
+            return null;
+        }
+        Comment comment = new Comment();
+        comment.setType(ApprovalType.COMMENT.name());
+        comment.setComment_id(approvalComment.getId());
+        comment.setInfosystem_uuid(approvalComment.getInfoSystemUuid());
+        comment.setComment_parent_id(approvalComment.getApprovalId());
+        comment.setComment(approvalComment.getComment());
+        comment.setAuthor_name(approvalComment.getAuthorName());
+        comment.setAuthor_personal_code(approvalComment.getAuthorPersonalCode());
+        comment.setOrganization_name(approvalComment.getOrganizationName());
+        comment.setOrganization_code(approvalComment.getOrganizationCode());
+
+        return comment;
     };
 
     @Autowired
@@ -166,6 +206,20 @@ public class ApprovalService {
         }
 
         return COMMENT_TO_APPROVAL_COMMENT.apply(comment);
+    }
+
+    public Approval createInfoSystemApproval(UUID infoSystemUuid, Approval approval) {
+        approval.setInfoSystemUuid(infoSystemUuid);
+        approval.setStatus(OPEN);
+        Long approvalId = commentRepository.add(APPROVAL_TO_COMMENT.apply(approval)).get(0);
+        return COMMENT_TO_APPROVAL.apply(commentRepository.get(approvalId));
+    }
+
+    public ApprovalComment createInfoSystemApprovalComment(UUID infoSystemUuid, Long approvalId, ApprovalComment approvalComment) {
+        approvalComment.setApprovalId(approvalId);
+        approvalComment.setInfoSystemUuid(infoSystemUuid);
+        Long approvalCommentId = commentRepository.add(APPROVAL_COMMENT_TO_COMMENT.apply(approvalComment)).get(0);
+        return COMMENT_TO_APPROVAL_COMMENT.apply(commentRepository.get(approvalCommentId));
     }
 
     private String getParentApprovalIdIsNullFilter() {

@@ -7,9 +7,7 @@ import ee.ria.riha.storage.util.Pageable;
 import ee.ria.riha.storage.util.PagedResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -58,6 +56,22 @@ public class ApprovalCommentController {
             @PathVariable("commentId") Long commentId) {
         return ResponseEntity.ok(
                 approvalService.getInfoSystemApprovalCommentById(commentId));
+    }
+
+    /**
+     * Adds single comment to the info system approval.
+     *
+     * @param infoSystemUuid  info system UUID
+     * @param approvalId      an id of approval
+     * @param approvalComment comment model
+     * @return created approval comment
+     */
+    @PostMapping("/systems/{infoSystemUuid}/approvals/{approvalId}/comments")
+    public ResponseEntity<ApprovalComment> createInfoSystemApprovalComment(
+            @PathVariable("infoSystemUuid") UUID infoSystemUuid, @PathVariable("approvalId") Long approvalId,
+            @RequestBody ApprovalComment approvalComment) {
+        return ResponseEntity.ok(
+                approvalService.createInfoSystemApprovalComment(infoSystemUuid, approvalId, approvalComment));
     }
 
 }
