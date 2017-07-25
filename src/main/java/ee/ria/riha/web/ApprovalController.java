@@ -1,22 +1,24 @@
 package ee.ria.riha.web;
 
 import ee.ria.riha.domain.model.Approval;
-import ee.ria.riha.domain.model.ApprovalComment;
 import ee.ria.riha.service.ApprovalService;
+import ee.ria.riha.storage.util.ApiPageableAndFilterableParams;
 import ee.ria.riha.storage.util.Filterable;
 import ee.ria.riha.storage.util.Pageable;
 import ee.ria.riha.storage.util.PagedResponse;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+/**
+ * Info system approvals
+ */
 @RestController
-@RequestMapping("/approvals")
+@Api("approvals")
 public class ApprovalController {
 
     @Autowired
@@ -29,8 +31,10 @@ public class ApprovalController {
      * @param filterable filter definition
      * @return paginated list of approvals
      */
-    @GetMapping
-    public ResponseEntity<PagedResponse<Approval>> list(Pageable pageable, Filterable filterable) {
+    @GetMapping("/systems/approvals")
+    @ApiOperation("List all approvals of all information systems")
+    @ApiPageableAndFilterableParams
+    public ResponseEntity<PagedResponse<Approval>> listApprovals(Pageable pageable, Filterable filterable) {
         return ResponseEntity.ok(approvalService.listApprovals(pageable, filterable));
     }
 
@@ -42,7 +46,9 @@ public class ApprovalController {
      * @param filterable     filter definition
      * @return paginated list of info system approvals
      */
-    @GetMapping(path = "/{infoSystemUuid}")
+    @GetMapping("/systems/{infoSystemUuid}/approvals")
+    @ApiOperation("List all information system approvals")
+    @ApiPageableAndFilterableParams
     public ResponseEntity<PagedResponse<Approval>> listInfoSystemApprovals(
             @PathVariable("infoSystemUuid") UUID infoSystemUuid,
             Pageable pageable, Filterable filterable) {
@@ -50,21 +56,31 @@ public class ApprovalController {
     }
 
     /**
-     * Retrieve paginated and filtered list of approval comments for given info system.
+     * Retrieve single approval by id.
      *
      * @param infoSystemUuid info system UUID
-     * @param approvalId     approval id
-     * @param pageable       paging definition
-     * @param filterable     filter definition
-     * @return paginated list of approval comments
+     * @param approvalId     id of an approval
+     * @return approval or null
      */
-    @GetMapping(path = "/{infoSystemUuid}/{approvalId}/comments")
-    public ResponseEntity<PagedResponse<ApprovalComment>> listInfoSystemApprovalComments(
-            @PathVariable("infoSystemUuid") UUID infoSystemUuid,
-            @PathVariable("approvalId") Long approvalId,
-            Pageable pageable,
-            Filterable filterable) {
-        return ResponseEntity.ok(
-                approvalService.listInfoSystemApprovalComments(infoSystemUuid, approvalId, pageable, filterable));
+    @GetMapping("/systems/{infoSystemUuid}/approvals/{approvalId}")
+    @ApiOperation("Get single information system approval")
+    public ResponseEntity<Approval> getInfoSystemApproval(@PathVariable("infoSystemUuid") UUID infoSystemUuid,
+                                                          @PathVariable("approvalId") Long approvalId) {
+        return ResponseEntity.ok(approvalService.getApprovalById(approvalId));
     }
+
+    /**
+     * Adds single approval to the info system.
+     *
+     * @param infoSystemUuid info system UUID
+     * @param approval       approval model
+     * @return created approval
+     */
+    @PostMapping("/systems/{infoSystemUuid}/approvals")
+    @ApiOperation("Create new information system approval")
+    public ResponseEntity<Approval> createInfoSystemApproval(@PathVariable("infoSystemUuid") UUID infoSystemUuid,
+                                                             @RequestBody Approval approval) {
+        return ResponseEntity.ok(approvalService.createInfoSystemApproval(infoSystemUuid, approval));
+    }
+
 }
