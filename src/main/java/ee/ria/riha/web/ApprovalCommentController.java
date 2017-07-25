@@ -2,9 +2,12 @@ package ee.ria.riha.web;
 
 import ee.ria.riha.domain.model.ApprovalComment;
 import ee.ria.riha.service.ApprovalService;
+import ee.ria.riha.storage.util.ApiPageableAndFilterableParams;
 import ee.ria.riha.storage.util.Filterable;
 import ee.ria.riha.storage.util.Pageable;
 import ee.ria.riha.storage.util.PagedResponse;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +20,7 @@ import java.util.UUID;
  * @author Valentin Suhnjov
  */
 @RestController
+@Api("approval comments")
 public class ApprovalCommentController {
 
     @Autowired
@@ -32,6 +36,8 @@ public class ApprovalCommentController {
      * @return paginated list of approval comments
      */
     @GetMapping("/systems/{infoSystemUuid}/approvals/{approvalId}/comments")
+    @ApiOperation("List all information system approval comments")
+    @ApiPageableAndFilterableParams
     public ResponseEntity<PagedResponse<ApprovalComment>> listInfoSystemApprovalComments(
             @PathVariable("infoSystemUuid") UUID infoSystemUuid,
             @PathVariable("approvalId") Long approvalId,
@@ -50,6 +56,7 @@ public class ApprovalCommentController {
      * @return single concrete comment or null
      */
     @GetMapping("/systems/{infoSystemUuid}/approvals/{approvalId}/comments/{commentId}")
+    @ApiOperation("Get single information system approval comment")
     public ResponseEntity<ApprovalComment> getInfoSystemApprovalComment(
             @PathVariable("infoSystemUuid") UUID infoSystemUuid,
             @PathVariable("approvalId") Long approvalId,
@@ -67,6 +74,7 @@ public class ApprovalCommentController {
      * @return created approval comment
      */
     @PostMapping("/systems/{infoSystemUuid}/approvals/{approvalId}/comments")
+    @ApiOperation("Create new information system approval comment")
     public ResponseEntity<ApprovalComment> createInfoSystemApprovalComment(
             @PathVariable("infoSystemUuid") UUID infoSystemUuid, @PathVariable("approvalId") Long approvalId,
             @RequestBody ApprovalComment approvalComment) {
