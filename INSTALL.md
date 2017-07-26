@@ -1,47 +1,57 @@
-## Before install
-See the Ubuntu example for details
- * Install karma for JS unit tests
- * Install Java 8
+# Build process
 
-**NB!** Make sure the internet is reachable using the git:// protocol (TCP on 9418), some of the karma packages attempt a github clone and fail silently, if network is not available
+## Prerequisites
+These prerequisites are not strict but reflect an actual build environment:
+
+ - Ubuntu 16.04.2 LTS
+ - OpenJDK Java 1.8.0_131
+ - Apache Maven 3.3.9
 
  ## Package
  ```mvn clean package```
 
- ## Configure
-Into application.properties file:
-```
-server.port=8080
-infosystems.url=http://ec2-35-160-53-79.us-west-2.compute.amazonaws.com:8081/systems.json
-```
+# Deployment process
 
- ## Run
- ```
- java -jar target/<generated jar> --spring.config.location=file://application.properties >> system.out 2>>system.err &
-```
+During build step, an Spring Boot executable jar should have been produced. Jar contains Spring Boot application that can be easily started as Unix/Linux service using either `init.d` or `systemd`. For complete documentation please see [Installing Spring Boot applications](https://docs.spring.io/spring-boot/docs/current/reference/html/deployment-install.html#deployment-install).
 
-## Specifics
-### Ubuntu
- * Ubuntu 14.04 will have problems regarding node: the version from the main repo is too old to work properly
- Try this:
+### Install as a service
+Install as a `init.d` service
+~~~bash
+sudo ln -s /var/riha-approvertarget/browser-approver.jar /etc/init.d/riha-approver
+~~~
+Here `riha-approver` will become a service name that will be used system wide.
 
-```
-sudo apt-get install nodejs
-sudo apt-get install npm
-sudo apt-get install maven
-sudo ln -s /usr/bin/nodejs /usr/bin/node
-sudo npm install -g npm
+Configure automatic start (optional)
+~~~bash
+sudo update-rc.d riha-approver defaults <priority>
+~~~
 
-# This is important!
-sudo npm install -g npm
-sudo npm install karma --save-dev
-sudo npm install -g karma-cli
+Secure jar file and restrict its modification (optional)
+~~~bash
+sudo chmod 500 riha-approver.jar
+sudo chattr +i riha-approver.jar
+~~~
 
-# This is not documented anywhere
-sudo apt-get install libfontconfig
-sudo npm install karma karma-jasmine jasmine
+#### Run
+Service will be executed as a user that owns the jar file even when started automatically at boot. Please make sure to change jar file owner to anything but `root`
 
-sudo npm install karma-jasmine karma-junit-reporter karma-jasmine-jquery karma-jasmine-ajax karma-coverage karma-phantomjs2-launcher
+Start application service. **Note!** Service will be started as the user that owns the jar file
+~~~bash
+sudo service riha-approver start
+~~~
 
-sudo apt-get install openjdk-8-jdk
-```
+#### Logs
+Logs are written to `/var/log/riha-approver.log`
+
+#### PID file
+Application`s PID is tracked using `/var/run/riha-approver/riha-approver.pid`
+
+#### Init script configuration
+It is possible to configure init script without modifying jar file. Script can be customized by creating configuration file is expected to be placed next to the jar file with same name as jar but suffixed with `.conf`. For example if jar path is `/var/riha-approver/target/riha-approver.jar`, then configuration should be placed to `/var/riha-approver/target/riha-approver.conf` file.
+
+### Application configuration
+Sensible application default properties are packaged inside jar with name `application.properties`.
+
+Spring Boot provides numerous ways to configure application like command line arguments, configuration JSON embedded in an environment variable or system property, JNDI attributes, etc. One of the easiest ways to configure Spring Boot application is to place configuration file named `application.properties` next to the jar file.
+
+Please refer to Spring Boot [Externalized Configuration](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html#boot-features-external-config) documentation for more information.
