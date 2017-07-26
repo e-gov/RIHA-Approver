@@ -17,7 +17,7 @@ During build step, an Spring Boot executable jar should have been produced. Jar 
 ### Install as a service
 Install as a `init.d` service
 ~~~bash
-sudo ln -s /var/riha-approvertarget/browser-approver.jar /etc/init.d/riha-approver
+sudo ln -s /var/riha-approvertarget/riha-approver.jar /etc/init.d/riha-approver
 ~~~
 Here `riha-approver` will become a service name that will be used system wide.
 
