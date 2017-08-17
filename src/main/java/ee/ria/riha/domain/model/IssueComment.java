@@ -7,13 +7,13 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * Approval comment
+ * Issue comment
  *
  * @author Valentin Suhnjov
  */
 @Getter
 @Setter
-public class ApprovalComment {
+public class IssueComment {
 
     private Long id;
     private UUID infoSystemUuid;
@@ -24,5 +24,6 @@ public class ApprovalComment {
     private String authorPersonalCode;
     private String organizationName;
     private String organizationCode;
+    private IssueStatus status;
 
 }

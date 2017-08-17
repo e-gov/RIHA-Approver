@@ -7,13 +7,13 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * Approval
+ * Issue event
  *
  * @author Valentin Suhnjov
  */
 @Getter
 @Setter
-public class Approval {
+public class Issue {
 
     private Long id;
     private UUID infoSystemUuid;
@@ -24,6 +24,6 @@ public class Approval {
     private String authorPersonalCode;
     private String organizationName;
     private String organizationCode;
-    private ApprovalStatus status;
+    private IssueStatus status;
 
 }
