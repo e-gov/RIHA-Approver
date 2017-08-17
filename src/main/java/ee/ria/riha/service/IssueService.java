@@ -26,8 +26,6 @@ import static java.util.stream.Collectors.toList;
 @Service
 public class IssueService {
 
-    private static final String PARENT_ISSUE_ID_IS_NULL_FILTER = "comment_parent_id,isnull,null";
-
     private static final Function<Comment, Issue> COMMENT_TO_ISSUE = comment -> {
         if (comment == null) {
             return null;
@@ -116,8 +114,7 @@ public class IssueService {
      */
     public PagedResponse<Issue> listIssues(Pageable pageable, Filterable filterable) {
         Filterable filter = new FilterRequest(filterable.getFilter(), filterable.getSort(), filterable.getFields())
-                .addFilter(getIssueTypeEqFilter(ISSUE))
-                .addFilter(getParentIssueIdIsNullFilter());
+                .addFilter(getIssueTypeEqFilter(ISSUE));
 
         PagedResponse<Comment> response = commentRepository.list(pageable, filter);
 
@@ -166,7 +163,6 @@ public class IssueService {
                                                      Filterable filterable) {
         Filterable filter = new FilterRequest(filterable.getFilter(), filterable.getSort(), filterable.getFields())
                 .addFilter(getIssueTypeEqFilter(ISSUE))
-                .addFilter(getParentIssueIdIsNullFilter())
                 .addFilter(getInfoSystemUuidEqFilter(infoSystemUuid));
 
         PagedResponse<Comment> response = commentRepository.list(pageable, filter);
@@ -223,10 +219,6 @@ public class IssueService {
         issueComment.setInfoSystemUuid(infoSystemUuid);
         Long issueCommentId = commentRepository.add(ISSUE_COMMENT_TO_COMMENT.apply(issueComment)).get(0);
         return COMMENT_TO_ISSUE_COMMENT.apply(commentRepository.get(issueCommentId));
-    }
-
-    private String getParentIssueIdIsNullFilter() {
-        return PARENT_ISSUE_ID_IS_NULL_FILTER;
     }
 
     private String getIssueTypeEqFilter(EventType eventType) {
