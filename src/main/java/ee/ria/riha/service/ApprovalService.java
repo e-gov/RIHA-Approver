@@ -3,7 +3,7 @@ package ee.ria.riha.service;
 import ee.ria.riha.domain.model.Approval;
 import ee.ria.riha.domain.model.ApprovalComment;
 import ee.ria.riha.domain.model.ApprovalStatus;
-import ee.ria.riha.domain.model.ApprovalType;
+import ee.ria.riha.domain.model.EventType;
 import ee.ria.riha.storage.domain.CommentRepository;
 import ee.ria.riha.storage.domain.model.Comment;
 import ee.ria.riha.storage.util.*;
@@ -14,8 +14,8 @@ import java.util.UUID;
 import java.util.function.Function;
 
 import static ee.ria.riha.domain.model.ApprovalStatus.OPEN;
-import static ee.ria.riha.domain.model.ApprovalType.APPROVAL;
-import static ee.ria.riha.domain.model.ApprovalType.COMMENT;
+import static ee.ria.riha.domain.model.EventType.ISSUE;
+import static ee.ria.riha.domain.model.EventType.ISSUE_COMMENT;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -70,7 +70,7 @@ public class ApprovalService {
             return null;
         }
         Comment comment = new Comment();
-        comment.setType(ApprovalType.APPROVAL.name());
+        comment.setType(EventType.ISSUE.name());
         comment.setComment_id(approval.getId());
         comment.setInfosystem_uuid(approval.getInfoSystemUuid());
         comment.setTitle(approval.getTitle());
@@ -91,7 +91,7 @@ public class ApprovalService {
             return null;
         }
         Comment comment = new Comment();
-        comment.setType(ApprovalType.COMMENT.name());
+        comment.setType(EventType.ISSUE_COMMENT.name());
         comment.setComment_id(approvalComment.getId());
         comment.setInfosystem_uuid(approvalComment.getInfoSystemUuid());
         comment.setComment_parent_id(approvalComment.getApprovalId());
@@ -116,7 +116,7 @@ public class ApprovalService {
      */
     public PagedResponse<Approval> listApprovals(Pageable pageable, Filterable filterable) {
         Filterable filter = new FilterRequest(filterable.getFilter(), filterable.getSort(), filterable.getFields())
-                .addFilter(getApprovalTypeEqFilter(APPROVAL))
+                .addFilter(getApprovalTypeEqFilter(ISSUE))
                 .addFilter(getParentApprovalIdIsNullFilter());
 
         PagedResponse<Comment> response = commentRepository.list(pageable, filter);
@@ -141,7 +141,7 @@ public class ApprovalService {
                                                                          Pageable pageable,
                                                                          Filterable filterable) {
         Filterable filter = new FilterRequest(filterable.getFilter(), filterable.getSort(), filterable.getFields())
-                .addFilter(getApprovalTypeEqFilter(COMMENT))
+                .addFilter(getApprovalTypeEqFilter(ISSUE_COMMENT))
                 .addFilter(getInfoSystemUuidEqFilter(infoSystemUuid))
                 .addFilter(getParentApprovalIdEqFilter(approvalId));
 
@@ -165,7 +165,7 @@ public class ApprovalService {
     public PagedResponse<Approval> listInfoSystemApprovals(UUID infoSystemUuid, Pageable pageable,
                                                            Filterable filterable) {
         Filterable filter = new FilterRequest(filterable.getFilter(), filterable.getSort(), filterable.getFields())
-                .addFilter(getApprovalTypeEqFilter(APPROVAL))
+                .addFilter(getApprovalTypeEqFilter(ISSUE))
                 .addFilter(getParentApprovalIdIsNullFilter())
                 .addFilter(getInfoSystemUuidEqFilter(infoSystemUuid));
 
@@ -187,7 +187,7 @@ public class ApprovalService {
     public Approval getApprovalById(Long approvalId) {
         Comment approval = commentRepository.get(approvalId);
 
-        if (ApprovalType.valueOf(approval.getType()) != APPROVAL) {
+        if (EventType.valueOf(approval.getType()) != ISSUE) {
             throw new IllegalArgumentException("Not an approval");
         }
 
@@ -203,7 +203,7 @@ public class ApprovalService {
     public ApprovalComment getInfoSystemApprovalCommentById(Long commentId) {
         Comment comment = commentRepository.get(commentId);
 
-        if (ApprovalType.valueOf(comment.getType()) != COMMENT) {
+        if (EventType.valueOf(comment.getType()) != ISSUE_COMMENT) {
             throw new IllegalArgumentException("Not a comment");
         }
 
@@ -217,7 +217,8 @@ public class ApprovalService {
         return COMMENT_TO_APPROVAL.apply(commentRepository.get(approvalId));
     }
 
-    public ApprovalComment createInfoSystemApprovalComment(UUID infoSystemUuid, Long approvalId, ApprovalComment approvalComment) {
+    public ApprovalComment createInfoSystemApprovalComment(UUID infoSystemUuid, Long approvalId,
+                                                           ApprovalComment approvalComment) {
         approvalComment.setApprovalId(approvalId);
         approvalComment.setInfoSystemUuid(infoSystemUuid);
         Long approvalCommentId = commentRepository.add(APPROVAL_COMMENT_TO_COMMENT.apply(approvalComment)).get(0);
@@ -228,7 +229,7 @@ public class ApprovalService {
         return PARENT_APPROVAL_ID_IS_NULL_FILTER;
     }
 
-    private String getApprovalTypeEqFilter(ApprovalType approvalType) {
+    private String getApprovalTypeEqFilter(EventType approvalType) {
         return "type,=," + approvalType.name();
     }
 
