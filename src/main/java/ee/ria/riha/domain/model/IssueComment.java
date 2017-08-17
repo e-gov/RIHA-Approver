@@ -1,29 +1,39 @@
 package ee.ria.riha.domain.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.UUID;
+
+import static ee.ria.riha.domain.model.EntityType.ISSUE_COMMENT;
 
 /**
- * Issue comment
+ * Issue comment entity model
  *
  * @author Valentin Suhnjov
  */
 @Getter
 @Setter
-public class IssueComment {
+@Builder
+@AllArgsConstructor
+public class IssueComment implements Entity {
 
     private Long id;
-    private UUID infoSystemUuid;
-    private Date dateCreated;
-    private Long approvalId;
+    private Long issueId;
     private String comment;
+    private Date dateCreated;
     private String authorName;
     private String authorPersonalCode;
     private String organizationName;
     private String organizationCode;
-    private IssueStatus status;
 
+    public IssueComment() {
+    }
+
+    @Override
+    public EntityType getEntityType() {
+        return ISSUE_COMMENT;
+    }
 }

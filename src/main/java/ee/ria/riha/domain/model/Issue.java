@@ -1,19 +1,25 @@
 package ee.ria.riha.domain.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
 import java.util.UUID;
 
+import static ee.ria.riha.domain.model.EntityType.ISSUE;
+
 /**
- * Issue event
+ * Issue entity model
  *
  * @author Valentin Suhnjov
  */
 @Getter
 @Setter
-public class Issue {
+@Builder
+@AllArgsConstructor
+public class Issue implements Entity {
 
     private Long id;
     private UUID infoSystemUuid;
@@ -26,4 +32,11 @@ public class Issue {
     private String organizationCode;
     private IssueStatus status;
 
+    public Issue() {
+    }
+
+    @Override
+    public EntityType getEntityType() {
+        return ISSUE;
+    }
 }

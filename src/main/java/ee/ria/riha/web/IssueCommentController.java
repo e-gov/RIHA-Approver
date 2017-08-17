@@ -1,7 +1,7 @@
 package ee.ria.riha.web;
 
 import ee.ria.riha.domain.model.IssueComment;
-import ee.ria.riha.service.IssueService;
+import ee.ria.riha.service.IssueCommentService;
 import ee.ria.riha.storage.util.ApiPageableAndFilterableParams;
 import ee.ria.riha.storage.util.Filterable;
 import ee.ria.riha.storage.util.Pageable;
@@ -12,74 +12,67 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 /**
- * Info system issue comments
+ * Issue comments.
  *
  * @author Valentin Suhnjov
  */
 @RestController
-@Api("issue comments")
+@Api("Issue events")
 public class IssueCommentController {
 
     @Autowired
-    private IssueService issueService;
+    private IssueCommentService issueEventService;
 
     /**
-     * Retrieve paginated and filtered list of issue comments for given info system.
+     * Retrieve paginated and filtered list of issue comments.
      *
-     * @param infoSystemUuid info system UUID
-     * @param issueId     issue id
-     * @param pageable       paging definition
-     * @param filterable     filter definition
+     * @param issueId    issue id
+     * @param pageable   paging definition
+     * @param filterable filter definition
      * @return paginated list of issue comments
      */
-    @GetMapping("/systems/{infoSystemUuid}/issues/{issueId}/comments")
-    @ApiOperation("List all information system issue comments")
+    @GetMapping("/issues/{issueId}/comments")
+    @ApiOperation("List all issue comments")
     @ApiPageableAndFilterableParams
-    public ResponseEntity<PagedResponse<IssueComment>> listInfoSystemIssueComments(
-            @PathVariable("infoSystemUuid") UUID infoSystemUuid,
+    public ResponseEntity<PagedResponse<IssueComment>> listIssueComments(
             @PathVariable("issueId") Long issueId,
             Pageable pageable,
             Filterable filterable) {
         return ResponseEntity.ok(
-                issueService.listInfoSystemIssueComments(infoSystemUuid, issueId, pageable, filterable));
+                issueEventService.listIssueComments(issueId, pageable, filterable));
     }
 
     /**
      * Get single comment by its id.
      *
-     * @param infoSystemUuid info system UUID
-     * @param issueId     an id of an issue
-     * @param commentId      comment id
+     * @param issueId   an id of an issue
+     * @param commentId comment id
      * @return single concrete comment or null
      */
-    @GetMapping("/systems/{infoSystemUuid}/issues/{issueId}/comments/{commentId}")
-    @ApiOperation("Get single information system issue comment")
-    public ResponseEntity<IssueComment> getInfoSystemIssueComment(
-            @PathVariable("infoSystemUuid") UUID infoSystemUuid,
+    @GetMapping("/issues/{issueId}/comments/{commentId}")
+    @ApiOperation("Get single issue comment")
+    public ResponseEntity<IssueComment> getIssueComment(
             @PathVariable("issueId") Long issueId,
             @PathVariable("commentId") Long commentId) {
         return ResponseEntity.ok(
-                issueService.getInfoSystemIssueCommentById(commentId));
+                issueEventService.getIssueCommentById(commentId));
     }
 
     /**
-     * Adds single comment to the info system issue.
+     * Adds single comment to the issue.
      *
-     * @param infoSystemUuid  info system UUID
      * @param issueId      an id of an issue
      * @param issueComment comment model
      * @return created issue comment
      */
-    @PostMapping("/systems/{infoSystemUuid}/issues/{issueId}/comments")
-    @ApiOperation("Create new information system issue comment")
-    public ResponseEntity<IssueComment> createInfoSystemIssueComment(
-            @PathVariable("infoSystemUuid") UUID infoSystemUuid, @PathVariable("issueId") Long issueId,
+    @PostMapping("/issues/{issueId}/comments")
+    @ApiOperation("Create new issue comment")
+    public ResponseEntity<IssueComment> createIssueComment(
+            @PathVariable("issueId") Long issueId,
             @RequestBody IssueComment issueComment) {
         return ResponseEntity.ok(
-                issueService.createInfoSystemIssueComment(infoSystemUuid, issueId, issueComment));
+                issueEventService.createIssueComment(issueId, issueComment));
     }
 
 }
