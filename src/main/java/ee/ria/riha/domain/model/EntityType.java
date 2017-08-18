@@ -12,6 +12,10 @@ public enum EntityType {
     /**
      * Issue comment entity discriminator
      */
-    ISSUE_COMMENT;
+    ISSUE_COMMENT,
 
+    /**
+     * Issue event entity discriminator
+     */
+    ISSUE_EVENT;
 }

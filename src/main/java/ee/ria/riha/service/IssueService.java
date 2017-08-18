@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 import java.util.UUID;
 import java.util.function.Function;
 
+import static ee.ria.riha.domain.model.IssueStatus.CLOSED;
 import static ee.ria.riha.domain.model.IssueStatus.OPEN;
 import static java.util.stream.Collectors.toList;
 
@@ -138,6 +139,50 @@ public class IssueService {
         Long issueId = commentRepository.add(ISSUE_TO_COMMENT.apply(issue)).get(0);
 
         return COMMENT_TO_ISSUE.apply(commentRepository.get(issueId));
+    }
+
+    /**
+     * Updates issue status. Throws exception in case current status is not {@link IssueStatus#OPEN}.
+     *
+     * @param issueId id of an issue
+     * @param model   updated issue model
+     * @return updated issue
+     */
+    public Issue updateIssue(Long issueId, Issue model) {
+        Issue issue = getIssueById(issueId);
+
+        if (issue.getStatus() == CLOSED) {
+            throw new IllegalArgumentException("Can't modify closed issue");
+        }
+
+        if (StringUtils.hasText(model.getComment())) {
+            IssueComment issueComment = IssueComment.builder()
+                    .comment(model.getComment())
+                    .authorName(model.getAuthorName())
+                    .authorPersonalCode(model.getAuthorPersonalCode())
+                    .organizationName(model.getOrganizationName())
+                    .organizationCode(model.getOrganizationCode())
+                    .build();
+
+            issueCommentService.createIssueComment(issueId, issueComment);
+        }
+
+        if (issue.getStatus() != model.getStatus()) {
+            IssueEvent issueClosedEvent = IssueEvent.builder()
+                    .type(IssueEventType.CLOSED)
+                    .authorName(model.getAuthorName())
+                    .authorPersonalCode(model.getAuthorPersonalCode())
+                    .organizationName(model.getOrganizationName())
+                    .organizationCode(model.getOrganizationCode())
+                    .build();
+
+            issueEventService.createEvent(issueId, issueClosedEvent);
+
+            issue.setStatus(model.getStatus());
+        }
+
+        commentRepository.update(issueId, ISSUE_TO_COMMENT.apply(issue));
+        return getIssueById(issueId);
     }
 
     private String getIssueTypeFilter() {

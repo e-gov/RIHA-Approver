@@ -81,4 +81,18 @@ public class IssueController {
         return ResponseEntity.ok(issueService.getIssueById(issueId));
     }
 
+    /**
+     * Update issue.
+     *
+     * @param issueId id of an issue
+     * @param issue   updated issue model
+     * @return updated issue
+     */
+    @PutMapping("/issues/{issueId}")
+    @ApiOperation("Update issue")
+    public ResponseEntity<Issue> updateStatus(@PathVariable("issueId") Long issueId,
+                                              @RequestBody Issue issue) {
+        return ResponseEntity.ok(issueService.updateIssue(issueId, issue));
+    }
+
 }
