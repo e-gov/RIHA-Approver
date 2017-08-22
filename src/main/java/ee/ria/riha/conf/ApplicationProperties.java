@@ -4,6 +4,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Valentin Suhnjov
  */
@@ -12,9 +15,14 @@ import org.springframework.context.annotation.Configuration;
 public class ApplicationProperties {
 
     private final StorageClientProperties storageClient = new StorageClientProperties();
+    private final SecurityProperties security = new SecurityProperties();
 
     public StorageClientProperties getStorageClient() {
         return storageClient;
+    }
+
+    public SecurityProperties getSecurity() {
+        return security;
     }
 
     public static class StorageClientProperties {
@@ -31,4 +39,23 @@ public class ApplicationProperties {
         }
     }
 
+    public static class Cors {
+        private final List<String> allowedOrigins = new ArrayList<>();
+
+        public List<String> getAllowedOrigins() {
+            return allowedOrigins;
+        }
+
+        public void setAllowedOrigins(List<String> allowedOrigins) {
+            this.allowedOrigins.addAll(allowedOrigins);
+        }
+    }
+
+    public static class SecurityProperties {
+        private final Cors cors = new Cors();
+
+        public Cors getCors() {
+            return cors;
+        }
+    }
 }

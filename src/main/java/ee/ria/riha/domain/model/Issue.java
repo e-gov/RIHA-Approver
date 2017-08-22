@@ -1,19 +1,25 @@
 package ee.ria.riha.domain.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
 import java.util.UUID;
 
+import static ee.ria.riha.domain.model.EntityType.ISSUE;
+
 /**
- * Approval
+ * Issue entity model
  *
  * @author Valentin Suhnjov
  */
 @Getter
 @Setter
-public class Approval {
+@Builder
+@AllArgsConstructor
+public class Issue implements Entity {
 
     private Long id;
     private UUID infoSystemUuid;
@@ -24,6 +30,13 @@ public class Approval {
     private String authorPersonalCode;
     private String organizationName;
     private String organizationCode;
-    private ApprovalStatus status;
+    private IssueStatus status;
 
+    public Issue() {
+    }
+
+    @Override
+    public EntityType getEntityType() {
+        return ISSUE;
+    }
 }
