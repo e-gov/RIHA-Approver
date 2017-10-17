@@ -1,8 +1,10 @@
 ![Estonian Information System Authority](https://github.com/e-gov/RIHA-Frontend/raw/master/logo/gov-CVI/lions.png "Estonian Information System Authority") ![European Regional Development Fund](https://github.com/e-gov/RIHA-Frontend/raw/master/logo/EU/EU.png "European Regional Development Fund")
 
-# RIHA-Approver [![Build Status](https://travis-ci.org/e-gov/RIHA-Approver.svg?branch=master)](https://travis-ci.org/e-gov/RIHA-Approver)
+# RIHA-Approver Deprecated as of [04.10.2017](https://github.com/e-gov/RIHA-Browser/releases/tag/v0.7.0)
 
-Software application that serves as an API to review descriptions and make approval decisions. 
+**All the necessary services to create and modify infosystems have been moved under [RIHA-Browser](https://github.com/e-gov/RIHA-Browser).**
+
+This software application was previously used by the frontend module of the RIHA-Browser to add new issues and comments to RIHA-Storage. Acts only as a rest-api without any user interface.
 
 ## Packaging and installation
 
