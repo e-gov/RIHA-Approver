@@ -1,6 +1,6 @@
 ![Estonian Information System Authority](https://github.com/e-gov/RIHA-Frontend/raw/master/logo/gov-CVI/lions.png "Estonian Information System Authority") ![European Regional Development Fund](https://github.com/e-gov/RIHA-Frontend/raw/master/logo/EU/EU.png "European Regional Development Fund")
 
-# RIHA-Approver Deprecated as of [04.10.2017](https://github.com/e-gov/RIHA-Browser/releases/tag/v0.7.0)
+# RIHA-Approver - Deprecated as of [04.10.2017](https://github.com/e-gov/RIHA-Browser/releases/tag/v0.7.0)
 
 **All the necessary services to create and modify infosystems have been moved under [RIHA-Browser](https://github.com/e-gov/RIHA-Browser).**
 
